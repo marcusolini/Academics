@@ -8,14 +8,14 @@ extern CLogger < CConsoleLogPolicy > *pConsoleLoggerInstance;
 extern CLogger < CFileLogPolicy > *pFileLoggerInstance;
 
 
-#define LOG(DATA) \
-if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Informational >(DATA); \
-if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Informational >(DATA) \
+#define LOG(...) \
+if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Informational >(__VA_ARGS__); \
+if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Informational >(__VA_ARGS__) \
 
-#define LOG_WARNING(DATA) \
-if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Warning >(DATA); \
-if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Warning >(DATA) \
+#define LOG_WARNING(...) \
+if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Warning >(__VA_ARGS__); \
+if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Warning >(__VA_ARGS__) \
 
-#define LOG_ERROR(DATA) \
-if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Error >(DATA); \
-if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Error >(DATA) \
+#define LOG_ERROR(...) \
+if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Error >(__VA_ARGS__); \
+if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Error >(__VA_ARGS__) \
