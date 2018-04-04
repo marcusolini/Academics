@@ -21,16 +21,16 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProdConQueue.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Producer.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Consumer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Data.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProdConQueue.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Producer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ThreadGuard.h">
@@ -41,7 +41,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProducerConsumer.cpp">
+    <ClCompile Include="ProducerConsumer-WindowsLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

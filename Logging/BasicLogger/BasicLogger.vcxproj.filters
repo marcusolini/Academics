@@ -21,19 +21,22 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProdConQueue.h">
+    <ClInclude Include="Log.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Producer.h">
+    <ClInclude Include="Logger.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Consumer.h">
+    <ClInclude Include="LogPolicy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Data.h">
+    <ClInclude Include="ConsoleLogPolicy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadGuard.h">
+    <ClInclude Include="CreateLogger.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLogPolicy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,7 +44,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProducerConsumer.cpp">
+    <ClCompile Include="BasicLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

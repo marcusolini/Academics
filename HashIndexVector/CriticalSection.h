@@ -13,9 +13,6 @@ public:
           InitializeCriticalSectionAndSpinCount(&m_criticalSection, 1000);
      }
 
-     CriticalSection(const CriticalSection&) = delete;
-     CriticalSection& operator=(const CriticalSection&) = delete;
-
      virtual ~CriticalSection()
      {
           DeleteCriticalSection(&m_criticalSection);
@@ -36,26 +33,32 @@ public:
           }
      }
 
+     CriticalSection(const CriticalSection&) = delete;
+     CriticalSection& operator=(const CriticalSection&) = delete;
+
 private:
      CRITICAL_SECTION m_criticalSection;
      bool bLocked = false;
 };
 
 
-class Guard
+class CriticalSectionGuard
 {
 public:
-     Guard(CriticalSection* criticalSection) : m_criticalSection(criticalSection)
+     explicit CriticalSectionGuard(CriticalSection& criticalSection) : m_criticalSection(criticalSection)
      {
-          m_criticalSection->Lock();
+          m_criticalSection.Lock();
      }
 
-     virtual ~Guard()
+     virtual ~CriticalSectionGuard()
      {
-          m_criticalSection->Unlock();
+          m_criticalSection.Unlock();
      }
+
+     CriticalSectionGuard(CriticalSectionGuard const&) = delete;
+     CriticalSectionGuard& operator= (CriticalSectionGuard const&) = delete;
 
 private:
 
-     CriticalSection * m_criticalSection;
+     CriticalSection& m_criticalSection;
 };

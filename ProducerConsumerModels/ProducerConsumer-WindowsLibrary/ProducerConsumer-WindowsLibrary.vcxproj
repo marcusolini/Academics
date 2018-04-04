@@ -20,11 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{D4721599-11F6-48B7-8C26-EB7F2B30E597}</ProjectGuid>
+    <ProjectGuid>{17820C03-35C8-42A7-9A6C-6466C18936D5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ProducerConsumer</RootNamespace>
+    <RootNamespace>ProducerConsumerWindowsLibrary</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <ProjectName>ProducerConsumer-WinPlatform</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -157,7 +156,7 @@
     <ClInclude Include="ThreadGuard.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ProducerConsumer.cpp" />
+    <ClCompile Include="ProducerConsumer-WindowsLibrary.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

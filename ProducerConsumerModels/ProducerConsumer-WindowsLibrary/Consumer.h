@@ -10,13 +10,11 @@ public:
      CConsumer(CProdConQueue<DATA>& queue, size_t quantity, const DWORD removeDelay = 0);
      virtual ~CConsumer();
 
-     void operator()();
-
      DATA& Remove();
      size_t Quantity();
 
-     //CConsumer(const CConsumer&) = delete;
-     //CConsumer& operator=(const CConsumer&) = delete;
+     CConsumer(const CConsumer&) = delete;
+     CConsumer& operator=(const CConsumer&) = delete;
 
 private:
      CProdConQueue<DATA>& m_queue;
@@ -58,25 +56,3 @@ size_t CConsumer<DATA>::Quantity()
 
      return m_quantity;
 }
-
-template <class DATA>
-void CConsumer<DATA>::operator()()
-{
-     try
-     {
-
-     //for (auto& count : m_quantity)
-     for (int count = 0; count < m_quantity; count++)
-     {
-          POD_CON_DATA data = Remove();
-          std::wcout << L"Removed Data: " << data << L" " << __FUNCTION__ << L":" << __LINE__ << std::endl;
-     }
-
-     }
-     catch (std::exception& e)
-     {
-          std::wcerr << L"exception: " << e.what() << std::endl;
-          throw;
-     }
-}
-

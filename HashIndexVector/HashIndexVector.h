@@ -115,7 +115,7 @@ public:
 
      void Insert(const KEY key, const DATA data)
      {
-          Guard guard(&m_criticalSection);
+          CriticalSectionGuard guard(m_criticalSection);
 
           size_t hash = CalculateHash(key);
           size_t hashIndex = CalculateHashIndex(hash);
@@ -129,7 +129,7 @@ public:
 
      void Insert(const size_t hashIndex, VectorElement<KEY, DATA>& vectorElement)
      {
-          Guard guard(&m_criticalSection);
+          CriticalSectionGuard guard(m_criticalSection);
 
           if (hashIndex > m_count-1)
           {
@@ -155,13 +155,13 @@ public:
 
      size_t Count()
      {
-          Guard guard(&m_criticalSection);
+          CriticalSectionGuard guard(m_criticalSection);
           return m_count;
      }
 
      DATA Get(const KEY key)
      {
-          Guard guard(&m_criticalSection);
+          CriticalSectionGuard guard(m_criticalSection);
 
           size_t hash = CalculateHash(key);
           size_t hashIndex = CalculateHashIndex(hash);
@@ -185,7 +185,7 @@ public:
      /*
      DATA Get(size_t index)
      {
-          Guard guard(&m_criticalSection);
+          CriticalSectionGuard guard(m_criticalSection);
 
           if (index > m_count - 1)
           {
@@ -203,7 +203,7 @@ public:
 
      void Remove(const KEY key)
      {
-          Guard guard(&m_criticalSection);
+          CriticalSectionGuard guard(m_criticalSection);
 
           size_t hash = CalculateHash(key);
           size_t hashIndex = CalculateHashIndex(hash);
@@ -214,7 +214,7 @@ public:
      /* Do not see the benefit size index is hidden
      DATA operator[] (size_t index)
      {
-          Guard guard(&m_criticalSection);
+          CriticalSectionGuard guard(m_criticalSection);
           if (index > m_count - 1)
           {
                throw std::out_of_range("input index out of range");

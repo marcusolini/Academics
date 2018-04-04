@@ -10,14 +10,12 @@ public:
      CProducer(CProdConQueue<DATA>& queue, const size_t quantity, const DWORD createDelay = 0, const DWORD addDelay = 0);
      virtual ~CProducer();
 
-     void operator()();
-
      DATA& Create();
      void Add(DATA& data);
      size_t Quantity();
 
-     //CProducer(const CProducer&) = delete;
-     //CProducer& operator=(const CProducer&) = delete;
+     CProducer(const CProducer&) = delete;
+     CProducer& operator=(const CProducer&) = delete;
 
 private:
      CProdConQueue<DATA>& m_queue;
@@ -78,27 +76,3 @@ size_t CProducer<DATA>::Quantity()
 
      return m_quantity;
 }
-
-
-template <class DATA>
-void CProducer<DATA>::operator()()
-{
-     try
-     {
-
-     //for (auto& i : m_quantity)
-     for (int count = 0; count < m_quantity; count++)
-     {
-          POD_CON_DATA data = Create();
-          Add(data);
-          std::wcout << L"Added Data: " << data << L" " << __FUNCTION__ << L":" << __LINE__ << std::endl;
-     }
-
-     }
-     catch (std::exception& e)
-     {
-          std::wcerr << L"exception: " << e.what() << std::endl;
-          throw;
-     }
-}
-
