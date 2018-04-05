@@ -24,22 +24,24 @@ public:
      virtual ~CLogger();
 
      template< ESeverity severity, class...Args >
-     void print(Args...args);
+     void Print(Args...args);
      
 private:
      unsigned m_lineNumber = 0;
 
-     std::string GetTime();
-     std::string GetHeader();
+     void GenerateTime();
+     void GenerateHeader();
 
-     std::stringstream m_logStream;
+     std::ostringstream m_logStream;
+     std::ostringstream m_headerStream;
+     std::string m_timeString;
 
      ILogPolicy* m_pPolicy = nullptr;;
 
      std::mutex m_writeMutex;
 
-     void print_impl();
-     template<class First, class...Rest> void print_impl(First parm1, Rest...parm);
+     void PrintImpl();
+     template<class First, class...Rest> void PrintImpl(First parm1, Rest...parm);
 };
 
 
@@ -54,7 +56,7 @@ CLogger< LogPolicy >::CLogger(const std::string& name)
      if (nullptr != m_pPolicy)
      {
           m_pPolicy->Open(name);
-          print< ESeverity::Informational >("LOGGING STARTED >>>>>>");
+          Print< ESeverity::Informational >("LOGGING STARTED >>>>>>");
      }
 }
 
@@ -63,7 +65,7 @@ CLogger< LogPolicy >::~CLogger()
 {
      if (nullptr != m_pPolicy)
      {
-          print< ESeverity::Informational >("<<<<< LOGGING ENDED");
+          Print< ESeverity::Informational >("<<<<< LOGGING ENDED");
           m_pPolicy->Close();
           delete m_pPolicy;
           m_pPolicy = nullptr;
@@ -73,9 +75,15 @@ CLogger< LogPolicy >::~CLogger()
 
 template< class LogPolicy >
 template< ESeverity severity, class...Args >
-void CLogger< LogPolicy >::print(Args...args)
+void CLogger< LogPolicy >::Print(Args...args)
 {
      std::lock_guard<std::mutex> lock(m_writeMutex);
+
+     m_logStream.str("");
+
+     GenerateTime();
+     GenerateHeader();
+
      switch (severity)
      {
      case ESeverity::Informational:
@@ -88,51 +96,56 @@ void CLogger< LogPolicy >::print(Args...args)
           m_logStream << "<ERROR> :";
           break;
      };
-     print_impl(args...);
+     PrintImpl(args...);
 }
 
 
 template< class LogPolicy >
-void CLogger< LogPolicy >::print_impl()
+void CLogger< LogPolicy >::PrintImpl()
 {
-     m_pPolicy->Write(GetHeader() + m_logStream.str());
-     m_logStream.str("");
+     m_pPolicy->Write(m_headerStream.str() + m_logStream.str() );
 }
 
 template< class LogPolicy >
 template<class First, class...Rest >
-void CLogger< LogPolicy >::print_impl(First parm1, Rest...parm)
+void CLogger< LogPolicy >::PrintImpl(First parm1, Rest...parm)
 {
      m_logStream << parm1;
-     print_impl(parm...);
+     PrintImpl(parm...);
 }
 
 template< class LogPolicy >
-std::string CLogger< LogPolicy >::GetTime()
+void CLogger< LogPolicy >::GenerateTime()
 {
-     std::string time_str;
-     time_t raw_time;
-     time(&raw_time);
+     m_timeString.erase();
+
+     std::string timeString;
+     time_t rawTime = { 0 };
+
+     time(&rawTime);
 
      const int size = 1024;
-     time_str.resize(size);
+     timeString.resize(size);
 
-     ctime_s((char*)time_str.data(), size, &raw_time);
-     time_str = time_str.c_str();
+     ctime_s((char*)timeString.data(), size, &rawTime);
+     timeString = timeString.c_str();
 
-     return time_str.substr(0, time_str.size() - 1);
+     m_timeString = timeString.substr(0, timeString.size() - 1);
 }
 
+
 template< class LogPolicy >
-std::string CLogger< LogPolicy >::GetHeader()
+void CLogger< LogPolicy >::GenerateHeader()
 {
-     std::stringstream header;
-     header.str("");
-     header.fill('0');
-     header.width(7);
-     header << m_lineNumber++ << " < " << GetTime() << " - ";
-     header.fill('0');
-     header.width(7);
-     header << clock() << " > ~ ";
-     return header.str();
+     m_headerStream.str("");
+
+     m_headerStream.fill('0');
+     m_headerStream.width(7);
+     m_headerStream << std::this_thread::get_id();
+     m_headerStream << " ~ ";
+     m_headerStream.width(7);
+     m_headerStream << m_lineNumber++ << " < " << m_timeString << " - ";
+     m_headerStream.fill('0');
+     m_headerStream.width(7);
+     m_headerStream << clock() << " > ~ ";
 }

@@ -69,7 +69,7 @@ public:
      }
 
      // TODO GetFirst, GetNext
-     VectorElement<KEY, DATA>& GetFirst()
+     /*VectorElement<KEY, DATA>& GetFirst()
      {
           if (key == m_vectorElement->GetKey())
 
@@ -84,7 +84,7 @@ public:
                m_pNextVectorNode->Get(key);
           }
      }
-
+     */
 
 private:
      VectorElement<KEY, DATA>* m_vectorElement = nullptr;
@@ -99,7 +99,7 @@ public:
      {
           m_indexVector = new VectorNode<KEY, DATA>[m_count];
           m_size = m_count * sizeof(VectorNode<KEY, DATA>);
-     };
+     }
 
      virtual ~IndexVector()
      {
@@ -182,7 +182,7 @@ public:
           }
      }
 
-     /*
+     
      DATA Get(size_t index)
      {
           CriticalSectionGuard guard(m_criticalSection);
@@ -196,10 +196,10 @@ public:
                if (nullptr == m_indexVector[index])
                     throw std::invalid_argument("index NOT occupied");
                else
-                    return m_indexVector[index].Get(
+                    return m_indexVector[index].GetData();
           }
      }
-     */
+     
 
      void Remove(const KEY key)
      {

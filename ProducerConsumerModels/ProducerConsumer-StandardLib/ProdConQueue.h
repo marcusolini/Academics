@@ -32,7 +32,7 @@ private:
 template <class DATA>
 CProdConQueue<DATA>::CProdConQueue(size_t size) : m_size(size)
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      m_semHandle = CreateSemaphore(nullptr, 0, (LONG)size - 1, nullptr);
 
@@ -46,7 +46,7 @@ CProdConQueue<DATA>::CProdConQueue(size_t size) : m_size(size)
 template <class DATA>
 CProdConQueue<DATA>::~CProdConQueue()
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      if (INVALID_HANDLE_VALUE != m_semHandle)
      {
@@ -63,7 +63,7 @@ CProdConQueue<DATA>::~CProdConQueue()
 template <class DATA>
 void CProdConQueue<DATA>::Add(DATA& data)
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      bool bStatus = false;
 
@@ -78,7 +78,7 @@ void CProdConQueue<DATA>::Add(DATA& data)
 template <class DATA>
 DATA& CProdConQueue<DATA>::Remove()
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      DWORD dwStatus = ERROR_SUCCESS;
      bool  bStatus = false;

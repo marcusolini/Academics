@@ -4,18 +4,18 @@
 #include "ConsoleLogPolicy.h"
 #include "FileLogPolicy.h"
 
-extern CLogger < CConsoleLogPolicy > *pConsoleLoggerInstance;
-extern CLogger < CFileLogPolicy > *pFileLoggerInstance;
+extern std::shared_ptr< CLogger < CConsoleLogPolicy > > g_consoleLoggerInstance;
+extern std::shared_ptr< CLogger < CFileLogPolicy > > g_fileLoggerInstance;
 
 
 #define LOG(...) \
-if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Informational >(__VA_ARGS__); \
-if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Informational >(__VA_ARGS__) \
+if (g_consoleLoggerInstance) g_consoleLoggerInstance->Print< ESeverity::Informational >(" " __FUNCTION__, ":", __LINE__, " ~ ", __VA_ARGS__); \
+if (g_fileLoggerInstance) g_fileLoggerInstance->Print< ESeverity::Informational >(" " __FUNCTION__, ":", __LINE__, " ~ ", __VA_ARGS__) \
 
 #define LOG_WARNING(...) \
-if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Warning >(__VA_ARGS__); \
-if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Warning >(__VA_ARGS__) \
+if (g_consoleLoggerInstance) g_consoleLoggerInstance->Print< ESeverity::Warning >(" " __FUNCTION__, ":", __LINE__, " ~ ", __VA_ARGS__); \
+if (g_fileLoggerInstance) g_fileLoggerInstance->Print< ESeverity::Warning >(" " __FUNCTION__, ":", __LINE__, " ~ ", __VA_ARGS__) \
 
 #define LOG_ERROR(...) \
-if (pConsoleLoggerInstance) pConsoleLoggerInstance->print< ESeverity::Error >(__VA_ARGS__); \
-if (pFileLoggerInstance) pFileLoggerInstance->print< ESeverity::Error >(__VA_ARGS__) \
+if (g_consoleLoggerInstance) g_consoleLoggerInstance->print< ESeverity::Error >(" " __FUNCTION__, ":", __LINE__, " ~ ", __VA_ARGS__); \
+if (g_fileLoggerInstance) g_fileLoggerInstance->Print< ESeverity::Error >(" " __FUNCTION__, ":", __LINE__, " ~ ", __VA_ARGS__) \

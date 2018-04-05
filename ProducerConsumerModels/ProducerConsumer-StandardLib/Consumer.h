@@ -4,6 +4,8 @@
 
 #include "ProdConQueue.h"
 
+#include "Log.h"
+
 template <class DATA> class CConsumer
 {
 public:
@@ -29,19 +31,19 @@ template <class DATA>
 CConsumer<DATA>::CConsumer(CProdConQueue<DATA>& queue, const size_t quantity, const DWORD removeDelay)
      : m_queue(queue), m_quantity(quantity), m_removeDelay(removeDelay)
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 }
 
 template <class DATA>
 CConsumer<DATA>::~CConsumer()
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 }
 
 template <class DATA>
 DATA& CConsumer<DATA>::Remove()
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      if (m_removeDelay)
      {
@@ -54,7 +56,7 @@ DATA& CConsumer<DATA>::Remove()
 template <class DATA>
 size_t CConsumer<DATA>::Quantity()
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      return m_quantity;
 }
@@ -69,7 +71,8 @@ void CConsumer<DATA>::operator()()
      for (int count = 0; count < m_quantity; count++)
      {
           POD_CON_DATA data = Remove();
-          std::wcout << L"Removed Data: " << data << L" " << __FUNCTION__ << L":" << __LINE__ << std::endl;
+          LOG("Removed Data: ", data);
+          //std::wcout << L"Removed Data: " << data << L" " << __FUNCTION__ << L":" << __LINE__ << std::endl;
      }
 
      }

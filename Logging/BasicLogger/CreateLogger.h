@@ -2,55 +2,47 @@
 
 #include "Logger.h"
 #include "ConsoleLogPolicy.h"
+#include "FileLogPolicy.h"
 
-CLogger < CConsoleLogPolicy > *pConsoleLoggerInstance = 0;
-CLogger < CFileLogPolicy > *pFileLoggerInstance = 0;
+std::shared_ptr< CLogger < CConsoleLogPolicy > > g_consoleLoggerInstance;
+std::shared_ptr< CLogger < CFileLogPolicy > > g_fileLoggerInstance;
 
-std::mutex gCreateLoggerMutex;
+std::once_flag initConsoleLoggerFlag;
+std::once_flag initFileLoggerFlag;
 
 class CCreateLogger
 {
 public:
-     static void CreateConsoleLogger(const std::string& name = "ConsoleLogger")
+     static std::shared_ptr< CLogger < CConsoleLogPolicy > >& CreateConsoleLogger(const std::string& name = "ConsoleLogger")
      {
-          std::lock_guard<std::mutex> lock(gCreateLoggerMutex);
-
-          if (nullptr == pConsoleLoggerInstance)
-          {
-               pConsoleLoggerInstance = new CLogger < CConsoleLogPolicy >(name);
-          }
+          std::call_once(initConsoleLoggerFlag, InitConsoleLogger, name);
+          return g_consoleLoggerInstance;
      }
 
-     static void CreateFileLogger(const std::string& name = "C:\\ConsoleLogger.log")
+     static std::shared_ptr< CLogger < CFileLogPolicy > >& CreateFileLogger(const std::string& name = "C:\\FileLogger.log")
      {
-          std::lock_guard<std::mutex> lock(gCreateLoggerMutex);
-
-          if (nullptr == pFileLoggerInstance)
-          {
-               pFileLoggerInstance = new CLogger < CFileLogPolicy >(name);
-          }
+          std::call_once(initFileLoggerFlag, InitFileLogger, name);
+          return g_fileLoggerInstance;
      }
 
-     static void DeleteConsoleLogger()
+     static void DeleteConsoleLogger(std::shared_ptr< CLogger < CConsoleLogPolicy > >& consoleLoggerInstance)
      {
-          std::lock_guard<std::mutex> lock(gCreateLoggerMutex);
-
-          if (nullptr != pConsoleLoggerInstance)
-          {
-               delete pConsoleLoggerInstance;
-               pConsoleLoggerInstance = nullptr;
-          }
+          consoleLoggerInstance.reset();
      }
 
-     static void DeleteFileLogger()
+     static void DeleteFileLogger(std::shared_ptr< CLogger < CFileLogPolicy >>& fileLoggerInstance)
      {
-          std::lock_guard<std::mutex> lock(gCreateLoggerMutex);
-
-          if (nullptr != pFileLoggerInstance)
-          {
-               delete pFileLoggerInstance;
-               pFileLoggerInstance = nullptr;
-          }
+          fileLoggerInstance.reset();
      }
 
+private:
+     static void InitConsoleLogger(const std::string& name)
+     {
+          g_consoleLoggerInstance = std::make_shared < CLogger < CConsoleLogPolicy >>(name);
+     }
+
+     static void InitFileLogger(const std::string& name)
+     {
+          g_fileLoggerInstance = std::make_shared < CLogger < CFileLogPolicy >>(name);
+     }
 };

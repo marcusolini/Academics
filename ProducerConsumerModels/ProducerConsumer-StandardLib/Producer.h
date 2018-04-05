@@ -4,6 +4,8 @@
 
 #include "ProdConQueue.h"
 
+#include "Log.h"
+
 template <class DATA> class CProducer
 {
 public:
@@ -32,20 +34,20 @@ template <class DATA>
 CProducer<DATA>::CProducer(CProdConQueue<DATA>& queue, const size_t quantity, const DWORD createDelay, const DWORD addDelay)
      : m_queue(queue), m_quantity(quantity), m_createDelay(createDelay), m_addDelay(addDelay)
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 }
 
 template <class DATA>
 CProducer<DATA>::~CProducer()
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 }
 
 
 template <class DATA>
 DATA& CProducer<DATA>::Create()
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      if (m_createDelay)
      {
@@ -61,7 +63,7 @@ DATA& CProducer<DATA>::Create()
 template <class DATA>
 void CProducer<DATA>::Add(DATA& data)
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      if (m_addDelay)
      {
@@ -74,7 +76,7 @@ void CProducer<DATA>::Add(DATA& data)
 template <class DATA>
 size_t CProducer<DATA>::Quantity()
 {
-     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 
      return m_quantity;
 }
@@ -91,7 +93,8 @@ void CProducer<DATA>::operator()()
      {
           POD_CON_DATA data = Create();
           Add(data);
-          std::wcout << L"Added Data: " << data << L" " << __FUNCTION__ << L":" << __LINE__ << std::endl;
+          LOG("Added Data: ", data);
+//          std::wcout << L"Added Data: " << data << L" " << __FUNCTION__ << L":" << __LINE__ << std::endl;
      }
 
      }
