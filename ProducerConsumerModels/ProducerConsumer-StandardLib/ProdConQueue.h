@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Log.h"
 
+#include "Semaphore.h"
 
 // DECLARATIONS
 
@@ -17,14 +18,12 @@ public:
      CProdConQueue(size_t size);
      virtual ~CProdConQueue();
      void Add(DATA& data);
-     DATA& Remove();
+     DATA Remove();
 private:
      std::deque<DATA> m_queue;
      size_t m_size = 0;
 
-     DWORD  m_semWaitinMinutes = 2 * 60 * 1000;  // 2 minute wait.
-     int    m_retries = 3;
-     HANDLE m_semHandle = INVALID_HANDLE_VALUE;
+     Semaphore m_semaphore;
 };
 
 
@@ -35,30 +34,13 @@ CProdConQueue<DATA>::CProdConQueue(size_t size) : m_size(size)
 {
      LOG_START_TRACE();
 
-     m_semHandle = CreateSemaphore(nullptr, 0, (LONG)size - 1, nullptr);
-
-     if (nullptr == m_semHandle)
-     {
-          std::wcout << L"Error creating Semaphore: " << GetLastError() << std::endl;
-          throw std::runtime_error("Semaphore Creation Failure");
-     }
+     m_semaphore.SetCount(size);
 }
 
 template <class DATA>
 CProdConQueue<DATA>::~CProdConQueue()
 {
      LOG_START_TRACE();
-
-     if (INVALID_HANDLE_VALUE != m_semHandle)
-     {
-          bool bStatus = CloseHandle(m_semHandle);
-
-          if (false == bStatus)
-          {
-               std::wcout << L"Error closing Semaphore: " << GetLastError() << std::endl;
-               //throw std::runtime_error("Semaphore Deletion Failure");
-          }
-     }
 }
 
 template <class DATA>
@@ -72,51 +54,28 @@ void CProdConQueue<DATA>::Add(DATA& data)
 
      while (false == bStatus)
      {    // If the size has been hit, then release will fail, which is set to size-1 
-          bStatus = ReleaseSemaphore(m_semHandle, 1, nullptr);
+          bStatus = m_semaphore.Release();
      };
 }
 
 template <class DATA>
-DATA& CProdConQueue<DATA>::Remove()
+DATA CProdConQueue<DATA>::Remove()
 {
      LOG_START_TRACE();
 
-     DWORD dwStatus = ERROR_SUCCESS;
      bool  bStatus = false;
      DATA data;
 
-     for (int retried = 0; (retried < m_retries) && (false == bStatus); m_retries++)
+     bStatus = m_semaphore.Wait();
+
+     if (true == bStatus)
      {
-          dwStatus = WaitForSingleObject(m_semHandle, m_semWaitinMinutes);
-
-          switch (dwStatus)
-          {
-          case WAIT_OBJECT_0:
-               data = m_queue.front();
-               m_queue.pop_front();
-               bStatus = true;
-               break;
-
-          case WAIT_TIMEOUT:
-               std::wcout << L"Semaphore timeout" << std::endl;
-               break;
-
-          case WAIT_ABANDONED_0:
-               std::wcout << L"Semaphore abandoned" << std::endl;
-               break;
-
-          case WAIT_FAILED:
-               std::wcout << L"Semaphore failed: " << GetLastError() << std::endl;
-               break;
-
-          default:
-               std::wcout << L"Semaphore error: " << GetLastError() << std::endl;
-          }
+          data = m_queue.front();
+          m_queue.pop_front();
      }
-
-     if (false == bStatus)
+     else
      {
-          std::wcout << L"Error removing data" << std::endl;
+          LOG_ERROR("Error removing data");
           throw std::runtime_error("Removal Failure");
      }
 

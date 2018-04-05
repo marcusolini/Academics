@@ -1,5 +1,9 @@
 #pragma once
 
+// References
+// Doctor Dobbs - A lightweight logger
+// A Thread-Safe Logger
+
 #include "Logger.h"
 #include "ConsoleLogPolicy.h"
 #include "FileLogPolicy.h"

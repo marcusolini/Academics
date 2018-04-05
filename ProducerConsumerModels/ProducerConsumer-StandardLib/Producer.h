@@ -90,19 +90,17 @@ void CProducer<DATA>::operator()()
      try
      {
 
-     //for (auto& i : m_quantity)
      for (int count = 0; count < m_quantity; count++)
      {
           POD_CON_DATA data = Create();
           Add(data);
           LOG("Added Data: ", data);
-//          std::wcout << L"Added Data: " << data << L" " << __FUNCTION__ << L":" << __LINE__ << std::endl;
      }
 
      }
      catch (std::exception& e)
      {
-          std::wcerr << L"exception: " << e.what() << std::endl;
+          LOG_ERROR("exception: ", e.what());
           throw;
      }
 }

@@ -14,7 +14,7 @@ public:
 
      void operator()();
 
-     DATA& Remove();
+     DATA Remove();
      size_t Quantity();
 
      //CConsumer(const CConsumer&) = delete;
@@ -41,7 +41,7 @@ CConsumer<DATA>::~CConsumer()
 }
 
 template <class DATA>
-DATA& CConsumer<DATA>::Remove()
+DATA CConsumer<DATA>::Remove()
 {
      LOG_START_TRACE();
 
@@ -74,13 +74,12 @@ void CConsumer<DATA>::operator()()
      {
           POD_CON_DATA data = Remove();
           LOG("Removed Data: ", data);
-          //std::wcout << L"Removed Data: " << data << L" " << __FUNCTION__ << L":" << __LINE__ << std::endl;
      }
 
      }
      catch (std::exception& e)
      {
-          std::wcerr << L"exception: " << e.what() << std::endl;
+          LOG_ERROR("exception: ", e.what());
           throw;
      }
 }

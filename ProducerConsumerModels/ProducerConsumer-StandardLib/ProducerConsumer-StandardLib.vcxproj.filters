@@ -36,6 +36,9 @@
     <ClInclude Include="ThreadGuard.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Semaphore.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -16,7 +16,7 @@ public:
      CProdConQueue(size_t size);
      virtual ~CProdConQueue();
      void Add(DATA& data);
-     DATA& Remove();
+     DATA Remove();
 private:
      std::deque<DATA> m_queue;
      size_t m_size = 0;
@@ -76,7 +76,7 @@ void CProdConQueue<DATA>::Add(DATA& data)
 }
 
 template <class DATA>
-DATA& CProdConQueue<DATA>::Remove()
+DATA CProdConQueue<DATA>::Remove()
 {
      std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 

@@ -10,7 +10,7 @@ public:
      CConsumer(CProdConQueue<DATA>& queue, size_t quantity, const DWORD removeDelay = 0);
      virtual ~CConsumer();
 
-     DATA& Remove();
+     DATA Remove();
      size_t Quantity();
 
      CConsumer(const CConsumer&) = delete;
@@ -37,7 +37,7 @@ CConsumer<DATA>::~CConsumer()
 }
 
 template <class DATA>
-DATA& CConsumer<DATA>::Remove()
+DATA CConsumer<DATA>::Remove()
 {
      std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 

@@ -1,12 +1,24 @@
 #pragma once
 
+// References
+// Doctor Dobbs - A lightweight logger
+// A Thread-Safe Logger
+
+// TODO
+// Add logfile size limits
+// Add new incremental logfile creation (log-00000, log-00001)
+// Add circular buffer to maintain messages and prune. For automatic logging.
+// Add automatic logging of all circular buffer when error occurs.
+// Consider consoldating differnt logging policies to use one buffer.
+
 #include "LogPolicy.h"
 
 #include <mutex>
 #include <sstream>
 #include <time.h>
 #include <atomic>
-#include <deque>  
+#include <deque> 
+#include <chrono>
 
 
 enum class ESeverity
@@ -104,17 +116,31 @@ CLogger< LogPolicy >::~CLogger()
 template< class LogPolicy >
 /*static*/ void CLogger< LogPolicy >::LoggingThread(CLogger< LogPolicy >* pLogger)
 {
+     std::unique_lock<std::timed_mutex> lock(pLogger->m_LoggingQueueTimedMutex, std::defer_lock);
+
      while (true == pLogger->m_bLoggingThreadContinue)
      {
-          { std::lock_guard<std::timed_mutex> lock(pLogger->m_LoggingQueueTimedMutex);
-            
+          if (true == lock.try_lock_for(std::chrono::milliseconds{ 50 }))
+          {
                if (pLogger->m_loggingQueue.size())
                {
                     pLogger->m_pPolicy->Write( pLogger->m_loggingQueue.front() );
                     pLogger->m_loggingQueue.pop_front();
                }
-          } //  std::lock_guard<std::timed_mutex> lock(m_LoggingQueueTimedMutex);
+               lock.unlock();
+          }
+          std::this_thread::sleep_for(std::chrono::milliseconds{ 50 });
      }
+
+     // Write remaning buffers
+     lock.lock();
+     for (auto& buffer : pLogger->m_loggingQueue)
+     {
+          pLogger->m_pPolicy->Write(buffer);
+     }
+     pLogger->m_loggingQueue.clear();
+     lock.unlock();
+
 }
 
 
