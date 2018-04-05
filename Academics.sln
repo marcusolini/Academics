@@ -25,8 +25,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProducerConsumer-StandardLi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProducerConsumer-WindowsLibrary", "ProducerConsumerModels\ProducerConsumer-WindowsLibrary\ProducerConsumer-WindowsLibrary.vcxproj", "{17820C03-35C8-42A7-9A6C-6466C18936D5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logger", "Logger\Logger.vcxproj", "{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{C768B0FE-63E3-4050-9F3D-2CDB844D5D65}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicLogger", "Logging\BasicLogger\BasicLogger.vcxproj", "{84E1BEA5-B70D-4A7A-BF22-4E75D855BAB6}"
@@ -95,14 +93,6 @@ Global
 		{17820C03-35C8-42A7-9A6C-6466C18936D5}.Release|x64.Build.0 = Release|x64
 		{17820C03-35C8-42A7-9A6C-6466C18936D5}.Release|x86.ActiveCfg = Release|Win32
 		{17820C03-35C8-42A7-9A6C-6466C18936D5}.Release|x86.Build.0 = Release|Win32
-		{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}.Debug|x64.ActiveCfg = Debug|x64
-		{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}.Debug|x64.Build.0 = Debug|x64
-		{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}.Debug|x86.ActiveCfg = Debug|Win32
-		{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}.Debug|x86.Build.0 = Debug|Win32
-		{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}.Release|x64.ActiveCfg = Release|x64
-		{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}.Release|x64.Build.0 = Release|x64
-		{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}.Release|x86.ActiveCfg = Release|Win32
-		{8D434471-CDB5-4FC5-8860-78E5E1FE6F04}.Release|x86.Build.0 = Release|Win32
 		{84E1BEA5-B70D-4A7A-BF22-4E75D855BAB6}.Debug|x64.ActiveCfg = Debug|x64
 		{84E1BEA5-B70D-4A7A-BF22-4E75D855BAB6}.Debug|x64.Build.0 = Debug|x64
 		{84E1BEA5-B70D-4A7A-BF22-4E75D855BAB6}.Debug|x86.ActiveCfg = Debug|Win32
