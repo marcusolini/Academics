@@ -5,6 +5,8 @@
 #include <mutex>
 #include <sstream>
 #include <time.h>
+#include <atomic>
+#include <deque>  
 
 
 enum class ESeverity
@@ -42,9 +44,15 @@ private:
      ILogPolicy* m_pPolicy = nullptr;;
 
      std::mutex m_writeMutex;
+     std::thread m_loggingThread;
+     std::atomic_bool m_bLoggingThreadContinue;
+     std::deque < std::string> m_loggingQueue;
+     std::timed_mutex m_LoggingQueueTimedMutex;
 
      void PrintImpl();
      template<class First, class...Rest> void PrintImpl(First parm1, Rest...parm);
+
+     static void LoggingThread(CLogger< LogPolicy >* pLogger);
 };
 
 
@@ -52,6 +60,7 @@ template< class LogPolicy >
 CLogger< LogPolicy >::CLogger(const std::string& name, ESeverity level)
 {
      m_level = level;
+     m_bLoggingThreadContinue = true;
 
      if (nullptr == m_pPolicy)
      {
@@ -67,6 +76,9 @@ CLogger< LogPolicy >::CLogger(const std::string& name, ESeverity level)
           Print< ESeverity::Trace >("LOGGING STARTED >>>>>>");
           m_level = origLevel;
      }
+
+      m_loggingThread = std::thread(CLogger::LoggingThread, this);
+
 }
 
 template< class LogPolicy >
@@ -79,9 +91,29 @@ CLogger< LogPolicy >::~CLogger()
           Print< ESeverity::Trace >("<<<<< LOGGING ENDED");
           m_level = origLevel;
 
+          m_bLoggingThreadContinue = false;
+          m_loggingThread.join();
+
           m_pPolicy->Close();
           delete m_pPolicy;
           m_pPolicy = nullptr;
+     }
+}
+
+
+template< class LogPolicy >
+/*static*/ void CLogger< LogPolicy >::LoggingThread(CLogger< LogPolicy >* pLogger)
+{
+     while (true == pLogger->m_bLoggingThreadContinue)
+     {
+          { std::lock_guard<std::timed_mutex> lock(pLogger->m_LoggingQueueTimedMutex);
+            
+               if (pLogger->m_loggingQueue.size())
+               {
+                    pLogger->m_pPolicy->Write( pLogger->m_loggingQueue.front() );
+                    pLogger->m_loggingQueue.pop_front();
+               }
+          } //  std::lock_guard<std::timed_mutex> lock(m_LoggingQueueTimedMutex);
      }
 }
 
@@ -122,7 +154,8 @@ void CLogger< LogPolicy >::Print(Args...args)
 template< class LogPolicy >
 void CLogger< LogPolicy >::PrintImpl()
 {
-     m_pPolicy->Write(m_headerStream.str() + m_logStream.str() );
+     std::lock_guard<std::timed_mutex> lock(m_LoggingQueueTimedMutex);
+     m_loggingQueue.push_back(m_headerStream.str() + m_logStream.str());
 }
 
 template< class LogPolicy >
