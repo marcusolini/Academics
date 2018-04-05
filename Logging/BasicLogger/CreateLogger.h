@@ -13,15 +13,15 @@ std::once_flag initFileLoggerFlag;
 class CCreateLogger
 {
 public:
-     static std::shared_ptr< CLogger < CConsoleLogPolicy > >& CreateConsoleLogger(const std::string& name = "ConsoleLogger")
+     static std::shared_ptr< CLogger < CConsoleLogPolicy > >& CreateConsoleLogger(const std::string& name = "ConsoleLogger", ESeverity level = ESeverity::Trace)
      {
-          std::call_once(initConsoleLoggerFlag, InitConsoleLogger, name);
+          std::call_once(initConsoleLoggerFlag, InitConsoleLogger, name, level);
           return g_consoleLoggerInstance;
      }
 
-     static std::shared_ptr< CLogger < CFileLogPolicy > >& CreateFileLogger(const std::string& name = "C:\\FileLogger.log")
+     static std::shared_ptr< CLogger < CFileLogPolicy > >& CreateFileLogger(const std::string& name = "C:\\FileLogger.log", ESeverity level = ESeverity::Trace)
      {
-          std::call_once(initFileLoggerFlag, InitFileLogger, name);
+          std::call_once(initFileLoggerFlag, InitFileLogger, name, level);
           return g_fileLoggerInstance;
      }
 
@@ -36,13 +36,13 @@ public:
      }
 
 private:
-     static void InitConsoleLogger(const std::string& name)
+     static void InitConsoleLogger(const std::string& name, ESeverity level)
      {
-          g_consoleLoggerInstance = std::make_shared < CLogger < CConsoleLogPolicy >>(name);
+          g_consoleLoggerInstance = std::make_shared < CLogger < CConsoleLogPolicy >>(name, level);
      }
 
-     static void InitFileLogger(const std::string& name)
+     static void InitFileLogger(const std::string& name, ESeverity level)
      {
-          g_fileLoggerInstance = std::make_shared < CLogger < CFileLogPolicy >>(name);
+          g_fileLoggerInstance = std::make_shared < CLogger < CFileLogPolicy >>(name, level);
      }
 };

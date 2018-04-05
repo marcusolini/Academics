@@ -31,19 +31,19 @@ template <class DATA>
 CConsumer<DATA>::CConsumer(CProdConQueue<DATA>& queue, const size_t quantity, const DWORD removeDelay)
      : m_queue(queue), m_quantity(quantity), m_removeDelay(removeDelay)
 {
-//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+     LOG_START_TRACE();
 }
 
 template <class DATA>
 CConsumer<DATA>::~CConsumer()
 {
-//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+     LOG_START_TRACE();
 }
 
 template <class DATA>
 DATA& CConsumer<DATA>::Remove()
 {
-//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+     LOG_START_TRACE();
 
      if (m_removeDelay)
      {
@@ -56,7 +56,7 @@ DATA& CConsumer<DATA>::Remove()
 template <class DATA>
 size_t CConsumer<DATA>::Quantity()
 {
-//     std::wcout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+     LOG_START_TRACE();
 
      return m_quantity;
 }
@@ -64,6 +64,8 @@ size_t CConsumer<DATA>::Quantity()
 template <class DATA>
 void CConsumer<DATA>::operator()()
 {
+     LOG_START_TRACE();
+
      try
      {
 

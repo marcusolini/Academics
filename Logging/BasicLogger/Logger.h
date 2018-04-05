@@ -9,7 +9,8 @@
 
 enum class ESeverity
 {
-     Informational = 1,
+     Trace = 0,
+     Informational,
      Warning,
      Error
 };
@@ -20,13 +21,15 @@ template< class LogPolicy > class CLogger
 {
 public:
 
-     CLogger(const std::string& name);
+     CLogger(const std::string& name, ESeverity level = ESeverity::Trace);
      virtual ~CLogger();
 
      template< ESeverity severity, class...Args >
      void Print(Args...args);
      
 private:
+     ESeverity m_level = ESeverity::Trace;
+
      unsigned m_lineNumber = 0;
 
      void GenerateTime();
@@ -46,8 +49,10 @@ private:
 
 
 template< class LogPolicy >
-CLogger< LogPolicy >::CLogger(const std::string& name)
+CLogger< LogPolicy >::CLogger(const std::string& name, ESeverity level)
 {
+     m_level = level;
+
      if (nullptr == m_pPolicy)
      {
           m_pPolicy = new LogPolicy();
@@ -56,7 +61,11 @@ CLogger< LogPolicy >::CLogger(const std::string& name)
      if (nullptr != m_pPolicy)
      {
           m_pPolicy->Open(name);
-          Print< ESeverity::Informational >("LOGGING STARTED >>>>>>");
+
+          ESeverity origLevel = m_level;
+          m_level = ESeverity::Trace;
+          Print< ESeverity::Trace >("LOGGING STARTED >>>>>>");
+          m_level = origLevel;
      }
 }
 
@@ -65,7 +74,11 @@ CLogger< LogPolicy >::~CLogger()
 {
      if (nullptr != m_pPolicy)
      {
-          Print< ESeverity::Informational >("<<<<< LOGGING ENDED");
+          ESeverity origLevel = m_level;
+          m_level = ESeverity::Trace;
+          Print< ESeverity::Trace >("<<<<< LOGGING ENDED");
+          m_level = origLevel;
+
           m_pPolicy->Close();
           delete m_pPolicy;
           m_pPolicy = nullptr;
@@ -79,24 +92,30 @@ void CLogger< LogPolicy >::Print(Args...args)
 {
      std::lock_guard<std::mutex> lock(m_writeMutex);
 
-     m_logStream.str("");
-
-     GenerateTime();
-     GenerateHeader();
-
-     switch (severity)
+     if (severity >= m_level)
      {
-     case ESeverity::Informational:
-          m_logStream << "<INFO> :";
-          break;
-     case ESeverity::Warning:
-          m_logStream << "<WARNING> :";
-          break;
-     case ESeverity::Error:
-          m_logStream << "<ERROR> :";
-          break;
-     };
-     PrintImpl(args...);
+          m_logStream.str("");
+
+          GenerateTime();
+          GenerateHeader();
+
+          switch (severity)
+          {
+          case ESeverity::Trace:
+               m_logStream << "<TRACE> :";
+               break;
+          case ESeverity::Informational:
+               m_logStream << "<INFO> :";
+               break;
+          case ESeverity::Warning:
+               m_logStream << "<WARNING> :";
+               break;
+          case ESeverity::Error:
+               m_logStream << "<ERROR> :";
+               break;
+          };
+          PrintImpl(args...);
+     }
 }
 
 
