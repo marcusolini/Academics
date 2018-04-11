@@ -1,8 +1,9 @@
-#pragma once
-
+// Copyright(c) 2018 marcusolini@outlook.com
 // References
 // Doctor Dobbs - A lightweight logger
 // A Thread-Safe Logger
+
+#pragma once
 
 #include "Logger.h"
 #include "ConsoleLogPolicy.h"

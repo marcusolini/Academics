@@ -1,0 +1,154 @@
+// Debug library initialized ...
+7FF7BB490000-7FF7BB496FFF DBGHELP: LeakTest - private symbols & lines 
+        C:\Projects\Academics\x64\Release\LeakTest.pdb
+7FFE38F70000-7FFE3914FFFF DBGHELP: ntdll - public symbols  
+        c:\symbol_store\ntdll.pdb\780C0C1B6159AE8B7663B42759BA7B4E1\ntdll.pdb
+7FFE189A0000-7FFE18A0FFFF DBGHELP: verifier - public symbols  
+        c:\symbol_store\verifier.pdb\002F248DF64E0FF0E71953BD5FFCB7E41\verifier.pdb
+7FFE36440000-7FFE364EDFFF DBGHELP: KERNEL32 - public symbols  
+        c:\symbol_store\kernel32.pdb\1BCCD94C515486E03396C7E89525227E1\kernel32.pdb
+7FFE35390000-7FFE355F5FFF DBGHELP: KERNELBASE - public symbols  
+        c:\symbol_store\kernelbase.pdb\141ADA76555FCF3BDF62E499523D31701\kernelbase.pdb
+7FFE35870000-7FFE35965FFF DBGHELP: ucrtbase - public symbols  
+        c:\symbol_store\ucrtbase.pdb\8C72B97E7A18BC4D8F649E89DAD85BC31\ucrtbase.pdb
+7FFE32E30000-7FFE32E38FFF DBGHELP: LeakLib - private symbols & lines 
+        C:\Projects\Academics\x64\Release\LeakLib.pdb
+7FFE33100000-7FFE33115FFF DBGHELP: VCRUNTIME140 - private symbols & lines 
+        c:\symbol_store\vcruntime140.amd64.pdb\E93D4EDDDEB54C72857912DE41650BF41\vcruntime140.amd64.pdb
+7FFE33050000-7FFE330F9FFF DBGHELP: MSVCP140 - private symbols & lines 
+        c:\symbol_store\msvcp140.amd64.pdb\E8E6C6508BB74E9E82EE6709B8E5F1641\msvcp140.amd64.pdb
+//                                                                          
+// Each log entry has the following syntax:                                 
+//                                                                          
+// + BYTES_DELTA (NEW_BYTES - OLD_BYTES) NEW_COUNT allocs BackTrace TRACEID 
+// + COUNT_DELTA (NEW_COUNT - OLD_COUNT) BackTrace TRACEID allocations      
+//     ... stack trace ...                                                  
+//                                                                          
+// where:                                                                   
+//                                                                          
+//     BYTES_DELTA - increase in bytes between before and after log         
+//     NEW_BYTES - bytes in after log                                       
+//     OLD_BYTES - bytes in before log                                      
+//     COUNT_DELTA - increase in allocations between before and after log   
+//     NEW_COUNT - number of allocations in after log                       
+//     OLD_COUNT - number of allocations in before log                      
+//     TRACEID - decimal index of the stack trace in the trace database     
+//         (can be used to search for allocation instances in the original  
+//         UMDH logs).                                                      
+//                                                                          
+
+
++   63fdb ( 64000 -    25)     64 allocs	BackTraceA0197A5F
++      63 (    64 -     1)	BackTraceA0197A5F	allocations
+
+	ntdll!RtlDebugAllocateHeap+3F
+	ntdll!RtlpAllocateHeap+89F54
+	ntdll!RtlpAllocateHeapInternal+5CB
+	ucrtbase!_calloc_base+4E
+	LeakLib!CLeakLib::LeakCallocMemory+40 (c:\projects\academics\leaks\leaklib\leaklib.cpp, 52)
+	LeakTest!main+5D (c:\projects\academics\leaks\leaktest\leaktest.cpp, 29)
+	LeakTest!__scrt_common_main_seh+110 (f:\dd\vctools\crt\vcstartup\src\startup\exe_common.inl, 283)
+	KERNEL32!BaseThreadInitThunk+14
+	ntdll!RtlUserThreadStart+21
+
++   32000 ( 32000 -     0)     64 allocs	BackTraceA019B75F
++      64 (    64 -     0)	BackTraceA019B75F	allocations
+
+	ntdll!RtlDebugAllocateHeap+3F
+	ntdll!RtlpAllocateHeap+89F54
+	ntdll!RtlpAllocateHeapInternal+5CB
+	ucrtbase!_malloc_base+36
+	LeakLib!CLeakLib::LeakMallocMemory+3D (c:\projects\academics\leaks\leaklib\leaklib.cpp, 37)
+	LeakTest!main+49 (c:\projects\academics\leaks\leaktest\leaktest.cpp, 28)
+	LeakTest!__scrt_common_main_seh+110 (f:\dd\vctools\crt\vcstartup\src\startup\exe_common.inl, 283)
+	KERNEL32!BaseThreadInitThunk+14
+	ntdll!RtlUserThreadStart+21
+
++   18fe4 ( 19000 -    1c)     64 allocs	BackTraceA019B6FF
++      63 (    64 -     1)	BackTraceA019B6FF	allocations
+
+	ntdll!RtlDebugAllocateHeap+3F
+	ntdll!RtlpAllocateHeap+89F54
+	ntdll!RtlpAllocateHeapInternal+5CB
+	ucrtbase!_malloc_base+36
+	LeakLib!operator new+1F (f:\dd\vctools\crt\vcstartup\src\heap\new_scalar.cpp, 34)
+	LeakLib!operator new+12 (f:\dd\vctools\crt\vcstartup\src\heap\new_scalar_nothrow.cpp, 30)
+	LeakLib!CLeakLib::LeakNewMemory+43 (c:\projects\academics\leaks\leaklib\leaklib.cpp, 22)
+	LeakTest!main+35 (c:\projects\academics\leaks\leaktest\leaktest.cpp, 27)
+	LeakTest!__scrt_common_main_seh+110 (f:\dd\vctools\crt\vcstartup\src\startup\exe_common.inl, 283)
+	KERNEL32!BaseThreadInitThunk+14
+	ntdll!RtlUserThreadStart+21
+
++     244 (   244 -     0)      1 allocs	BackTraceA019B9FF
++       1 (     1 -     0)	BackTraceA019B9FF	allocations
+
+	ntdll!RtlDebugAllocateHeap+3F
+	ntdll!RtlpAllocateHeap+89F54
+	ntdll!RtlpAllocateHeapInternal+5CB
+	ucrtbase!_calloc_base+4E
+	ucrtbase!<lambda_a094494068278ba5130ab06e1292f60a>::operator()+A4
+	ucrtbase!__crt_seh_guarded_call<bool>::operator()<<lambda_a22f0c497e5168315e06dae667770027>,<lambda_a094494068278ba5130ab06e1292f60a> & __ptr64,<lambda_24dc10c13f43218c635520766e23e324> >+3B
+	ucrtbase!accumulate_inheritable_handles+4B
+	ucrtbase!execute_command<char>+B8
+	ucrtbase!common_spawnv<char>+1A3
+	ucrtbase!common_system<char>+BD
+	LeakTest!main+85 (c:\projects\academics\leaks\leaktest\leaktest.cpp, 39)
+	LeakTest!__scrt_common_main_seh+110 (f:\dd\vctools\crt\vcstartup\src\startup\exe_common.inl, 283)
+	KERNEL32!BaseThreadInitThunk+14
+	ntdll!RtlUserThreadStart+21
+
++      25 (    25 -     0)      1 allocs	BackTraceA019B96F
++       1 (     1 -     0)	BackTraceA019B96F	allocations
+
+	ntdll!RtlDebugAllocateHeap+3F
+	ntdll!RtlpAllocateHeap+89F54
+	ntdll!RtlpAllocateHeapInternal+5CB
+	ucrtbase!_calloc_base+4E
+	ucrtbase!construct_command_line<char>+67
+	ucrtbase!common_pack_argv_and_envp<char>+2D
+	ucrtbase!execute_command<char>+7C
+	ucrtbase!common_spawnv<char>+1A3
+	ucrtbase!common_system<char>+BD
+	LeakTest!main+85 (c:\projects\academics\leaks\leaktest\leaktest.cpp, 39)
+	LeakTest!__scrt_common_main_seh+110 (f:\dd\vctools\crt\vcstartup\src\startup\exe_common.inl, 283)
+	KERNEL32!BaseThreadInitThunk+14
+	ntdll!RtlUserThreadStart+21
+
+-     198 (     0 -   198)      0 allocs	BackTraceA019796F
+-       3 (     0 -     3)	BackTraceA019796F	allocations
+
+	ntdll!RtlDebugAllocateHeap+3F
+	ntdll!RtlpAllocateHeap+89F54
+	ntdll!RtlpAllocateHeapInternal+5CB
+	ntdll!TppAllocThreadData+41
+	ntdll!TppWorkerThread+A6
+	KERNEL32!BaseThreadInitThunk+14
+	ntdll!RtlUserThreadStart+21
+
+-     228 (    1c -   244)      1 allocs	BackTraceA019B68F
++       0 (     1 -     1)	BackTraceA019B68F	allocations
+
+	ntdll!RtlDebugAllocateHeap+3F
+	ntdll!RtlpAllocateHeap+89F54
+	ntdll!RtlpAllocateHeapInternal+5CB
+	ucrtbase!_calloc_base+4E
+	ucrtbase!common_dupenv_s_nolock<char>+8C
+	ucrtbase!common_dupenv_s<char>+34
+	ucrtbase!common_system<char>+40
+	LeakTest!main+85 (c:\projects\academics\leaks\leaktest\leaktest.cpp, 39)
+	LeakTest!__scrt_common_main_seh+110 (f:\dd\vctools\crt\vcstartup\src\startup\exe_common.inl, 283)
+	KERNEL32!BaseThreadInitThunk+14
+	ntdll!RtlUserThreadStart+21
+
+-     ab0 (     0 -   ab0)      0 allocs	BackTraceA01978AF
+-       3 (     0 -     3)	BackTraceA01978AF	allocations
+
+	ntdll!RtlDebugAllocateHeap+3F
+	ntdll!RtlpAllocateHeap+89F54
+	ntdll!RtlpAllocateHeapInternal+5CB
+	ntdll!TppWorkerThread+A6F
+	KERNEL32!BaseThreadInitThunk+14
+	ntdll!RtlUserThreadStart+21
+
+
+Total increase ==  ae3b8 requested + 201c48 overhead = 2b0000
