@@ -53,10 +53,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
      ShowWindow(hDlg, nCmdShow);
      UpdateWindow(hDlg);
 
+
      while (GetMessage(&msg, 0, 0, 0))
      {
-          TranslateMessage(&msg);
-          DispatchMessage(&msg);
+          if (!IsDialogMessage(hDlg, &msg))
+          {
+               TranslateMessage(&msg);
+               DispatchMessage(&msg);
+          }
      }
 
      return (int)msg.wParam;
@@ -341,9 +345,12 @@ void NewOperatorThreadFunc(const HWND hDlg, const size_t nIterations, const size
 {
      DWORD dwStatus = ERROR_SUCCESS;
 
+     std::this_thread::yield();
+
      for (size_t nIteration = 0; (nIteration < nIterations) && gbThreadContinue && SUCCEEDED(dwStatus); nIteration++)
      {
           dwStatus = CLeakLib::LeakNewMemory(1, nBytesPerIteration);
+          //std::this_thread::sleep_for(std::chrono::milliseconds{ 37 });
      }
 
      if (FAILED(dwStatus))
@@ -356,9 +363,12 @@ void MallocFunctionThreadFunc(const HWND hDlg, const size_t nIterations, const s
 {
      DWORD dwStatus = ERROR_SUCCESS;
 
+     std::this_thread::yield();
+
      for (size_t nIteration = 0; (nIteration < nIterations) && gbThreadContinue && SUCCEEDED(dwStatus); nIteration++)
      {
           dwStatus = CLeakLib::LeakMallocMemory(1, nBytesPerIteration);
+          //std::this_thread::sleep_for(std::chrono::milliseconds{ 61 });
      }
 
      if (FAILED(dwStatus))
