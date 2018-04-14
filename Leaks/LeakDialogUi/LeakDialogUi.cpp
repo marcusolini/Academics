@@ -21,6 +21,15 @@
 
 #pragma comment(lib, "ComCtl32.lib")
 
+//#define WM_PROGRESS_DIALOG_HANDLE (WM_USER + 100)
+//#define WM_STOP_PROGRESS_DIALOG (WM_USER + 101)
+
+
+enum class ERESOURCE_ALLOCATION_TYPES;
+
+//class ResourceLeakTest;
+//std::vector<ResourceLeakTest> gTests;
+
 // MAIN DIALOG
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE h0, LPTSTR lpCmdLine, int nCmdShow);
 INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -29,19 +38,47 @@ void onMainOk(const HWND hDlg);
 void onMainCancel(const HWND hDlg);
 void onMainClose(const HWND hDlg);
 void onCheckBox(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
-void onGetData(const HWND hDlg, const int Id, bool& bChecked, size_t& nIterations, size_t& nBytesPerIteration);
+void onGetData(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eType, bool& bChecked, size_t& nIterations, size_t& nBytesPerIteration);
 
 // PROGRESS DIALOG
 INT_PTR CALLBACK ProgressDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
-void onInitProgressnDialog(const HWND hDlg);
+void onProgressInit(const HWND hDlg);
+void onProgressPauseContinue(const HWND hDlg);
 void onProgressClose(const HWND hDlg, const WPARAM wParam);
 
 // THREADS
 std::vector<std::thread> gThreadVector;
 std::atomic<bool> gbThreadContinue = true;
-void NewOperatorThreadFunc(const HWND hDlg, const size_t nIterations, const size_t nBytesPerIteration);
-void MallocFunctionThreadFunc(const HWND hDlg, const size_t nIterations, const size_t nBytesPerIteration);
+std::atomic<bool> gbThreadPause = false;
+void AllocationThreadFunc(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eAllocationType, const size_t nIterations, const size_t nBytesPerIteration);
 
+
+enum class ERESOURCE_ALLOCATION_TYPES : int
+{
+     NEW_OPERATOR = IDC_NEW_LEAK_CHECK,
+     MALLOC_FUNCTION = IDC_MALLOC_LEAK_CHECK,
+     CALLOC_FUNCTION = IDC_CALLOC_LEAK_CHECK,
+     HANDLE_FUNCTION = IDC_HANDLE_LEAK_CHECK,
+};
+
+/*
+class ResourceLeakTest
+{
+public:
+     ResourceLeakTest(const ERESOURCE_ALLOCATION_TYPES eResourceAllocationType, size_t nIternations, size_t nBytesPerIterations);
+     virtual ~ResourceLeakTest();
+
+     ERESOURCE_ALLOCATION_TYPES GetResourceLeakTest();
+     size_t GetInterations();
+     size_t BytesPerIterations();
+     std::thread GetThread();
+private:
+     ERESOURCE_ALLOCATION_TYPES m_eResourceAllocationType;
+     size_t m_nIterations = 0;
+     size_t m_nBytesPerIterations = 0;
+     std::thread m_thread;
+};
+*/
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
@@ -82,6 +119,8 @@ INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
           {
           case IDC_NEW_LEAK_CHECK:
           case IDC_MALLOC_LEAK_CHECK:
+          case IDC_CALLOC_LEAK_CHECK:
+          case IDC_HANDLE_LEAK_CHECK:
           {
                onCheckBox(hDlg, wParam, lParam);
                return TRUE;
@@ -108,6 +147,15 @@ INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
           PostQuitMessage(0);
           return TRUE;
           break;
+
+     //case WM_PROGRESS_DIALOG_HANDLE:
+     //     return TRUE;
+     //     break;
+
+     //case WM_STOP_PROGRESS_DIALOG:
+     //     //HWND hProgressDialog = GetDlgItem(hDlg, IdIternations);
+     //     return TRUE;
+     //     break;
      }
 
      return FALSE;
@@ -133,14 +181,14 @@ void onMainOk(const HWND hDlg)
 
      bool bLeakTesting = false;
 
-     onGetData(hDlg, IDC_NEW_LEAK_CHECK, bChecked, nIterations, nBytesPerIteration);
+     onGetData(hDlg, ERESOURCE_ALLOCATION_TYPES::NEW_OPERATOR, bChecked, nIterations, nBytesPerIteration);
 
      if (true == bChecked)
      {
           if (0 != nIterations && 0 != nBytesPerIteration)
           {
                bLeakTesting = true;
-               gThreadVector.push_back(std::thread(NewOperatorThreadFunc, hDlg, nIterations, nBytesPerIteration));
+               gThreadVector.push_back(std::thread(AllocationThreadFunc, hDlg, ERESOURCE_ALLOCATION_TYPES::NEW_OPERATOR, nIterations, nBytesPerIteration));
           }
           else
           {
@@ -149,18 +197,52 @@ void onMainOk(const HWND hDlg)
           }
      }
 
-     onGetData(hDlg, IDC_MALLOC_LEAK_CHECK, bChecked, nIterations, nBytesPerIteration);
+     onGetData(hDlg, ERESOURCE_ALLOCATION_TYPES::MALLOC_FUNCTION, bChecked, nIterations, nBytesPerIteration);
 
      if (true == bChecked)
      {
           if (0 != nIterations && 0 != nBytesPerIteration)
           {
                bLeakTesting = true;
-               gThreadVector.push_back(std::thread(MallocFunctionThreadFunc, hDlg, nIterations, nBytesPerIteration));
+               gThreadVector.push_back(std::thread(AllocationThreadFunc, hDlg, ERESOURCE_ALLOCATION_TYPES::MALLOC_FUNCTION, nIterations, nBytesPerIteration));
           }
           else
           {
                int msgBoxID = MessageBox(hDlg, TEXT("Malloc Function Invalid Data Entered"), TEXT("Invalid Data"), (MB_ICONERROR | MB_OK));
+
+          }
+     }
+
+     onGetData(hDlg, ERESOURCE_ALLOCATION_TYPES::CALLOC_FUNCTION, bChecked, nIterations, nBytesPerIteration);
+
+     if (true == bChecked)
+     {
+          if (0 != nIterations && 0 != nBytesPerIteration)
+          {
+               bLeakTesting = true;
+               gThreadVector.push_back(std::thread(AllocationThreadFunc, hDlg, ERESOURCE_ALLOCATION_TYPES::CALLOC_FUNCTION, nIterations, nBytesPerIteration));
+          }
+          else
+          {
+               int msgBoxID = MessageBox(hDlg, TEXT("Calloc Function Invalid Data Entered"), TEXT("Invalid Data"), (MB_ICONERROR | MB_OK));
+
+          }
+
+     }
+
+     onGetData(hDlg, ERESOURCE_ALLOCATION_TYPES::HANDLE_FUNCTION, bChecked, nIterations, nBytesPerIteration);
+
+     if (true == bChecked)
+     {
+          if (0 != nIterations )
+          //if (0 != nIterations && 0 != nBytesPerIteration)
+          {
+               bLeakTesting = true;
+               gThreadVector.push_back(std::thread(AllocationThreadFunc, hDlg, ERESOURCE_ALLOCATION_TYPES::HANDLE_FUNCTION, nIterations, nBytesPerIteration));
+          }
+          else
+          {
+               int msgBoxID = MessageBox(hDlg, TEXT("Handle Function Invalid Data Entered"), TEXT("Invalid Data"), (MB_ICONERROR | MB_OK));
 
           }
      }
@@ -224,6 +306,18 @@ void onCheckBox(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
           IdBytesPerIterations = IDC_MALLOC_LEAK_BYTES_PER_ITERATIONS;
           break;
      }
+     case IDC_CALLOC_LEAK_CHECK:
+     {
+          IdIternations = IDC_CALLOC_LEAK_ITERATIONS;
+          IdBytesPerIterations = IDC_CALLOC_LEAK_BYTES_PER_ITERATIONS;
+          break;
+     }
+     case IDC_HANDLE_LEAK_CHECK:
+     {
+          IdIternations = IDC_HANDLE_LEAK_ITERATIONS;
+          IdBytesPerIterations = IDC_HANDLE_LEAK_BYTES_PER_ITERATIONS;
+          break;
+     }
      }
 
      checked = SendDlgItemMessage(hDlg, LOWORD(wParam), BM_GETCHECK, (WPARAM)0, (LPARAM)0);
@@ -245,37 +339,49 @@ void onCheckBox(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
      }
 }
 
-void onGetData(const HWND hDlg, const int Id, bool& bChecked, size_t& nIterations, size_t& nBytesPerIteration)
+void onGetData(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eType, bool& bChecked, size_t& nIterations, size_t& nBytesPerIteration)
 {
      LRESULT checked = BST_INDETERMINATE;
      int IdIternations = 0;
      int IdBytesPerIterations = 0;
 
-     wchar_t szTemp[1024] = {};
+     const int nSize = 1024;
+     wchar_t szTemp[nSize] = {};
      WORD wTemp = 0;
 
      bChecked = false;
      nIterations = 0;
      nBytesPerIteration = 0;
 
-     switch (Id)
+     switch (eType)
      {
-     case IDC_NEW_LEAK_CHECK:
+     case ERESOURCE_ALLOCATION_TYPES::NEW_OPERATOR:
      {
           IdIternations = IDC_NEW_LEAK_ITERATIONS;
           IdBytesPerIterations = IDC_NEW_LEAK_BYTES_PER_INTERATION;
           break;
      }
-     case IDC_MALLOC_LEAK_CHECK:
+     case ERESOURCE_ALLOCATION_TYPES::MALLOC_FUNCTION:
      {
           IdIternations = IDC_MALLOC_LEAK_ITERATIONS;
           IdBytesPerIterations = IDC_MALLOC_LEAK_BYTES_PER_ITERATIONS;
           break;
      }
-
+     case ERESOURCE_ALLOCATION_TYPES::CALLOC_FUNCTION:
+     {
+          IdIternations = IDC_CALLOC_LEAK_ITERATIONS;
+          IdBytesPerIterations = IDC_CALLOC_LEAK_BYTES_PER_ITERATIONS;
+          break;
+     }
+     case ERESOURCE_ALLOCATION_TYPES::HANDLE_FUNCTION:
+     {
+          IdIternations = IDC_HANDLE_LEAK_ITERATIONS;
+          IdBytesPerIterations = IDC_HANDLE_LEAK_BYTES_PER_ITERATIONS;
+          break;
+     }
      }
 
-     checked = SendDlgItemMessage(hDlg, Id, BM_GETCHECK, (WPARAM)0, (LPARAM)0);
+     checked = SendDlgItemMessage(hDlg, (int)eType, BM_GETCHECK, (WPARAM)0, (LPARAM)0);
 
      if (BST_CHECKED == checked)
      {
@@ -285,6 +391,9 @@ void onGetData(const HWND hDlg, const int Id, bool& bChecked, size_t& nIteration
           *((LPWORD)szTemp) = wTemp;
           SendDlgItemMessage(hDlg, IdIternations, EM_GETLINE, (WPARAM)0, (LPARAM)szTemp);
           nIterations = _wtoi64(szTemp);
+
+          std::memset(szTemp, 0, nSize);
+          wTemp = 0;
 
           wTemp = (WORD)SendDlgItemMessage(hDlg, IdBytesPerIterations, EM_LINELENGTH, (WPARAM)0, (LPARAM)0);
           *((LPWORD)szTemp) = wTemp;
@@ -302,7 +411,7 @@ INT_PTR CALLBACK ProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPAR
      switch (uMsg)
      {
      case WM_INITDIALOG:
-          onInitProgressnDialog(hDlg);
+          onProgressInit(hDlg);
           return TRUE;
           break;
 
@@ -314,6 +423,9 @@ INT_PTR CALLBACK ProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPAR
                onProgressClose(hDlg, wParam);
                return TRUE;
                break;
+          case IDC_PAUSE:
+               onProgressPauseContinue(hDlg);
+               return TRUE;
           }
           break;
      }
@@ -322,11 +434,41 @@ INT_PTR CALLBACK ProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPAR
      return FALSE;
 }
 
-void onInitProgressnDialog(const HWND hDlg)
+void onProgressInit(const HWND hDlg)
 {
-     SendDlgItemMessage(hDlg, IDC_PROGRESS1, PBM_SETMARQUEE, (WPARAM)1, (LPARAM)0);
+     SendDlgItemMessage(hDlg, IDC_PROGRESS, PBM_SETMARQUEE, (WPARAM)1, (LPARAM)0);
+     SendDlgItemMessage(hDlg, IDC_PROGRESS_TEXT, WM_SETTEXT, (WPARAM)0, (LPARAM)L"Tests Running...");
+
+     //HWND hParent = GetParent(hDlg);
+     //SendMessage(hParent, WM_PROGRESS_DIALOG_HANDLE, WPARAM(hDlg), 0);
 }
 
+void onProgressPauseContinue(const HWND hDlg)
+{
+     std::wstring sPauseState;
+     wchar_t szTemp[1024] = {};
+     WORD wTemp = 0;
+
+     GetDlgItemText(hDlg, IDC_PAUSE, szTemp, 1024);
+
+     sPauseState = szTemp;
+
+     if (0 == sPauseState.compare(L"Pause"))
+     {
+          gbThreadPause = true;
+          SendDlgItemMessage(hDlg, IDC_PROGRESS_TEXT, WM_SETTEXT, (WPARAM)0, (LPARAM)L"Tests Paused");
+          SendDlgItemMessage(hDlg, IDC_PAUSE, WM_SETTEXT, (WPARAM)0, (LPARAM)L"Continue");
+          SendDlgItemMessage(hDlg, IDC_PROGRESS, PBM_SETSTATE, (WPARAM)PBST_PAUSED, (LPARAM)0);
+
+     }
+     else
+     {
+          gbThreadPause = false;
+          SendDlgItemMessage(hDlg, IDC_PAUSE, WM_SETTEXT, (WPARAM)0, (LPARAM)L"Pause");
+          SendDlgItemMessage(hDlg, IDC_PROGRESS_TEXT, WM_SETTEXT, (WPARAM)0, (LPARAM)L"Tests Running...");
+          SendDlgItemMessage(hDlg, IDC_PROGRESS, PBM_SETSTATE, (WPARAM)PBST_NORMAL, (LPARAM)0);
+     }
+}
 
 void onProgressClose(const HWND hDlg, const WPARAM wParam)
 {
@@ -341,38 +483,48 @@ void onProgressClose(const HWND hDlg, const WPARAM wParam)
 }
 
 
-void NewOperatorThreadFunc(const HWND hDlg, const size_t nIterations, const size_t nBytesPerIteration)
+void AllocationThreadFunc(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eAllocationType, const size_t nIterations, const size_t nBytesPerIteration)
 {
      DWORD dwStatus = ERROR_SUCCESS;
+     std::wstring sAllocationType;
 
      std::this_thread::yield();
 
      for (size_t nIteration = 0; (nIteration < nIterations) && gbThreadContinue && SUCCEEDED(dwStatus); nIteration++)
      {
-          dwStatus = CLeakLib::LeakNewMemory(1, nBytesPerIteration);
-          //std::this_thread::sleep_for(std::chrono::milliseconds{ 37 });
-     }
+          switch (eAllocationType)
+          {
+          case ERESOURCE_ALLOCATION_TYPES::NEW_OPERATOR:
+               dwStatus = CLeakLib::LeakNewMemory(1, nBytesPerIteration);
+               if (FAILED(dwStatus)) MessageBox(hDlg, TEXT("New Operator Allocation Failure Occurred"), TEXT("Allocation Failure"), (MB_ICONERROR | MB_OK));
+               break;
+          case ERESOURCE_ALLOCATION_TYPES::MALLOC_FUNCTION:
+               dwStatus = CLeakLib::LeakMallocMemory(1, nBytesPerIteration);
+               if (FAILED(dwStatus)) MessageBox(hDlg, TEXT("Malloc Function Allocation Failure Occurred"), TEXT("Allocation Failure"), (MB_ICONERROR | MB_OK));
+               break;
+          case ERESOURCE_ALLOCATION_TYPES::CALLOC_FUNCTION:
+               dwStatus = CLeakLib::LeakCallocMemory(1, nBytesPerIteration);
+               if (FAILED(dwStatus)) MessageBox(hDlg, TEXT("Calloc Function Allocation Failure Occurred"), TEXT("Allocation Failure"), (MB_ICONERROR | MB_OK));
+               break;
+          case ERESOURCE_ALLOCATION_TYPES::HANDLE_FUNCTION:
+               dwStatus = CLeakLib::LeakHandle(1);
+               if (FAILED(dwStatus)) MessageBox(hDlg, TEXT("Handle Function Allocation Failure Occurred"), TEXT("Allocation Failure"), (MB_ICONERROR | MB_OK));
+               break;
+          default:
+               MessageBox(hDlg, TEXT("Invalid Allocation Type"), TEXT("Invalid Entry"), (MB_ICONERROR | MB_OK));
+               dwStatus = E_INVALIDARG;
+               break;
+          }
 
-     if (FAILED(dwStatus))
-     {
-          int msgBoxID = MessageBox(hDlg, TEXT("New Operator Failure"), TEXT("Memory Failure"), (MB_ICONERROR | MB_OK));
-     }
-}
+          while (gbThreadPause && gbThreadContinue)
+          {
+               std::this_thread::sleep_for(std::chrono::milliseconds{ 300 });
+          }
 
-void MallocFunctionThreadFunc(const HWND hDlg, const size_t nIterations, const size_t nBytesPerIteration)
-{
-     DWORD dwStatus = ERROR_SUCCESS;
-
-     std::this_thread::yield();
-
-     for (size_t nIteration = 0; (nIteration < nIterations) && gbThreadContinue && SUCCEEDED(dwStatus); nIteration++)
-     {
-          dwStatus = CLeakLib::LeakMallocMemory(1, nBytesPerIteration);
-          //std::this_thread::sleep_for(std::chrono::milliseconds{ 61 });
-     }
-
-     if (FAILED(dwStatus))
-     {
-          int msgBoxID = MessageBox(hDlg, TEXT("Malloc Function Failure"), TEXT("Memory Failure"), (MB_ICONERROR | MB_OK));
+          if (FAILED(dwStatus))
+          {
+               //SendMessage(hDlg, WM_STOP_PROGRESS_DIALOG, 0, 0);
+               gbThreadContinue = false;
+          }
      }
 }
