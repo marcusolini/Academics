@@ -1,4 +1,4 @@
-// Copyright(c) 2018 Mark Nicolini
+// Copyright(c) 2018 marcusolini@outlook.com
 
 #pragma once
 
@@ -6,8 +6,9 @@
 #include <deque>
 #include <exception>
 #include <iostream>
-#include "Log.h"
+#include <chrono>
 
+#include "Log.h"
 #include "Semaphore.h"
 
 // DECLARATIONS
@@ -34,7 +35,7 @@ CProdConQueue<DATA>::CProdConQueue(size_t size) : m_size(size)
 {
      LOG_START_TRACE();
 
-     m_semaphore.SetCount(size);
+     m_semaphore.SetCount(size-1);
 }
 
 template <class DATA>
@@ -55,6 +56,7 @@ void CProdConQueue<DATA>::Add(DATA& data)
      while (false == bStatus)
      {    // If the size has been hit, then release will fail, which is set to size-1 
           bStatus = m_semaphore.Release();
+          if (false == bStatus) std::this_thread::sleep_for(std::chrono::milliseconds{ 50 });
      };
 }
 
