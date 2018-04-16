@@ -1,3 +1,9 @@
+//Copyright 2018 marcusolini@outlook.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+
+
 #include <Windows.h>
 #include <Windowsx.h>
 #include <CommCtrl.h>
@@ -12,6 +18,7 @@
 #include "LeakLib.h"
 #pragma comment(lib, "LeakLib.lib")
 
+
 #pragma comment(linker, \
   "\"/manifestdependency:type='Win32' "\
   "name='Microsoft.Windows.Common-Controls' "\
@@ -19,6 +26,7 @@
   "processorArchitecture='*' "\
   "publicKeyToken='6595b64144ccf1df' "\
   "language='*'\"")
+
 
 #pragma comment(lib, "ComCtl32.lib")
 
@@ -467,7 +475,7 @@ void onProgressInit(const HWND hDlg)
      SendDlgItemMessage(hDlg, IDC_PROGRESS, PBM_SETMARQUEE, (WPARAM)1, (LPARAM)0);
      SendDlgItemMessage(hDlg, IDC_PROGRESS_TEXT, WM_SETTEXT, (WPARAM)0, (LPARAM)L"Tests Running...");
 
-     SendMessage(hDlg, DM_SETDEFID, (WPARAM)IDC_PAUSE, (LPARAM)IDC_PAUSE);
+     //SendMessage(hDlg, DM_SETDEFID, (WPARAM)IDC_PAUSE, (LPARAM)IDC_PAUSE);
 
      for (auto& test : gTests)
      {
