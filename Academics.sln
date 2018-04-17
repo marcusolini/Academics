@@ -39,6 +39,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LeakDialogUi", "Leaks\LeakD
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LeakLib", "Leaks\LeakLib\LeakLib.vcxproj", "{9456D25A-D813-4DA8-A821-57AFD4344D9E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProdConApp", "ProducerConsumerModels\ProdConApp\ProdConApp.vcxproj", "{6E431B21-F201-496E-98B0-C9DAA9C3634F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -135,6 +137,14 @@ Global
 		{9456D25A-D813-4DA8-A821-57AFD4344D9E}.Release|x64.Build.0 = Release|x64
 		{9456D25A-D813-4DA8-A821-57AFD4344D9E}.Release|x86.ActiveCfg = Release|Win32
 		{9456D25A-D813-4DA8-A821-57AFD4344D9E}.Release|x86.Build.0 = Release|Win32
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F}.Debug|x64.ActiveCfg = Debug|x64
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F}.Debug|x64.Build.0 = Debug|x64
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F}.Debug|x86.ActiveCfg = Debug|Win32
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F}.Debug|x86.Build.0 = Debug|Win32
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F}.Release|x64.ActiveCfg = Release|x64
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F}.Release|x64.Build.0 = Release|x64
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F}.Release|x86.ActiveCfg = Release|Win32
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +159,7 @@ Global
 		{65E6ABFF-74BE-4B05-9BA9-629874F7B862} = {AD704F1C-E05F-4C9E-B062-2DA805120D84}
 		{08A29AFA-0F5A-4481-B87E-225FA0A8AEC0} = {AD704F1C-E05F-4C9E-B062-2DA805120D84}
 		{9456D25A-D813-4DA8-A821-57AFD4344D9E} = {AD704F1C-E05F-4C9E-B062-2DA805120D84}
+		{6E431B21-F201-496E-98B0-C9DAA9C3634F} = {C887239A-09CE-43D8-86DA-721ED26F4963}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F83E4DC3-BF69-4AD1-9984-6581AABB0BD1}

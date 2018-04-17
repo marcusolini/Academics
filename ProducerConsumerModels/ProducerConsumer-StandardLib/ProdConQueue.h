@@ -5,27 +5,29 @@
 
 #pragma once
 
-#include <windows.h>
+//#include <windows.h>
 #include <deque>
 #include <exception>
 #include <iostream>
 #include <chrono>
+#include <thread>
 
-#include "Log.h"
+//#include "Log.h"
 #include "Semaphore.h"
 
 // DECLARATIONS
+using POD_CON_DATA = int;
 
 template <class DATA> class CProdConQueue
 {
 public:
-     CProdConQueue(size_t size);
+     CProdConQueue(std::size_t size);
      virtual ~CProdConQueue();
      void Add(DATA& data);
      DATA Remove();
 private:
      std::deque<DATA> m_queue;
-     size_t m_size = 0;
+     std::size_t m_size = 0;
 
      Semaphore m_semaphore;
 };
@@ -36,7 +38,7 @@ private:
 template <class DATA>
 CProdConQueue<DATA>::CProdConQueue(size_t size) : m_size(size)
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 
      m_semaphore.SetCount(size-1);
 }
@@ -44,13 +46,13 @@ CProdConQueue<DATA>::CProdConQueue(size_t size) : m_size(size)
 template <class DATA>
 CProdConQueue<DATA>::~CProdConQueue()
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 }
 
 template <class DATA>
 void CProdConQueue<DATA>::Add(DATA& data)
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 
      bool bStatus = false;
 
@@ -66,7 +68,7 @@ void CProdConQueue<DATA>::Add(DATA& data)
 template <class DATA>
 DATA CProdConQueue<DATA>::Remove()
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 
      bool  bStatus = false;
      DATA data;
@@ -80,7 +82,7 @@ DATA CProdConQueue<DATA>::Remove()
      }
      else
      {
-          LOG_ERROR("Error removing data");
+          //LOG_ERROR("Error removing data");
           throw std::runtime_error("Removal Failure");
      }
 
