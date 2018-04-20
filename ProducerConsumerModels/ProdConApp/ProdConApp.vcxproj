@@ -146,7 +146,13 @@
     <ClCompile Include="ProdConApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Consumer.h" />
+    <ClInclude Include="Data.h" />
+    <ClInclude Include="ProdConQueue.h" />
+    <ClInclude Include="Producer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Semaphore.h" />
+    <ClInclude Include="ThreadGuard.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProdConApp.rc" />
