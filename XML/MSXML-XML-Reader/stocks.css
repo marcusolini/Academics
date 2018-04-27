@@ -1,0 +1,38 @@
+stock {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #DACFE5;
+	width: 300px;
+	display: block;
+	padding: 10pt;
+	border: 1px solid #0D3427;
+	margin: 5px;
+	text-align: left;
+}
+
+stock:after {content: "exchange: " attr(exchange)}
+
+name {
+	color: #0D3427;
+	font-weight: bold;
+	font-size: 140%;
+	display: block;
+	margin-bottom: 3%;
+}
+
+symbol {
+	color: #0D3427;
+	font-size: 90%;
+	display: block;
+	margin-top: 3%;
+}
+
+symbol::before {content: "symbol: "}
+
+price{
+	font-size: 90%;
+	color: #523819;
+	font-size: 90%;
+	display: block;
+}
+
+price::before {content: "price: "}

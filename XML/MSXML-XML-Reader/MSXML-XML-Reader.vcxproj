@@ -166,6 +166,11 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="stocks.xml" />
+    <Xml Include="stocks.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="stocks-xslt.css" />
+    <None Include="stocks.css" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

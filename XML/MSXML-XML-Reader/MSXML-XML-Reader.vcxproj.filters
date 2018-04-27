@@ -45,5 +45,16 @@
     <Xml Include="stocks.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="stocks.xslt">
+      <Filter>Resource Files</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="stocks.css">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="stocks-xslt.css">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
