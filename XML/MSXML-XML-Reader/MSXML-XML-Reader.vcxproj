@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="businesscards.h">
+      <DependentUpon>businesscards.xsd</DependentUpon>
+    </ClInclude>
     <ClInclude Include="ERROR_CHECKS.H" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -165,12 +168,19 @@
     <ResourceCompile Include="MSXML-XML-Reader.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="businesscards.xml" />
     <Xml Include="stocks.xml" />
     <Xml Include="stocks.xslt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="stocks-xslt.css" />
     <None Include="stocks.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="businesscards.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
