@@ -3,10 +3,10 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="C:\Projects\Academics\XML\MSXML-XML-Reader\ C:\Projects\Academics\XML\MSXML-XML-Reader\businesscards.xsd">
      <BusinessCard>
-	<Name>Joe Marini</Name>
+	<Name>Joe Shmo</Name>
 	<phone type="mobile">(415) 555-4567</phone>
 	<phone type="work">(800) 555-9876</phone>
 	<phone type="fax">(510) 555-1234</phone>
-	<email>joe@joe.com</email>
+	<email>joe.shmo@joeshmo.com</email>
    </BusinessCard>
 </BusinessCards>
