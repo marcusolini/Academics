@@ -1,0 +1,4 @@
+## Ignore Specific XML Schema generated files
+5k-Race-Participants.h
+businesscards.h
+businesscards-schema-not-working.h

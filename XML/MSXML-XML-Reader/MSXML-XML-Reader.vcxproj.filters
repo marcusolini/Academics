@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\XMLs">
+      <UniqueIdentifier>{4e46a04f-5b85-403e-a5c7-f02cc11a1e8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -42,32 +45,44 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="stocks.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
-    <Xml Include="stocks.xslt">
-      <Filter>Resource Files</Filter>
-    </Xml>
-    <Xml Include="businesscards.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="stocks.css">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="stocks-xslt.css">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Xsd Include="businesscards.xsd">
-      <Filter>Resource Files</Filter>
-    </Xsd>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="Readme.txt">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="XMLs\5k-Race-Participants.xsd">
+      <Filter>Resource Files\XMLs</Filter>
+    </Xsd>
+    <Xsd Include="XMLs\businesscards.xsd">
+      <Filter>Resource Files\XMLs</Filter>
+    </Xsd>
+    <Xsd Include="XMLs\businesscards-schema-not-working.xsd">
+      <Filter>Resource Files\XMLs</Filter>
+    </Xsd>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="XMLs\5k-Race-Participants-with-XML-Schema.xml">
+      <Filter>Resource Files\XMLs</Filter>
+    </Xml>
+    <Xml Include="XMLs\businesscards.xml">
+      <Filter>Resource Files\XMLs</Filter>
+    </Xml>
+    <Xml Include="XMLs\businesscards-schema-not-working.xml">
+      <Filter>Resource Files\XMLs</Filter>
+    </Xml>
+    <Xml Include="XMLs\stocks.xml">
+      <Filter>Resource Files\XMLs</Filter>
+    </Xml>
+    <Xml Include="XMLs\stocks.xslt">
+      <Filter>Resource Files\XMLs</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XMLs\stocks.css">
+      <Filter>Resource Files\XMLs</Filter>
+    </None>
+    <None Include="XMLs\stocks-xslt.css">
+      <Filter>Resource Files\XMLs</Filter>
+    </None>
   </ItemGroup>
 </Project>

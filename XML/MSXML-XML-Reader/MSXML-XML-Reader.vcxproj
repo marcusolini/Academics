@@ -147,8 +147,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="5k-Race-Participants.h">
+      <DependentUpon>XMLs\5k-Race-Participants.xsd</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="businesscards-schema-not-working.h">
+      <DependentUpon>XMLs\businesscards-schema-not-working.xsd</DependentUpon>
+    </ClInclude>
     <ClInclude Include="businesscards.h">
-      <DependentUpon>businesscards.xsd</DependentUpon>
+      <DependentUpon>XMLs\businesscards.xsd</DependentUpon>
     </ClInclude>
     <ClInclude Include="ERROR_CHECKS.H" />
     <ClInclude Include="resource.h" />
@@ -168,19 +174,23 @@
     <ResourceCompile Include="MSXML-XML-Reader.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="businesscards.xml" />
-    <Xml Include="stocks.xml" />
-    <Xml Include="stocks.xslt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="stocks-xslt.css" />
-    <None Include="stocks.css" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xsd Include="businesscards.xsd" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="XMLs\5k-Race-Participants.xsd" />
+    <Xsd Include="XMLs\businesscards-schema-not-working.xsd" />
+    <Xsd Include="XMLs\businesscards.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="XMLs\5k-Race-Participants-with-XML-Schema.xml" />
+    <Xml Include="XMLs\businesscards-schema-not-working.xml" />
+    <Xml Include="XMLs\businesscards.xml" />
+    <Xml Include="XMLs\stocks.xml" />
+    <Xml Include="XMLs\stocks.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XMLs\stocks-xslt.css" />
+    <None Include="XMLs\stocks.css" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
