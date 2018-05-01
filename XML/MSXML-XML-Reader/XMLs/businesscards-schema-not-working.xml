@@ -1,12 +1,18 @@
 <?xml version="1.0"?>
-<BusinessCards xmlns="C:\Projects\Academics\XML\MSXML-XML-Reader\"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="C:\Projects\Academics\XML\MSXML-XML-Reader\ C:\Projects\Academics\XML\MSXML-XML-Reader\businesscards.xsd">
-     <BusinessCard>
-	<Name>Joe Shmo</Name>
-	<phone type="mobile">(415) 555-4567</phone>
-	<phone type="work">(800) 555-9876</phone>
-	<phone type="fax">(510) 555-1234</phone>
-	<email>joe.shmo@joeshmo.com</email>
-   </BusinessCard>
+<BusinessCards xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+               xsi:schemaLocation='urn:BusinessCard businesscards-schema-not-working.xsd'>
+     <x:BusinessCard xmlns:x='urn:BusinessCard'>
+	     <x:Name>Joe Shmo</x:Name>
+          <x:phone type="mobile">(415) 555-4567</x:phone>
+	     <x:phone type="work">(800) 555-9876</x:phone>
+	     <x:phone type="fax">(510) 555-1234</x:phone>
+          <x:email>joe.shmo@joeshmo.com</x:email>
+     </x:BusinessCard>
+     <x:BusinessCard xmlns:x='urn:BusinessCard' >
+          <x:Name>Me Mo</x:Name>
+          <x:phone type="mobile">(415) 555-1111</x:phone>
+          <x:phone type="work">(800) 555-2222</x:phone>
+          <x:phone type="fax">(510) 555-3333</x:phone>
+          <x:email>me.mo@memo.com</x:email>
+     </x:BusinessCard>     
 </BusinessCards>

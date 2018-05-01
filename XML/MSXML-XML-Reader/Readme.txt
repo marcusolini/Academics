@@ -8,3 +8,5 @@ ELEVATED COMMAND PROMPT
 ** Copyright (c) 2017 Microsoft Corporation
 **********************************************************************
 c:\> gacutil -i "%DevEnvDir%\PublicAssemblies\CppCodeProvider.dll"
+
+C:\Projects\Academics\XML\MSXML-XML-Reader\XMLs\businesscards-schema-not-working.xml
