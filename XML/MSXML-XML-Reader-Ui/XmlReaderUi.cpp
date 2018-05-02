@@ -105,11 +105,8 @@ INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
      {
           switch (LOWORD(wParam))
           {
-          case IDCANCEL:
+          case IDCLOSE:
                onMainCancel(hDlg);
-               return TRUE;
-               break;
-          case IDOK:
                return TRUE;
                break;
 
@@ -156,6 +153,7 @@ void onMainInitDialog(const HWND hDlg)
      SendDlgItemMessage(hDlg, IDC_OpenXmlButton, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_OPEN_XML)).c_str());
      SendDlgItemMessage(hDlg, IDC_Status, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS)).c_str());
      SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS_SELECT_XML)).c_str());
+     SendDlgItemMessage(hDlg, IDCLOSE, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_CLOSE_MENU)).c_str());
 }
 
 
@@ -255,7 +253,7 @@ void onMainClose(const HWND hDlg)
 {
      int msgBoxID = IDNO;
 
-     msgBoxID = MessageBox(hDlg, (LoadStringFromResourceId(IDS_CLOSE)).c_str(), (LoadStringFromResourceId(IDS_CLOSE)).c_str(), (MB_ICONQUESTION | MB_YESNO));
+     msgBoxID = MessageBox(hDlg, (LoadStringFromResourceId(IDS_CLOSE)).c_str(), (LoadStringFromResourceId(IDS_CLOSE_MENU)).c_str(), (MB_ICONQUESTION | MB_YESNO));
 
      if (IDYES == msgBoxID)
      {

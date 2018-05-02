@@ -15,11 +15,11 @@
 #define IDS_STATUS_XML_OPENNED          114
 #define IDS_STATUS                      115
 #define IDS_XML_MENU                    116
+#define IDS_CLOSE_MENU                  117
 #define IDC_OpenFileButton              1001
 #define IDC_XmlFilename                 1003
 #define IDC_XmlFilenameStatic           1004
 #define IDC_OpenXmlButton               1005
-#define IDC_XmlView                     1008
 #define IDC_LoadXmlButton               1010
 #define IDC_StatusText                  1011
 #define IDC_Status                      1012
