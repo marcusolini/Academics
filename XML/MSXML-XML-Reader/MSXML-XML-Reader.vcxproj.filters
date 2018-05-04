@@ -24,10 +24,16 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ERROR_CHECKS.H">
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="5k-Race-Participants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="businesscards-schema-not-working.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="businesscards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

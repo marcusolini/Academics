@@ -6,6 +6,7 @@
 #define IDS_RESOURCE_STRING_MISSING     105
 #define IDS_CLOSE                       106
 #define IDS_LOAD_XML                    107
+#define IDD_XmlOutputDialog             107
 #define IDS_UNLOAD_XML                  108
 #define IDS_OPEN_XML                    109
 #define IDS_STATUS_SELECT_XML           110
@@ -23,14 +24,17 @@
 #define IDC_LoadXmlButton               1010
 #define IDC_StatusText                  1011
 #define IDC_Status                      1012
+#define IDC_XmlOutputText               1013
+#define IDC_StatusXmlFileText           1014
+#define IDC_StatusXmlFileName           1015
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        107
+#define _APS_NEXT_RESOURCE_VALUE        109
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1013
+#define _APS_NEXT_CONTROL_VALUE         1016
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
