@@ -16,7 +16,7 @@ class IMsXmlLib
 {
 public:
      static HRESULT CreateInstance(IMsXmlLib** ppMsXmlLib);
-     static HRESULT DestoryInstance(IMsXmlLib* ppMsXmlLib);
+     static HRESULT DeleteInstance(IMsXmlLib* ppMsXmlLib);
      virtual HRESULT LoadXML(const std::wstring& xmlFilePathname) = 0;
      virtual HRESULT OutputXML(std::wstring& xmlData) = 0;
      virtual HRESULT ValidateXML() = 0;

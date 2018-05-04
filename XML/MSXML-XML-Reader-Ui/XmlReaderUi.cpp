@@ -23,7 +23,7 @@
 
 
 #pragma comment(lib, "MSXML-Library.lib")
-#include "..\MSXML-Library\IMsXmlLib.h"
+#include "..\\MSXML-Library\\IMsXmlLib.h"
 
 
 // GLOBALS
@@ -159,7 +159,11 @@ void onMainInitDialog(const HWND hDlg)
      SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS_SELECT_XML)).c_str());
      SendDlgItemMessage(hDlg, IDCLOSE, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_CLOSE_MENU)).c_str());
 
-     IMsXmlLib::CreateInstance(&pIMsXmlLib);
+     HRESULT hr = IMsXmlLib::CreateInstance(&pIMsXmlLib);
+     if (FAILED(hr))
+     {
+          // TODO MESSAGEBOX
+     }
 }
 
 
@@ -298,6 +302,12 @@ void onMainClose(const HWND hDlg)
 
      if (IDYES == msgBoxID)
      {
+          HRESULT hr = IMsXmlLib::DeleteInstance(pIMsXmlLib);
+          if (FAILED(hr))
+          {
+               // TODO MESSAGEBOX
+          }
+
           DestroyWindow(hDlg);
      }
 }

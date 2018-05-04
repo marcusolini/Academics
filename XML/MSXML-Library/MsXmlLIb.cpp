@@ -17,7 +17,7 @@
 
 #pragma comment(lib, "msxml6.lib")
 
-#include "..\..\Error_Checks\ERROR_CHECKS.H"
+#include "..\\..\\Error_Checks\\ERROR_CHECKS.H"
 
 
 class CMsXmlLib : IMsXmlLib
@@ -83,18 +83,22 @@ HRESULT WalkNode(IN IXMLDOMNode* pNode);
      return hrResult;
 }
 
-/*static*/ HRESULT IMsXmlLib::DestoryInstance(IMsXmlLib* pMsXmlLib)
+/*static*/ HRESULT IMsXmlLib::DeleteInstance(IMsXmlLib* pIMsXmlLib)
 {
      HRESULT hrResult = ERROR_SUCCESS;
 
      std::wostringstream outputStream;
+     CMsXmlLib* pCMsXmlLib = nullptr;
 
      try
      {
-     if (nullptr == pMsXmlLib) throw E_INVALIDARG;
+     if (nullptr == pIMsXmlLib) throw E_INVALIDARG;
 
-     delete pMsXmlLib;
-     pMsXmlLib = nullptr;
+     pCMsXmlLib = reinterpret_cast<CMsXmlLib*>(pIMsXmlLib);
+
+     delete pCMsXmlLib;
+     pCMsXmlLib = nullptr;
+     pIMsXmlLib = nullptr;
      }
      catch (HRESULT& check_catch_hresult)
      {
