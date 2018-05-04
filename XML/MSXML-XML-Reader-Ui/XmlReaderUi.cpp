@@ -10,12 +10,6 @@
 #include <tchar.h>
 #include "resource.h"
 
-#include <thread>
-#include <atomic>
-#include <vector>
-#include <sstream>
-
-#include <Shobjidl.h>
 
 #pragma comment(linker, \
   "\"/manifestdependency:type='Win32' "\
@@ -49,9 +43,11 @@ void onMainOk(const HWND hDlg);
 void onMainCancel(const HWND hDlg);
 void onMainClose(const HWND hDlg);
 
+// OPENXML DIALOG 
 INT_PTR CALLBACK OpenXmlDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam);
 void onOpenXmlDialogInit(const HWND hDlg);
 void onOpenXmlDialogClose(const HWND hDlg, const WPARAM wParam);
+
 
 std::wstring LoadStringFromResourceId(const UINT id)
 {
