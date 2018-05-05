@@ -9,6 +9,8 @@
 #include <CommCtrl.h>
 #include <tchar.h>
 #include "resource.h"
+#include <sstream>
+#include <thread>
 
 
 #pragma comment(linker, \
@@ -28,7 +30,16 @@
 
 // GLOBAL - DECLARATIONS
 std::wstring LoadStringFromResourceId(const UINT id);
-IMsXmlLib* pIMsXmlLib = nullptr;
+IMsXmlLib* g_pIMsXmlLib = nullptr;
+std::wstring g_sXmlFilename;
+std::wstring g_sXmlData;
+XML_NODE_MAP g_xmlNodeMap;
+
+#define WM_USER_XML_THREAD_COMPLETE (WM_USER + 100)
+#define WM_USER_XML_DATA_READY (WM_USER + 101)
+
+// THREAD
+void XMLThreadFunc(const HWND hDlg, const LPARAM lParam);
 
 
 // MAIN XML DIALOG - DECLARATIONS
@@ -36,17 +47,22 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE h0, LPTSTR lpCmdLine, int nCmdSho
 INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void onMainInitDialog(const HWND hDlg);
 void onMainOpenFile(const HWND hDlg);
-void onMainLoadXML(const HWND hDlg);
+void onMainLoadXML(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 void onMainOpenXML(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 void onMainOk(const HWND hDlg);
 void onMainCancel(const HWND hDlg);
 void onMainClose(const HWND hDlg);
 
-
 // OPEN XML DIALOG - DECLARATIONS
 INT_PTR CALLBACK OpenXmlDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam);
 void onOpenXmlDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 void onOpenXmlDialogClose(const HWND hDlg, const WPARAM wParam);
+void onOpenXmlDialogDataReady(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
+
+// XML PROGRESS - DECLARATIONS
+INT_PTR CALLBACK XmlProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam);
+void onXmlProgressDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
+void onXmlProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 
 
 // GLOBAL - DEFINITIONS
@@ -122,7 +138,7 @@ INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
                break;
 
           case IDC_LoadXmlButton:
-               onMainLoadXML(hDlg);
+               onMainLoadXML(hDlg, 0, IDC_LoadXmlButton);
                return TRUE;
                break;
 
@@ -168,7 +184,7 @@ void onMainInitDialog(const HWND hDlg)
      SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS_SELECT_XML)).c_str());
      SendDlgItemMessage(hDlg, IDCLOSE, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_CLOSE_MENU)).c_str());
 
-     HRESULT hr = IMsXmlLib::CreateInstance(&pIMsXmlLib);
+     HRESULT hr = IMsXmlLib::CreateInstance(&g_pIMsXmlLib);
      if (FAILED(hr))
      {
           MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_LOAD_XML_LIB)).c_str(), (LoadStringFromResourceId(IDS_FATAL_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
@@ -194,6 +210,8 @@ void onMainInitDialog(const HWND hDlg)
 
 void onMainOpenFile(const HWND hDlg)
 {
+     g_sXmlFilename.clear();
+
      OPENFILENAME ofn = { 0 };
      wchar_t szFileName[MAX_PATH] = { 0 };
 
@@ -211,6 +229,8 @@ void onMainOpenFile(const HWND hDlg)
      {
           SendDlgItemMessage(hDlg, IDC_XmlFilename, WM_SETTEXT, (WPARAM)0, (LPARAM)(szFileName));
 
+          g_sXmlFilename = szFileName;
+
           hLoadXmlButton = GetDlgItem(hDlg, IDC_LoadXmlButton);
           Edit_Enable(hLoadXmlButton, TRUE);
 
@@ -220,8 +240,10 @@ void onMainOpenFile(const HWND hDlg)
 
 
 
-void onMainLoadXML(const HWND hDlg)
+void onMainLoadXML(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
 {
+     INT_PTR LoadXmlDialog = 0;
+
      HWND hTemp{};
 
      std::wstring sLoadedState;
@@ -252,48 +274,24 @@ void onMainLoadXML(const HWND hDlg)
      }
      else
      {
-          wchar_t szTemp[MAX_PATH] = {};
-          WORD wTemp = 0;
-          std::wstring sXmlFilename;
+          LoadXmlDialog = DialogBoxParam(nullptr, MAKEINTRESOURCE(IDD_XmlOutputDialog), hDlg, OpenXmlDialogProc, lParam);
 
-          wTemp = (WORD)SendDlgItemMessage(hDlg, IDC_XmlFilename, EM_LINELENGTH, (WPARAM)0, (LPARAM)0);
-          *((LPWORD)szTemp) = wTemp;
-          SendDlgItemMessage(hDlg, IDC_XmlFilename, EM_GETLINE, (WPARAM)0, (LPARAM)szTemp);
+          SendDlgItemMessage(hDlg, IDC_LoadXmlButton, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_UNLOAD_XML)).c_str());
+          SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_OPEN_XML)).c_str());
 
-          sXmlFilename = szTemp;
+          hTemp = GetDlgItem(hDlg, IDC_OpenFileButton);
+          Edit_Enable(hTemp, FALSE);
 
-          if (pIMsXmlLib)
-          {
-               HRESULT hr = pIMsXmlLib->LoadXML(sXmlFilename);
+          hTemp = GetDlgItem(hDlg, IDC_XmlFilename);
+          Edit_Enable(hTemp, FALSE);
 
-               if (SUCCEEDED(hr))
-               {
-                    SendDlgItemMessage(hDlg, IDC_LoadXmlButton, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_UNLOAD_XML)).c_str());
-                    SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_OPEN_XML)).c_str());
+          hTemp = GetDlgItem(hDlg, IDC_OpenXmlButton);
+          Edit_Enable(hTemp, TRUE);
 
-                    hTemp = GetDlgItem(hDlg, IDC_OpenFileButton);
-                    Edit_Enable(hTemp, FALSE);
+          hTemp = GetDlgItem(hDlg, IDC_OpenParsedXmlButton);
+          Edit_Enable(hTemp, TRUE);
 
-                    hTemp = GetDlgItem(hDlg, IDC_XmlFilename);
-                    Edit_Enable(hTemp, FALSE);
-
-                    hTemp = GetDlgItem(hDlg, IDC_OpenXmlButton);
-                    Edit_Enable(hTemp, TRUE);
-
-                    hTemp = GetDlgItem(hDlg, IDC_OpenParsedXmlButton);
-                    Edit_Enable(hTemp, TRUE);
-
-                    SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS_XML_LOADED)).c_str());
-               }
-               else
-               {
-                    MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_LOAD_XML_FILE)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
-               }
-          }
-          else
-          {
-               MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_LOAD_XML_LIB)).c_str(), (LoadStringFromResourceId(IDS_FATAL_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
-          }
+          SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS_XML_LOADED)).c_str());
      }
 }
 
@@ -351,10 +349,10 @@ void onMainClose(const HWND hDlg)
 
      if (IDYES == msgBoxID)
      {
-          HRESULT hr = IMsXmlLib::DeleteInstance(pIMsXmlLib);
+          HRESULT hr = IMsXmlLib::DeleteInstance(g_pIMsXmlLib);
           if (FAILED(hr))
           {
-               // TODO MESSAGEBOX
+               // TODO?
           }
 
           DestroyWindow(hDlg);
@@ -385,6 +383,11 @@ INT_PTR CALLBACK OpenXmlDialogProc(const HWND hDlg, const UINT uMsg, const WPARA
           break;
      }
 
+     case WM_USER_XML_DATA_READY:
+     {
+          onOpenXmlDialogDataReady(hDlg, wParam, lParam);
+          break;
+     }
      } // switch
 
      return FALSE;
@@ -392,64 +395,16 @@ INT_PTR CALLBACK OpenXmlDialogProc(const HWND hDlg, const UINT uMsg, const WPARA
 
 void onOpenXmlDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
 {
+     INT_PTR XmlProgressDialog = 0;
+
      SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_XML_DATA)).c_str());
 
      SendDlgItemMessage(hDlg, IDC_StatusXmlFileText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS_XML_FILE)).c_str());
      SendDlgItemMessage(hDlg, IDCLOSE, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_CLOSE_MENU)).c_str());
 
-     if (pIMsXmlLib)
+     if (g_pIMsXmlLib)
      {
-          HRESULT hr = ERROR_SUCCESS;
-
-          HWND hMainDialog{};
-          hMainDialog = GetParent(hDlg);
-
-          wchar_t szTemp[MAX_PATH] = {};
-          WORD wTemp = 0;
-          std::wstring sXmlFilename;
-
-          wTemp = (WORD)SendDlgItemMessage(hMainDialog, IDC_XmlFilename, EM_LINELENGTH, (WPARAM)0, (LPARAM)0);
-          *((LPWORD)szTemp) = wTemp;
-          SendDlgItemMessage(hMainDialog, IDC_XmlFilename, EM_GETLINE, (WPARAM)0, (LPARAM)szTemp);
-          sXmlFilename = szTemp;
-
-          switch (lParam)
-          {
-          case IDC_OpenXmlButton:
-          {
-               std::wstring sXmlData;
-               hr = pIMsXmlLib->GetXML(sXmlData);
-
-               if (SUCCEEDED(hr))
-               {
-
-                    SendDlgItemMessage(hDlg, IDC_XmlOutputText, WM_SETTEXT, (WPARAM)0, (LPARAM)(sXmlData.c_str()));
-                    SendDlgItemMessage(hDlg, IDC_StatusXmlFileName, WM_SETTEXT, (WPARAM)0, (LPARAM)(sXmlFilename.c_str()));
-               }
-               else
-               {
-                    MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_GET_XML_DATA)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
-               }
-               break;
-          }
-          case IDC_OpenParsedXmlButton:
-          {
-               XML_NODE_MAP xmlNodeMap;
-               hr = pIMsXmlLib->ParseXML(xmlNodeMap);
-
-               if (SUCCEEDED(hr))
-               {
-                    SendDlgItemMessage(hDlg, IDC_StatusXmlFileName, WM_SETTEXT, (WPARAM)0, (LPARAM)(sXmlFilename.c_str()));
-               }
-               else
-               {
-                    MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_GET_XML_DATA)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
-               }
-
-               break;
-          }
-          } // switch
-
+         XmlProgressDialog = DialogBoxParam(nullptr, MAKEINTRESOURCE(IDD_XmlProgressDialog), hDlg, XmlProgressDialogProc, lParam);
      }
      else
      {
@@ -457,7 +412,199 @@ void onOpenXmlDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lPar
      }
 }
 
+
+void onOpenXmlDialogDataReady(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
+{
+     HRESULT hrResult = (HRESULT)wParam;
+
+     if (SUCCEEDED(hrResult))
+     {
+          switch (lParam)
+          {
+          case IDC_LoadXmlButton:
+          {
+               onOpenXmlDialogClose(hDlg, wParam);
+               break;
+          }
+          case IDC_OpenXmlButton:
+          {
+               SendDlgItemMessage(hDlg, IDC_XmlOutputText, WM_SETTEXT, (WPARAM)0, (LPARAM)(g_sXmlData.c_str()));
+               SendDlgItemMessage(hDlg, IDC_StatusXmlFileName, WM_SETTEXT, (WPARAM)0, (LPARAM)(g_sXmlFilename.c_str()));
+               break;
+          }
+          case IDC_OpenParsedXmlButton:
+          {
+               SendDlgItemMessage(hDlg, IDC_StatusXmlFileName, WM_SETTEXT, (WPARAM)0, (LPARAM)(g_sXmlFilename.c_str()));
+
+               // TODO
+               break;
+          }
+          } // switch
+     }
+     else
+     {
+          onOpenXmlDialogClose(hDlg, wParam);
+     }
+}
+
 void onOpenXmlDialogClose(const HWND hDlg, const WPARAM wParam)
 {
      EndDialog(hDlg, wParam);
 }
+
+
+
+// XML PROGRESS DIALOG - DEFINITIONS
+
+INT_PTR CALLBACK XmlProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam)
+{
+     switch (uMsg)
+     {
+     case WM_INITDIALOG:
+          onXmlProgressDialogInit(hDlg, wParam, lParam);
+          return TRUE;
+          break;
+
+     case WM_USER_XML_THREAD_COMPLETE:
+     {
+          onXmlProgressThreadComplete(hDlg, wParam, lParam);
+          return TRUE;
+          break;
+     }
+
+     } // switch
+
+     return FALSE;
+}
+
+void onXmlProgressDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
+{
+     SendDlgItemMessage(hDlg, IDC_XmlProgress, PBM_SETMARQUEE, (WPARAM)1, (LPARAM)0);
+
+     if (g_pIMsXmlLib)
+     {
+          switch (lParam)
+          {
+          case IDC_OpenXmlButton:
+          {
+               SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_OPENNING_XML)).c_str());
+
+               g_sXmlData.clear();
+
+               std::thread thread = std::thread(XMLThreadFunc, hDlg, lParam);
+               thread.detach(); // Thread will be communicated with SendMessage. Will not be joined.
+
+               break;
+          }
+          case IDC_OpenParsedXmlButton:
+          {
+               SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_PARSING_XML)).c_str());
+
+               g_xmlNodeMap.clear();
+
+               std::thread thread = std::thread(XMLThreadFunc, hDlg, lParam);
+               thread.detach(); // Thread will be communicated with SendMessage. Will not be joined.
+
+               break;
+          }
+          case IDC_LoadXmlButton:
+          {
+               SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_LOADING_XML)).c_str());
+
+               std::thread thread = std::thread(XMLThreadFunc, hDlg, lParam);
+               thread.detach(); // Thread will be communicated with SendMessage. Will not be joined.
+
+               break;
+          }
+          } // switch
+     }
+     else
+     {
+          MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_GET_XML_DATA)).c_str(), (LoadStringFromResourceId(IDS_FATAL_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
+          SendMessage(hDlg, WM_USER_XML_THREAD_COMPLETE, (WPARAM)E_FAIL, (LPARAM)lParam);
+     }
+
+}
+
+void onXmlProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
+{
+     HRESULT hr = ERROR_SUCCESS;
+
+     SendDlgItemMessage(hDlg, IDC_XmlProgress, PBM_SETSTATE, (WPARAM)PBST_PAUSED, (LPARAM)0);
+
+     HWND hParentDialog{};
+     hParentDialog = GetParent(hDlg);
+
+     SendMessage(hParentDialog, WM_USER_XML_DATA_READY, (WPARAM)wParam, (LPARAM)lParam);
+
+     EndDialog(hDlg, wParam);
+}
+
+
+
+
+void XMLThreadFunc(const HWND hDlg, LPARAM lParam)
+{
+     HRESULT hrResult = ERROR_SUCCESS;
+
+     std::wstringstream ss;
+     uint64_t id = 0;
+
+     ss << std::this_thread::get_id();
+     id = std::stoull(ss.str());
+
+     std::this_thread::yield();
+
+     switch (lParam)
+     {
+     case IDC_OpenXmlButton:
+     {
+          g_sXmlData.clear();
+
+          hrResult = g_pIMsXmlLib->GetTextXML(g_sXmlData);
+
+          if (FAILED(hrResult))
+          {
+               MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_GET_XML_DATA)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
+          }
+
+          //std::this_thread::sleep_for(std::chrono::milliseconds{ 3000 });  // Progress Bar Testing
+
+          break;
+     }
+     case IDC_OpenParsedXmlButton:
+     {
+          g_xmlNodeMap.clear();
+
+          hrResult = g_pIMsXmlLib->GetParsedXML(g_xmlNodeMap);
+
+          if (FAILED(hrResult))
+          {
+               MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_GET_XML_DATA)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
+          }
+
+          //std::this_thread::sleep_for(std::chrono::milliseconds{ 3000 });  // Progress Bar Testing
+
+          break;
+     }
+
+     case IDC_LoadXmlButton:
+     {
+          hrResult = g_pIMsXmlLib->LoadXML(g_sXmlFilename);
+
+          if (FAILED(hrResult))
+          {
+               MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_LOAD_XML_FILE)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
+          }
+
+          //std::this_thread::sleep_for(std::chrono::milliseconds{ 3000 });  // Progress Bar Testing
+
+          break;
+     }
+
+     } // switch
+
+     SendMessage(hDlg, WM_USER_XML_THREAD_COMPLETE, (WPARAM)hrResult, (LPARAM)lParam);
+}
+
+

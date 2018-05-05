@@ -29,9 +29,9 @@ public:
      virtual ~CMsXmlLib();
 
      HRESULT LoadXML(const std::wstring& xmlFilePathname);
-     HRESULT GetXML(std::wstring& xmlData);
+     HRESULT GetTextXML(std::wstring& xmlData);
      HRESULT ValidateXML();
-     HRESULT ParseXML(XML_NODE_MAP& xmlNodeMap);
+     HRESULT GetParsedXML(XML_NODE_MAP& xmlNodeMap);
 
      CMsXmlLib(const CMsXmlLib&) = delete;
      CMsXmlLib& operator=(const CMsXmlLib&) = delete;
@@ -255,7 +255,7 @@ HRESULT CMsXmlLib::LoadXML(const std::wstring& xmlFilePathname)
 
 }
 
-HRESULT CMsXmlLib::GetXML(std::wstring& xmlData)
+HRESULT CMsXmlLib::GetTextXML(std::wstring& xmlData)
 {
      std::lock_guard<std::recursive_mutex> lock(m_mutex);
 
@@ -331,7 +331,7 @@ HRESULT CMsXmlLib::ValidateXML()
      return hrResult;
 }
 
-HRESULT CMsXmlLib::ParseXML(XML_NODE_MAP& xmlNodeMap)
+HRESULT CMsXmlLib::GetParsedXML(XML_NODE_MAP& xmlNodeMap)
 {
      std::lock_guard<std::recursive_mutex> lock(m_mutex);
 

@@ -15,8 +15,8 @@ public:
      static HRESULT DeleteInstance(IMsXmlLib* ppMsXmlLib);
      
      virtual HRESULT LoadXML(const std::wstring& xmlFilePathname) = 0;
-     virtual HRESULT GetXML(std::wstring& xmlData) = 0;
-     virtual HRESULT ParseXML(XML_NODE_MAP& xmlNodeMap) = 0;
+     virtual HRESULT GetTextXML(std::wstring& xmlData) = 0;
+     virtual HRESULT GetParsedXML(XML_NODE_MAP& xmlNodeMap) = 0;
      virtual HRESULT ValidateXML() = 0;
 };
 
