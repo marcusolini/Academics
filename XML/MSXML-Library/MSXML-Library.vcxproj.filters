@@ -21,6 +21,9 @@
     <ClInclude Include="IMsXmlLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IMsXmlLibTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MSXML-Library.rc">

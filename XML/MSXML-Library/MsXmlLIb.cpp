@@ -20,6 +20,8 @@
 #include "..\\..\\Error_Checks\\ERROR_CHECKS.H"
 
 
+// DECLARATIONS
+
 class CMsXmlLib : IMsXmlLib
 {
 public:
@@ -27,8 +29,9 @@ public:
      virtual ~CMsXmlLib();
 
      HRESULT LoadXML(const std::wstring& xmlFilePathname);
-     HRESULT OutputXML(std::wstring& xmlData);
+     HRESULT GetXML(std::wstring& xmlData);
      HRESULT ValidateXML();
+     HRESULT ParseXML(XML_NODE_MAP& xmlNodeMap);
 
      CMsXmlLib(const CMsXmlLib&) = delete;
      CMsXmlLib& operator=(const CMsXmlLib&) = delete;
@@ -39,21 +42,17 @@ private:
 
      bool m_bXmlLoaded = false;
 
-     HRESULT WalkNode(IXMLDOMNode* pNode);
+     HRESULT WalkNode(IXMLDOMNode* pNode, XML_NODE_MAP* pXmlNodeMap);
 
      CComPtr<IXMLDOMDocument2> m_pDoc;
+     XML_NODE_MAP m_xmlNodeMap;
 
      std::recursive_mutex m_mutex;
      std::wostringstream m_outputStream;
 };
 
-/*
-HRESULT LoadXML(IN CComPtr<IXMLDOMDocument2>& pDoc, IN const std::wstring& xmlFilePathname);
-HRESULT OutputXML(IN CComPtr<IXMLDOMDocument2>& pDoc);
-HRESULT ValidateXML(IN CComPtr<IXMLDOMDocument2>& pDoc);
-HRESULT WalkNode(IN IXMLDOMNode* pNode);
-*/
 
+// DEFINITIONS
 
 /*static*/ HRESULT IMsXmlLib::CreateInstance(IMsXmlLib** ppIMsXmlLib)
 {
@@ -192,12 +191,6 @@ HRESULT CMsXmlLib::LoadXML(const std::wstring& xmlFilePathname)
      {
           if (nullptr == m_pDoc) throw E_INVALIDARG;
 
-          //if (true == m_bXmlLoaded)
-          //{
-          //     m_pDoc = nullptr;
-          //     m_bXmlLoaded = false;
-          //}
-
           CComBSTR bstrXML;
           CComVariant varFileName;
           VARIANT_BOOL bVarStatus = VARIANT_TRUE;
@@ -262,7 +255,7 @@ HRESULT CMsXmlLib::LoadXML(const std::wstring& xmlFilePathname)
 
 }
 
-HRESULT CMsXmlLib::OutputXML(std::wstring& xmlData)
+HRESULT CMsXmlLib::GetXML(std::wstring& xmlData)
 {
      std::lock_guard<std::recursive_mutex> lock(m_mutex);
 
@@ -277,10 +270,6 @@ HRESULT CMsXmlLib::OutputXML(std::wstring& xmlData)
           CHECK_SUCCEEDED_LOG_THROW(m_pDoc->get_xml(&bstrTemp));
 
           xmlData = bstrTemp.m_str;
-
-          //m_outputStream << std::endl << TEXT("XML:") << bstrTemp.m_str;
-          //LOG_MESSAGE(m_outputStream.str());
-          //m_outputStream.str(TEXT(""));
      }
      catch (HRESULT& check_catch_hresult)
      {
@@ -342,15 +331,45 @@ HRESULT CMsXmlLib::ValidateXML()
      return hrResult;
 }
 
-HRESULT CMsXmlLib::WalkNode(IXMLDOMNode* pNode)
+HRESULT CMsXmlLib::ParseXML(XML_NODE_MAP& xmlNodeMap)
+{
+     std::lock_guard<std::recursive_mutex> lock(m_mutex);
+
+     HRESULT hrResult = ERROR_SUCCESS;
+
+     m_xmlNodeMap.clear();
+
+     try
+     {
+          if (nullptr == m_pDoc) throw E_INVALIDARG;
+
+          CHECK_SUCCEEDED_LOG_NOTHROW(WalkNode(m_pDoc, &m_xmlNodeMap));
+
+          xmlNodeMap = m_xmlNodeMap;
+     }
+     catch (HRESULT& check_catch_hresult)
+     {
+          hrResult = check_catch_hresult;
+          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
+          LOG_MESSAGE(m_outputStream.str());
+          m_outputStream.str(TEXT(""));
+     }
+
+     return hrResult;
+}
+
+HRESULT CMsXmlLib::WalkNode(IXMLDOMNode* pNode, XML_NODE_MAP* pXmlNodeMap)
 {
      std::lock_guard<std::recursive_mutex> lock(m_mutex);
      
      HRESULT hrResult = ERROR_SUCCESS;
 
+     XML_NODE_DATA xmlNodeData;
+
      try
      {
           if (nullptr == pNode) throw E_INVALIDARG;
+          if (nullptr == pXmlNodeMap) throw E_INVALIDARG;
 
           CComPtr<IXMLDOMNamedNodeMap>  pDocAttribMap;
           long numDocAttribs = 0;
@@ -361,27 +380,23 @@ HRESULT CMsXmlLib::WalkNode(IXMLDOMNode* pNode)
           CComBSTR bstrTemp;
           CComVariant varNameTemp;
 
-          m_outputStream << std::endl << std::endl << ("NODE >>>>>>>> ");
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
-
           try {
                CHECK_SUCCEEDED_LOG_THROW(pNode->get_nodeName(&bstrTemp));
-               m_outputStream << TEXT("NAME: '") << bstrTemp.m_str << TEXT("'  ");
+               xmlNodeData.name = bstrTemp.m_str;
                bstrTemp.Empty();
           }
           catch (HRESULT) { /*Continue*/ }
 
           try {
                CHECK_SUCCEEDED_LOG_THROW(pNode->get_text(&bstrTemp));
-               m_outputStream << TEXT("TEXT: '") << bstrTemp.m_str << TEXT("'  ");
+               xmlNodeData.text = bstrTemp.m_str;
                bstrTemp.Empty();
           }
           catch (HRESULT) { /*Continue*/ }
 
           try {
                CHECK_SUCCEEDED_LOG_THROW(pNode->get_nodeTypeString(&bstrTemp));
-               m_outputStream << TEXT("TYPE: '") << bstrTemp.m_str << TEXT("'  ");
+               xmlNodeData.type = bstrTemp.m_str;
                bstrTemp.Empty();
           }
           catch (HRESULT) { /*Continue*/ }
@@ -400,14 +415,10 @@ HRESULT CMsXmlLib::WalkNode(IXMLDOMNode* pNode)
           }
           catch (HRESULT) { /*Continue*/ }
 
-          m_outputStream << std::endl;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
-
           try {
                CHECK_SUCCEEDED_LOG_THROW(pNode->get_attributes(&pDocAttribMap));
           }
-          catch (HRESULT) { /*Continue*/ }
+          catch (HRESULT) { pDocAttribMap = nullptr; /*Continue*/ }
 
           if (pDocAttribMap)
           {
@@ -418,37 +429,40 @@ HRESULT CMsXmlLib::WalkNode(IXMLDOMNode* pNode)
 
                if (numDocAttribs)
                {
-                    m_outputStream << TEXT("ATTRIBUTES - ");
-
                     for (long a = 0; a < numDocAttribs; a++)
                     {
                          CComPtr<IXMLDOMNode> pDocAttrib;
 
+                         XML_NODE_ATTRIB_DATA xmlNodeAttribData;
+                          
                          try {
                               CHECK_SUCCEEDED_LOG_THROW(pDocAttribMap->get_item(a, &pDocAttrib));
-                              CHECK_SUCCEEDED_LOG_THROW(pDocAttrib->get_nodeName(&bstrTemp));
-                              m_outputStream << TEXT("NAME: '") << bstrTemp.m_str << TEXT("'  ");
-                              bstrTemp.Empty();
-                         }
-                         catch (HRESULT) { /*Continue*/ }
 
-                         try {
-                              CHECK_SUCCEEDED_LOG_THROW(pDocAttrib->get_text(&bstrTemp));
-                              m_outputStream << TEXT("TEXT: '") << bstrTemp.m_str << TEXT("'  ");
-                              bstrTemp.Empty();
+                              try {
+                                   CHECK_SUCCEEDED_LOG_THROW(pDocAttrib->get_nodeName(&bstrTemp));
+                                   xmlNodeAttribData.name = bstrTemp.m_str;
+                                   bstrTemp.Empty();
+                              }
+                              catch (HRESULT) { /*Continue*/ }
+
+                              try {
+                                   CHECK_SUCCEEDED_LOG_THROW(pDocAttrib->get_text(&bstrTemp));
+                                   xmlNodeAttribData.text = bstrTemp.m_str;
+                                   bstrTemp.Empty();
+                              }
+                              catch (HRESULT) { /*Continue*/ }
+
+                              xmlNodeData.attribs.insert(XML_NODE_ATTRIB_PAIR(xmlNodeAttribData.name, xmlNodeAttribData));
                          }
                          catch (HRESULT) { /*Continue*/ }
                     }
-
-                    LOG_MESSAGE(m_outputStream.str());
-                    m_outputStream.str(TEXT(""));
                }
           }
 
           try {
                CHECK_SUCCEEDED_LOG_THROW(pNode->get_childNodes(&pChildNodes));
           }
-          catch (HRESULT) { /*Continue*/ }
+          catch (HRESULT) { pChildNodes = nullptr; /*Continue*/ }
 
           if (pChildNodes)
           {
@@ -463,12 +477,13 @@ HRESULT CMsXmlLib::WalkNode(IXMLDOMNode* pNode)
 
                     try {
                          CHECK_SUCCEEDED_LOG_THROW(pChildNodes->get_item(n, &pChildNode));
-                         CHECK_SUCCEEDED_LOG_THROW(WalkNode(pChildNode));
+                         CHECK_SUCCEEDED_LOG_THROW(WalkNode(pChildNode, &xmlNodeData.children));
                     }
                     catch (HRESULT) { /*Continue*/ }
-
                }
           }
+
+          pXmlNodeMap->insert(XML_NODE_PAIR(xmlNodeData.name, xmlNodeData));
 
      }
      catch (HRESULT& check_catch_hresult)

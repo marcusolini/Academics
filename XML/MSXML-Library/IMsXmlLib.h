@@ -6,18 +6,18 @@
 
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN
-#include <SDKDDKVer.h>
-#include <windows.h>
-
-#include <string>
+#include "IMsXmlLIbTypes.h"
 
 class IMsXmlLib
 {
 public:
      static HRESULT CreateInstance(IMsXmlLib** ppMsXmlLib);
      static HRESULT DeleteInstance(IMsXmlLib* ppMsXmlLib);
+     
      virtual HRESULT LoadXML(const std::wstring& xmlFilePathname) = 0;
-     virtual HRESULT OutputXML(std::wstring& xmlData) = 0;
+     virtual HRESULT GetXML(std::wstring& xmlData) = 0;
+     virtual HRESULT ParseXML(XML_NODE_MAP& xmlNodeMap) = 0;
      virtual HRESULT ValidateXML() = 0;
 };
+
+
