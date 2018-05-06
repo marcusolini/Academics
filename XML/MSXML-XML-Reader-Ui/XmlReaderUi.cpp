@@ -4,66 +4,7 @@
 // you may not use this file except in compliance with the License.
 
 
-#include <Windows.h>
-#include <Windowsx.h>
-#include <CommCtrl.h>
-#include <tchar.h>
-#include "resource.h"
-#include <sstream>
-#include <thread>
-
-
-#pragma comment(linker, \
-  "\"/manifestdependency:type='Win32' "\
-  "name='Microsoft.Windows.Common-Controls' "\
-  "version='6.0.0.0' "\
-  "processorArchitecture='*' "\
-  "publicKeyToken='6595b64144ccf1df' "\
-  "language='*'\"")
-
-#pragma comment(lib, "ComCtl32.lib")
-
-
-#pragma comment(lib, "MSXML-Library.lib")
-#include "..\\MSXML-Library\\IMsXmlLib.h"
-
-
-// GLOBAL - DECLARATIONS
-std::wstring LoadStringFromResourceId(const UINT id);
-IMsXmlLib* g_pIMsXmlLib = nullptr;
-std::wstring g_sXmlFilename;
-std::wstring g_sXmlData;
-XML_NODE_MAP g_xmlNodeMap;
-
-#define WM_USER_XML_THREAD_COMPLETE (WM_USER + 100)
-#define WM_USER_XML_DATA_READY (WM_USER + 101)
-
-// THREAD
-void XMLThreadFunc(const HWND hDlg, const LPARAM lParam);
-
-
-// MAIN XML DIALOG - DECLARATIONS
-int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE h0, LPTSTR lpCmdLine, int nCmdShow);
-INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
-void onMainInitDialog(const HWND hDlg);
-void onMainOpenFile(const HWND hDlg);
-void onMainLoadXML(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
-void onMainOpenXML(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
-void onMainOk(const HWND hDlg);
-void onMainCancel(const HWND hDlg);
-void onMainClose(const HWND hDlg);
-
-// OPEN XML DIALOG - DECLARATIONS
-INT_PTR CALLBACK OpenXmlDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam);
-void onOpenXmlDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
-void onOpenXmlDialogClose(const HWND hDlg, const WPARAM wParam);
-void onOpenXmlDialogDataReady(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
-
-// XML PROGRESS - DECLARATIONS
-INT_PTR CALLBACK XmlProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam);
-void onXmlProgressDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
-void onXmlProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
-
+#include "XmlReaderUi.h"
 
 // GLOBAL - DEFINITIONS
 
@@ -71,21 +12,26 @@ std::wstring LoadStringFromResourceId(const UINT id)
 {
      const size_t nString = 2048;
      wchar_t szString[nString] = {};
+
+     std::wstring sString;
+
      if (LoadString(GetModuleHandle(nullptr), id, szString, nString - 1))
      {
-          return szString;
+          sString = szString;
      }
      else
      {
           if (LoadString(GetModuleHandle(nullptr), IDS_RESOURCE_STRING_MISSING, szString, nString - 1))
           {
-               return szString;
+               sString = szString;
           }
           else
           {
-               return TEXT("Resource String Missing");
+               sString = TEXT("Resource String Missing");
           }
      }
+
+     return sString;
 }
 
 
@@ -315,12 +261,10 @@ void onMainOpenXML(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
      hTemp = GetDlgItem(hDlg, IDCLOSE);
      Edit_Enable(hTemp, FALSE);
 
-     SendDlgItemMessage(hDlg, IDC_LoadXmlButton, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_UNLOAD_XML)).c_str());
      SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS_XML_OPENNED)).c_str());
 
      OpenXmlDialog = DialogBoxParam(nullptr, MAKEINTRESOURCE(IDD_XmlOutputDialog), hDlg, OpenXmlDialogProc, lParam);
 
-     SendDlgItemMessage(hDlg, IDC_LoadXmlButton, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_UNLOAD_XML)).c_str());
      SendDlgItemMessage(hDlg, IDC_StatusText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_STATUS_XML_LOADED)).c_str());
      
      hTemp = GetDlgItem(hDlg, IDC_LoadXmlButton);
@@ -553,7 +497,7 @@ void XMLThreadFunc(const HWND hDlg, LPARAM lParam)
      ss << std::this_thread::get_id();
      id = std::stoull(ss.str());
 
-     std::this_thread::yield();
+     std::this_thread::sleep_for(std::chrono::milliseconds{ 750 });  // For Progress Bar Show
 
      switch (lParam)
      {
@@ -568,22 +512,20 @@ void XMLThreadFunc(const HWND hDlg, LPARAM lParam)
                MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_GET_XML_DATA)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
           }
 
-          //std::this_thread::sleep_for(std::chrono::milliseconds{ 3000 });  // Progress Bar Testing
-
           break;
      }
      case IDC_OpenParsedXmlButton:
      {
           g_xmlNodeMap.clear();
 
-          hrResult = g_pIMsXmlLib->GetParsedXML(g_xmlNodeMap);
+          std::wstring search = TEXT("Participant");
+          //std::wstring search = TEXT("Participants//Participant");
+          hrResult = g_pIMsXmlLib->GetParsedXML(search, g_xmlNodeMap);
 
           if (FAILED(hrResult))
           {
                MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_GET_XML_DATA)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
           }
-
-          //std::this_thread::sleep_for(std::chrono::milliseconds{ 3000 });  // Progress Bar Testing
 
           break;
      }
@@ -596,8 +538,6 @@ void XMLThreadFunc(const HWND hDlg, LPARAM lParam)
           {
                MessageBox(hDlg, (LoadStringFromResourceId(IDS_UNABLE_TO_LOAD_XML_FILE)).c_str(), (LoadStringFromResourceId(IDS_ERROR)).c_str(), (MB_ICONEXCLAMATION | MB_OK));
           }
-
-          //std::this_thread::sleep_for(std::chrono::milliseconds{ 3000 });  // Progress Bar Testing
 
           break;
      }
