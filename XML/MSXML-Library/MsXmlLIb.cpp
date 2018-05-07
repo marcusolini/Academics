@@ -354,9 +354,7 @@ HRESULT CMsXmlLib::GetParsedXML(IN const std::wstring& parseNode, OUT XML_NODE_M
                CComBSTR bstrTemp;
                CComPtr<IXMLDOMNodeList> pNodes;
 
-               tempSearch = TEXT("//") + parseNode + TEXT("[1]/*");
                tempSearch = TEXT("//") + parseNode;
-
                bstrTemp = tempSearch.c_str();
                CHECK_SUCCEEDED_LOG_THROW(m_pDoc->selectNodes(bstrTemp, &pNodes));
                bstrTemp.Empty();

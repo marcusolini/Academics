@@ -36,6 +36,7 @@ std::wstring LoadStringFromResourceId(const UINT id);
 
 IMsXmlLib* g_pIMsXmlLib = nullptr;
 std::wstring g_sXmlFilename;
+std::wstring g_sXmlParseName;
 std::wstring g_sXmlData;
 XML_NODE_MAP g_xmlNodeMap;
 
@@ -62,9 +63,15 @@ INT_PTR CALLBACK OpenXmlDialogProc(const HWND hDlg, const UINT uMsg, const WPARA
 void onOpenXmlDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 void onOpenXmlDialogClose(const HWND hDlg, const WPARAM wParam);
 void onOpenXmlDialogDataReady(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
+void onTraverseParsedXmlData(const HWND hDlg, const WPARAM wParam, const LPARAM lParam, const XML_NODE_MAP& xmlNodeMap, std::wostringstream& xmlStream);
 
 // XML PROGRESS - DECLARATIONS
 INT_PTR CALLBACK XmlProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam);
 void onXmlProgressDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 void onXmlProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 
+// XML PARSE INPUT
+INT_PTR CALLBACK EnterParsedXmlDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam);
+void onEnterParsedXmlDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
+void onEnterParsedXmlDialogOk(const HWND hDlg, const WPARAM wParam);
+void onEnterParsedXmlDialogCancel(const HWND hDlg, const WPARAM wParam);

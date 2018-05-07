@@ -372,15 +372,28 @@ void onOpenXmlDialogDataReady(const HWND hDlg, const WPARAM wParam, const LPARAM
           }
           case IDC_OpenXmlButton:
           {
-               SendDlgItemMessage(hDlg, IDC_XmlOutputText, WM_SETTEXT, (WPARAM)0, (LPARAM)(g_sXmlData.c_str()));
                SendDlgItemMessage(hDlg, IDC_StatusXmlFileName, WM_SETTEXT, (WPARAM)0, (LPARAM)(g_sXmlFilename.c_str()));
+               SendDlgItemMessage(hDlg, IDC_XmlOutputText, WM_SETTEXT, (WPARAM)0, (LPARAM)(g_sXmlData.c_str()));
                break;
           }
           case IDC_OpenParsedXmlButton:
           {
+               std::wostringstream xmlStream;
+
                SendDlgItemMessage(hDlg, IDC_StatusXmlFileName, WM_SETTEXT, (WPARAM)0, (LPARAM)(g_sXmlFilename.c_str()));
 
-               // TODO
+               for (auto root : g_xmlNodeMap)
+               {
+                    if (TEXT("element") == root.second.type)
+                    {
+                         xmlStream << root.second.name << TEXT("\r\n");
+
+                         onTraverseParsedXmlData(hDlg, wParam, lParam, root.second.children, xmlStream);
+                    }
+               }
+
+               SendDlgItemMessage(hDlg, IDC_XmlOutputText, WM_SETTEXT, (WPARAM)0, (LPARAM)(xmlStream.str().c_str()));
+
                break;
           }
           } // switch
@@ -444,10 +457,20 @@ void onXmlProgressDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM 
           {
                SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_PARSING_XML)).c_str());
 
+               g_sXmlParseName.clear();
                g_xmlNodeMap.clear();
 
-               std::thread thread = std::thread(XMLThreadFunc, hDlg, lParam);
-               thread.detach(); // Thread will be communicated with SendMessage. Will not be joined.
+               INT_PTR OpenXmlDialog = DialogBoxParam(nullptr, MAKEINTRESOURCE(IDD_ParseXmlData), hDlg, EnterParsedXmlDialogProc, lParam);
+
+               if (SUCCEEDED(OpenXmlDialog))
+               {
+                    std::thread thread = std::thread(XMLThreadFunc, hDlg, lParam);
+                    thread.detach(); // Thread will be communicated with SendMessage. Will not be joined.
+               }
+               else
+               {
+                    SendMessage(hDlg, WM_USER_XML_THREAD_COMPLETE, (WPARAM)OpenXmlDialog, (LPARAM)lParam);
+               }
 
                break;
           }
@@ -486,6 +509,23 @@ void onXmlProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPA
 
 
 
+void onTraverseParsedXmlData(const HWND hDlg, const WPARAM wParam, const LPARAM lParam, const XML_NODE_MAP& xmlNodeMap, std::wostringstream& xmlStream)
+{
+     HRESULT hr = ERROR_SUCCESS;
+
+     for (auto element : xmlNodeMap)
+     {
+          if (TEXT("element") == element.second.type)
+          {
+               xmlStream << element.second.name << TEXT(":") << element.second.text << TEXT("  ");
+
+               onTraverseParsedXmlData(hDlg, wParam, lParam, element.second.children, xmlStream);
+          }
+     }
+     xmlStream << TEXT("\r\n");
+}
+
+
 
 void XMLThreadFunc(const HWND hDlg, LPARAM lParam)
 {
@@ -517,10 +557,7 @@ void XMLThreadFunc(const HWND hDlg, LPARAM lParam)
      case IDC_OpenParsedXmlButton:
      {
           g_xmlNodeMap.clear();
-
-          std::wstring search = TEXT("Participant");
-          //std::wstring search = TEXT("Participants//Participant");
-          hrResult = g_pIMsXmlLib->GetParsedXML(search, g_xmlNodeMap);
+          hrResult = g_pIMsXmlLib->GetParsedXML(g_sXmlParseName, g_xmlNodeMap);
 
           if (FAILED(hrResult))
           {
@@ -548,3 +585,59 @@ void XMLThreadFunc(const HWND hDlg, LPARAM lParam)
 }
 
 
+INT_PTR CALLBACK EnterParsedXmlDialogProc(const HWND hDlg, const UINT uMsg, const WPARAM wParam, const LPARAM lParam)
+{
+     switch (uMsg)
+     {
+     case WM_INITDIALOG:
+          onEnterParsedXmlDialogInit(hDlg, wParam, lParam);
+          return TRUE;
+          break;
+
+     case WM_COMMAND:
+     { 
+          switch (LOWORD(wParam))
+          {
+          case IDCANCEL:
+               onEnterParsedXmlDialogCancel(hDlg, E_FAIL);
+               return TRUE;
+               break;
+          case IDOK:
+               onEnterParsedXmlDialogOk(hDlg, 0);
+               return TRUE;
+               break;
+          } // switch
+     }
+     } // switch
+
+     return FALSE;
+}
+
+void onEnterParsedXmlDialogInit(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
+{
+     g_sXmlParseName.clear(); 
+
+     SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_PARSE_XML_DATA)).c_str());
+
+     SendDlgItemMessage(hDlg, IDC_EnterParseName, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_PARSE_ENTER_NAME)).c_str());
+     SendDlgItemMessage(hDlg, IDOK, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_OK)).c_str());
+     SendDlgItemMessage(hDlg, IDCANCEL, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_CANCEL)).c_str());
+}
+
+void onEnterParsedXmlDialogOk(const HWND hDlg, const WPARAM wParam)
+{
+     wchar_t szTemp[1024] = {};
+     WORD wTemp = 0;
+
+     GetDlgItemText(hDlg, IDC_ParseNodeNameText, szTemp, 1024);
+
+     g_sXmlParseName = szTemp;
+
+     onEnterParsedXmlDialogCancel(hDlg, wParam);
+}
+
+
+void onEnterParsedXmlDialogCancel(const HWND hDlg, const WPARAM wParam)
+{
+     EndDialog(hDlg, wParam);
+}

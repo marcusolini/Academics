@@ -26,6 +26,10 @@
 #define IDS_OPENNING_XML                124
 #define IDS_PARSING_XML                 125
 #define IDS_LOADING_XML                 126
+#define IDS_OK                          127
+#define IDS_CANCEL                      128
+#define IDS_PARSE_XML_DATA              129
+#define IDS_PARSE_ENTER_NAME            130
 #define IDC_OpenFileButton              1001
 #define IDC_XmlFilename                 1003
 #define IDC_XmlFilenameStatic           1004
@@ -38,17 +42,20 @@
 #define IDC_StatusXmlFileName           1015
 #define IDC_OpenParsedXmlButton         1016
 #define IDC_XmlProgress                 1017
+#define IDC_ParseNodeNameText           1018
+#define IDC_EnterParseName              1020
 #define IDD_XmlReaderMenu               10001
 #define IDD_XmlOutputDialog             10002
 #define IDD_XmlProgressDialog           10003
+#define IDD_ParseXmlData                10004
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        10004
+#define _APS_NEXT_RESOURCE_VALUE        10006
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1019
+#define _APS_NEXT_CONTROL_VALUE         1021
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
