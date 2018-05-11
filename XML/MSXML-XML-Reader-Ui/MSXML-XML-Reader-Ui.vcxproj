@@ -154,6 +154,9 @@
   <ItemGroup>
     <ResourceCompile Include="MSXML-XML-Reader-Ui.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="XMLs\5k-Race-Participants-with-XML-Schema.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

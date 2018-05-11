@@ -1,0 +1,24 @@
+## Git RESTful API Examples
+
+@username = Enter-your-username
+@password = Enter-your-token-or-password
+
+GET https://api.github.com
+Authorization: Basic {{username}} {{password}}
+
+GET https://api.github.com/user/repos
+Authorization: Basic {{username}} {{password}}
+
+GET https://api.github.com/repos/marcusolini/monkey/subscription
+Authorization: Basic {{username}} {{password}}
+
+GET https://api.github.com/repos/marcusolini/monkey/subscribers
+Authorization: Basic {{username}} {{password}}
+
+POST https://api.github.com/user/repos
+Authorization: Basic {{username}} {{password}}
+Content-Type: application/json
+
+{
+    "name" : "apitest"
+}

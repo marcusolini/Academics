@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="XMLs">
+      <UniqueIdentifier>{2d3994a3-ea8e-490a-ad42-55ef4c86ec01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XmlReaderUi.cpp">
@@ -31,5 +34,10 @@
     <ResourceCompile Include="MSXML-XML-Reader-Ui.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="XMLs\5k-Race-Participants-with-XML-Schema.xml">
+      <Filter>XMLs</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
