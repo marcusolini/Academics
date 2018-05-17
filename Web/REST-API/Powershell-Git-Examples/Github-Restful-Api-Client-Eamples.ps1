@@ -16,7 +16,7 @@ $postRepoJson = $postRepoBody | ConvertTo-Json
 
 try
 {
-    $response = Invoke-RestMethod https://api.github.com -Method Get -Headers $auth
+    $response = Invoke-RestMethod https://api.github.com -Method Get -Headers @{Authorization = "Basic $userToken"}
     Write-Output $response
 }
 catch
@@ -26,7 +26,7 @@ catch
 
 try
 {
-    $response = Invoke-RestMethod https://api.github.com/user/repos -Method Get -Headers $auth
+    $response = Invoke-RestMethod https://api.github.com/user/repos -Method Get -Headers @{Authorization = "Basic $userToken"}
     Write-Output $response
 }
 catch
@@ -36,7 +36,7 @@ catch
 
 try
 {
-    $response = Invoke-RestMethod https://api.github.com/$userrepo/$reponame -Method Get -Headers $auth
+    $response = Invoke-RestMethod https://api.github.com/repos/$userrepo/$reponame -Method Get -Headers @{Authorization = "Basic $userToken"}
     Write-Output $response
 }
 catch
@@ -46,7 +46,7 @@ catch
 
 try
 {
-    $response = Invoke-RestMethod https://api.github.com/$userrepo/$reponame/subscription -Method Get -Headers $auth
+    $response = Invoke-RestMethod https://api.github.com/repos/$userrepo/$reponame/subscription -Method Get -Headers @{Authorization = "Basic $userToken"}
     Write-Output $response
 }
 catch
@@ -56,7 +56,7 @@ catch
 
 try
 {
-    $response = Invoke-RestMethod https://api.github.com/$userrepo/$reponame/subscribers -Method Get -Headers $auth
+    $response = Invoke-RestMethod https://api.github.com/repos/$userrepo/$reponame/subscribers -Method Get -Headers @{Authorization = "Basic $userToken"}
     Write-Output $response
 }
 catch
