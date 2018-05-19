@@ -191,6 +191,7 @@ void onMainEncrypt(const HWND hDlg)
           try
           {
                CHECK_SUCCEEDED_LOG_THROW(MemoryCrypt::Decrypt(sData));
+               SendDlgItemMessage(hDlg, IDC_DataEdit, WM_SETTEXT, (WPARAM)0, (LPARAM)(sData.c_str()));
           }
           catch (HRESULT& check_catch_hresult)
           {
@@ -199,7 +200,6 @@ void onMainEncrypt(const HWND hDlg)
           }
 
           SendDlgItemMessage(hDlg, IDC_EncryptBtn, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_ENCRYPT)).c_str());
-          //SendDlgItemMessage(hDlg, IDC_DataEdit, WM_SETTEXT, (WPARAM)0, (LPARAM)(sData.c_str()));
 
           hTemp = GetDlgItem(hDlg, IDC_DataEdit);
           Edit_Enable(hTemp, TRUE);
