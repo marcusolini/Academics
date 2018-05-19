@@ -62,6 +62,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Header Files", "Header File
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemCryptUi", "MemoryCrypt\MemCryptUi\MemCryptUi.vcxproj", "{063B75BA-FB82-4E79-B925-9C652366C533}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{1C125B9D-4E14-4650-990E-39225529164D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OAuth", "OAuth", "{91288B8B-ED4C-4303-A937-DC7F7DA1425E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Powershell", "Powershell", "{63F4013C-0A7E-43DC-A0A1-7CB4618FDC12}"
+	ProjectSection(SolutionItems) = preProject
+		Web\OAuth\Powershell\OAuth-Client-Grant-Type-Example.ps1 = Web\OAuth\Powershell\OAuth-Client-Grant-Type-Example.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REST", "REST", "{01C30D4C-EEEC-4E67-AD7E-20005D2CD3A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Powershell", "Powershell", "{1D50989A-A342-4E56-BF0D-123D39A3D1F3}"
+	ProjectSection(SolutionItems) = preProject
+		Web\REST-API\Powershell-Git-Examples\Github-Restful-Api-Client-Eamples.ps1 = Web\REST-API\Powershell-Git-Examples\Github-Restful-Api-Client-Eamples.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VSCode", "VSCode", "{41AB945E-7FCD-4A6D-97E9-0FCE3DC70FA0}"
+	ProjectSection(SolutionItems) = preProject
+		Web\REST-API\VSCode-GIT-Client-Examples\Github-Restful-Api-Client-Eamples.http = Web\REST-API\VSCode-GIT-Client-Examples\Github-Restful-Api-Client-Eamples.http
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Http", "Http", "{BB43F4E8-7775-4237-859E-1053E635E9CF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinHttpClient", "Web\Http\WinHttpClient\WinHttpClient.vcxproj", "{B3ABE379-AD0C-4178-BC0B-300215929043}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -214,6 +239,14 @@ Global
 		{063B75BA-FB82-4E79-B925-9C652366C533}.Release|x64.Build.0 = Release|x64
 		{063B75BA-FB82-4E79-B925-9C652366C533}.Release|x86.ActiveCfg = Release|Win32
 		{063B75BA-FB82-4E79-B925-9C652366C533}.Release|x86.Build.0 = Release|Win32
+		{B3ABE379-AD0C-4178-BC0B-300215929043}.Debug|x64.ActiveCfg = Debug|x64
+		{B3ABE379-AD0C-4178-BC0B-300215929043}.Debug|x64.Build.0 = Debug|x64
+		{B3ABE379-AD0C-4178-BC0B-300215929043}.Debug|x86.ActiveCfg = Debug|Win32
+		{B3ABE379-AD0C-4178-BC0B-300215929043}.Debug|x86.Build.0 = Debug|Win32
+		{B3ABE379-AD0C-4178-BC0B-300215929043}.Release|x64.ActiveCfg = Release|x64
+		{B3ABE379-AD0C-4178-BC0B-300215929043}.Release|x64.Build.0 = Release|x64
+		{B3ABE379-AD0C-4178-BC0B-300215929043}.Release|x86.ActiveCfg = Release|Win32
+		{B3ABE379-AD0C-4178-BC0B-300215929043}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -235,6 +268,13 @@ Global
 		{5AC349EF-6FD2-4983-AD58-FA7AEE2B711B} = {47674878-2620-4ED1-82B3-EA8A38EE7393}
 		{B2EED468-B223-4658-B0D9-E3A9CB5D0732} = {47674878-2620-4ED1-82B3-EA8A38EE7393}
 		{063B75BA-FB82-4E79-B925-9C652366C533} = {47674878-2620-4ED1-82B3-EA8A38EE7393}
+		{91288B8B-ED4C-4303-A937-DC7F7DA1425E} = {1C125B9D-4E14-4650-990E-39225529164D}
+		{63F4013C-0A7E-43DC-A0A1-7CB4618FDC12} = {91288B8B-ED4C-4303-A937-DC7F7DA1425E}
+		{01C30D4C-EEEC-4E67-AD7E-20005D2CD3A3} = {1C125B9D-4E14-4650-990E-39225529164D}
+		{1D50989A-A342-4E56-BF0D-123D39A3D1F3} = {01C30D4C-EEEC-4E67-AD7E-20005D2CD3A3}
+		{41AB945E-7FCD-4A6D-97E9-0FCE3DC70FA0} = {01C30D4C-EEEC-4E67-AD7E-20005D2CD3A3}
+		{BB43F4E8-7775-4237-859E-1053E635E9CF} = {1C125B9D-4E14-4650-990E-39225529164D}
+		{B3ABE379-AD0C-4178-BC0B-300215929043} = {BB43F4E8-7775-4237-859E-1053E635E9CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F83E4DC3-BF69-4AD1-9984-6581AABB0BD1}
