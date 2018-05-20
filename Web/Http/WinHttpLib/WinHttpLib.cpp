@@ -18,21 +18,23 @@ public:
      CWinHttpLib();
      virtual ~CWinHttpLib();
 
-     HRESULT Open( OPTIONAL IN const std::wstring& sApplicationName                       = IWinHttpLib::DEFAULT_APP_NAME,
-                   OPTIONAL IN const IWinHttpLib::EProxyAccessType eProxyAccessType       = IWinHttpLib::DEFAULT_PROXY_ACCESS_TYPE,
-                   OPTIONAL IN const std::wstring& sProxyName                             = IWinHttpLib::NO_PROXY_NAME,
-                   OPTIONAL IN const std::wstring& sProxyBypassList                       = IWinHttpLib::NO_PROXY_BYPASS
+     HRESULT Open( OPTIONAL IN const std::wstring&                    sApplicationName         = IWinHttpLib::DEFAULT_APP_NAME,
+                   OPTIONAL IN const IWinHttpLib::EProxyAccessType    eProxyAccessType         = IWinHttpLib::DEFAULT_PROXY_ACCESS_TYPE,
+                   OPTIONAL IN const std::wstring&                    sProxyName               = IWinHttpLib::NO_PROXY_NAME,
+                   OPTIONAL IN const std::wstring&                    sProxyBypassList         = IWinHttpLib::NO_PROXY_BYPASS
                  );
 
-     HRESULT Connect( IN const std::wstring& sServerName,
-                      OPTIONAL IN const WORD wServerPort    = IWinHttpLib::DEFAULT_SERVER_PORT
+     HRESULT Connect( IN const std::wstring&           sServerName,
+                      OPTIONAL IN const WORD           wServerPort         = IWinHttpLib::DEFAULT_SERVER_PORT
                     );
 
-     HRESULT OpenRequest( IN const IWinHttpLib::EVerb eVerb,
-                          IN const std::wstring sObjectPathName,
-                          OPTIONAL IN const std::wstring sVersion = IWinHttpLib::DEFAULT_VERSION,
-                          OPTIONAL IN const std::wstring sReferrer = IWinHttpLib::NO_REFERER
-                        );
+     HRESULT OpenRequest( IN const IWinHttpLib::EVerb                           eVerb,
+                          IN const std::wstring&                                sObjectPathName,
+                          OPTIONAL IN const std::wstring&                       sVersion                 = IWinHttpLib::DEFAULT_VERSION,
+                          OPTIONAL IN const std::wstring&                       sReferrer                = IWinHttpLib::NO_REFERER,
+                          OPTIONAL IN const IWinHttpLib::VAcceptTypesArray*     pAcceptTypesArray        = nullptr,
+                          OPTIONAL IN const DWORD                               dwFlags                  = IWinHttpLib::DEFAULT_FLAGS
+     );
 
      // TODO: Add a redo call with that uses all saved parameters???
 
@@ -44,22 +46,31 @@ private:
 
      const std::wstring m_sDefaultApplicationName = TEXT("WinHttpClientLib/1.0");
      
-     // Open
+     // WinHttpOpen
      HINTERNET m_hSession = nullptr;
      std::wstring m_sApplicationName;
      EProxyAccessType m_eProxyAccessType = EProxyAccessType::NoProxy;
      std::wstring m_sProxyName;
      std::wstring m_sProxyBypassList;
-     DWORD m_dwFlags = 0;   // WINHTTP_FLAG_ASYNC
+     DWORD m_dwOpenFlags = 0;   // WINHTTP_FLAG_ASYNC
 
 
-     //Connect
+     // WinHttpConnect
      HINTERNET m_hConnect = nullptr;
      std::wstring m_sServerName;
      WORD m_wServerPort = IWinHttpLib::DEFAULT_SERVER_PORT;
 
+     // WinHttpOpenRequest
+     HINTERNET m_hRequest = nullptr;
+     IWinHttpLib::EVerb m_eVerb = IWinHttpLib::EVerb::Get;
+     std::wstring m_sObjectPathName;
+     std::wstring m_sVersion;
+     std::wstring m_sReferrer;
+     IWinHttpLib::VAcceptTypesArray m_vAcceptTypesArray;
+     DWORD m_dwRequestFlags = IWinHttpLib::DEFAULT_FLAGS;
 
      DWORD TranslateProxyAccessType(EProxyAccessType eProxyAccessType);
+     std::wstring TranslateVerb(IWinHttpLib::EVerb eVerb);
 };
 
 
@@ -134,6 +145,7 @@ CWinHttpLib::~CWinHttpLib()
      {
           CHECK_BOOL_TRUE_LAST_ERROR_LOG_NOTHROW(WinHttpCloseHandle(m_hSession));
           CHECK_BOOL_TRUE_LAST_ERROR_LOG_NOTHROW(WinHttpCloseHandle(m_hConnect));
+          CHECK_BOOL_TRUE_LAST_ERROR_LOG_NOTHROW(WinHttpCloseHandle(m_hRequest));
      }
      catch (HRESULT& check_catch_hresult)
      {
@@ -143,7 +155,11 @@ CWinHttpLib::~CWinHttpLib()
 }
 
 
-HRESULT CWinHttpLib::Open(OPTIONAL IN const std::wstring& sApplicationName, OPTIONAL IN const IWinHttpLib::EProxyAccessType eProxyAccessType, OPTIONAL IN const std::wstring& sProxyName, OPTIONAL IN const std::wstring& sProxyBypassList)
+HRESULT CWinHttpLib::Open( OPTIONAL IN const std::wstring&                      sApplicationName,
+                           OPTIONAL IN const IWinHttpLib::EProxyAccessType      eProxyAccessType,
+                           OPTIONAL IN const std::wstring&                      sProxyName, 
+                           OPTIONAL IN const std::wstring&                      sProxyBypassList
+                         )
 {
      HRESULT hrResult = ERROR_SUCCESS;
 
@@ -178,7 +194,7 @@ HRESULT CWinHttpLib::Open(OPTIONAL IN const std::wstring& sApplicationName, OPTI
                m_sApplicationName = m_sDefaultApplicationName;
           }
 
-          CHECK_NOT_NULL_LAST_ERROR_LOG_THROW( m_hSession = WinHttpOpen(m_sApplicationName.c_str(), dwProxyAccessType, pwszProxyName, pwszProxyBypassList, m_dwFlags) );
+          CHECK_NOT_NULL_LAST_ERROR_LOG_THROW( m_hSession = WinHttpOpen(m_sApplicationName.c_str(), dwProxyAccessType, pwszProxyName, pwszProxyBypassList, m_dwOpenFlags) );
      }
      catch (HRESULT& check_catch_hresult)
      {
@@ -190,7 +206,9 @@ HRESULT CWinHttpLib::Open(OPTIONAL IN const std::wstring& sApplicationName, OPTI
 }
 
 
-HRESULT CWinHttpLib::Connect(IN const std::wstring& sServerName, OPTIONAL IN const WORD wServerPort)
+HRESULT CWinHttpLib::Connect( IN const std::wstring&        sServerName, 
+                              OPTIONAL IN const WORD        wServerPort
+                            )
 {
      HRESULT hrResult = ERROR_SUCCESS;
 
@@ -212,27 +230,122 @@ HRESULT CWinHttpLib::Connect(IN const std::wstring& sServerName, OPTIONAL IN con
      return hrResult;
 }
 
-HRESULT CWinHttpLib::OpenRequest(IN const IWinHttpLib::EVerb eVerb, IN const std::wstring sObjectPathName, OPTIONAL IN const std::wstring sVersion, OPTIONAL IN const std::wstring sReferrer)
+
+HRESULT CWinHttpLib::OpenRequest( IN const IWinHttpLib::EVerb                        eVerb, 
+                                  IN const std::wstring&                             sObjectPathName,
+                                  OPTIONAL IN const std::wstring&                    sVersion,
+                                  OPTIONAL IN const std::wstring&                    sReferrer,
+                                  OPTIONAL IN const IWinHttpLib::VAcceptTypesArray*  pAcceptTypesArray,
+                                  OPTIONAL IN const DWORD                            dwFlags
+                                )
 {
      HRESULT hrResult = ERROR_SUCCESS;
+
+     std::wstring sVerb;
+
+     LPCWSTR pwszVerb = nullptr;
+     LPCWSTR pwszObjectName = nullptr;
+     LPCWSTR pwszVersion = nullptr;
+     LPCWSTR pwszReferrer = WINHTTP_NO_REFERER;
+     LPCWSTR* pwszAcceptTypes = WINHTTP_DEFAULT_ACCEPT_TYPES;
 
      try
      {
           if (nullptr == m_hConnect) throw E_INVALIDARG;
+
+          m_eVerb = eVerb;
+          sVerb = TranslateVerb(m_eVerb);
+
+          m_sObjectPathName = sObjectPathName;
+          pwszObjectName = m_sObjectPathName.size() ? m_sObjectPathName.c_str() : nullptr;
+
+          m_sVersion = sVersion;
+          pwszVersion = m_sVersion.size() ? m_sVersion.c_str() : nullptr;
+
+          m_sReferrer = sReferrer;
+          pwszReferrer = m_sReferrer.size() ? m_sReferrer.c_str() : WINHTTP_NO_REFERER;
+
+          if (nullptr == pAcceptTypesArray)
+          {
+               pwszAcceptTypes = WINHTTP_DEFAULT_ACCEPT_TYPES;
+          }
+          else
+          {
+               m_vAcceptTypesArray = *pAcceptTypesArray;
+               size_t nvAcceptTypesArray = m_vAcceptTypesArray.size();
+
+               pwszAcceptTypes = new LPCWSTR[nvAcceptTypesArray];
+
+               for (auto acceptType = m_vAcceptTypesArray.begin(); acceptType != m_vAcceptTypesArray.end(); acceptType++, pwszAcceptTypes++)
+               {
+                    *pwszAcceptTypes = acceptType->c_str();
+               }
+          }
+
+          m_dwRequestFlags = dwFlags;
+
+
+          CHECK_NOT_NULL_LAST_ERROR_LOG_THROW( m_hRequest = WinHttpOpenRequest(m_hConnect, sVerb.c_str(), pwszObjectName, pwszVersion, pwszReferrer, pwszAcceptTypes, m_dwRequestFlags) );
      }
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
      }
 
+     if (nullptr != pwszAcceptTypes)
+     {
+          delete[] pwszAcceptTypes;
+     }
+
      return hrResult;
 }
 
 
-
-DWORD CWinHttpLib::TranslateProxyAccessType(EProxyAccessType eProxyAccessType)
+std::wstring CWinHttpLib::TranslateVerb(IWinHttpLib::EVerb eVerb)
 {
-     DWORD dwProxyAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
+     std::wstring sVerb;
+
+     switch (eVerb)
+     {
+     case IWinHttpLib::EVerb::Get:
+          sVerb = TEXT("GET");
+          break;
+     case IWinHttpLib::EVerb::Post:
+          sVerb = TEXT("POST");
+          break;
+     case IWinHttpLib::EVerb::Put:
+          sVerb = TEXT("PUT");
+          break;
+     case IWinHttpLib::EVerb::Delete:
+          sVerb = TEXT("DELETE");
+          break;
+     case IWinHttpLib::EVerb::Head:
+          sVerb = TEXT("HEAD");
+          break;
+     case IWinHttpLib::EVerb::Options:
+          sVerb = TEXT("OPTIONS");
+          break;
+     case IWinHttpLib::EVerb::Patch:
+          sVerb = TEXT("PATCH");
+          break;
+     case IWinHttpLib::EVerb::Connect:
+          sVerb = TEXT("CONNECT");
+          break;
+     case IWinHttpLib::EVerb::Trace:
+          sVerb = TEXT("TRACE");
+          break;
+     default:
+          sVerb = TEXT("GET");
+          break;
+     };
+
+     return sVerb;
+}
+
+
+DWORD CWinHttpLib::TranslateProxyAccessType(IWinHttpLib::EProxyAccessType eProxyAccessType)
+{
+     DWORD dwProxyAccessType = WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY;
 
      switch (eProxyAccessType)
      {
@@ -245,9 +358,8 @@ DWORD CWinHttpLib::TranslateProxyAccessType(EProxyAccessType eProxyAccessType)
      case EProxyAccessType::AutomaticProxy:
           dwProxyAccessType = WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY;
           break;
-     case EProxyAccessType::Default:
      default:
-          dwProxyAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
+          dwProxyAccessType = WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY;
           break;
      };
 
