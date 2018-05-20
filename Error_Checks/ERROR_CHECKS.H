@@ -86,3 +86,19 @@
           throw hresult_error_check_result; \
      } \
 } \
+
+#define CHECK_NOT_NULL_LAST_ERROR_LOG_THROW( error_check_call )  CHECK_NOT_NULL_LAST_ERROR_HANDLER( error_check_call, CHECK_LOG_ERROR, CHECK_THROW_ERROR )
+#define CHECK_NOT_NULL_LAST_ERROR_NOLOG_THROW( error_check_call )  CHECK_NOT_NULL_LAST_ERROR_HANDLER( error_check_call, CHECK_NOLOG_ERROR, CHECK_THROW_ERROR )
+#define CHECK_NOT_NULL_LAST_ERROR_LOG_NOTHROW( error_check_call )  CHECK_NOT_NULL_LAST_ERROR_HANDLER( error_check_call, CHECK_LOG_ERROR, CHECK_NOTHROW_ERROR )
+#define CHECK_NOT_NULL_LAST_ERROR_NOLOG_NOTHROW( error_check_call )  CHECK_NOT_NULL_LAST_ERROR_HANDLER( error_check_call, CHECK_NOLOG_ERROR, CHECK_NOTHROW_ERROR )
+#define CHECK_NOT_NULL_LAST_ERROR_HANDLER( error_check_call, error_check_log, error_check_throw ) \
+{ \
+     if ( nullptr == (error_check_call) ) \
+     { \
+        HRESULT hresult_error_check_result = HRESULT_FROM_WIN32(::GetLastError()); \
+        if ( CHECK_LOG_ERROR == error_check_log ) \
+          std::wcout << TEXT("OPERATION:") << #error_check_call << TEXT(" STATUS:") << std::hex << std::showbase << hresult_error_check_result << std::dec << TEXT(" LOCATION:") << __FUNCTION__ << TEXT(":") << __LINE__ << std::endl; \
+        if ( CHECK_THROW_ERROR == error_check_throw ) \
+          throw hresult_error_check_result; \
+     } \
+} \

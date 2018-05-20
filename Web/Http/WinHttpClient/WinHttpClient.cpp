@@ -18,6 +18,8 @@
 
 #pragma comment(lib, "ComCtl32.lib")
 
+#include "../WinHttpLib/WinHttpLib.h"
+#pragma comment(lib, "WinHttpLib.lib")
 
 // GLOBALS
 
