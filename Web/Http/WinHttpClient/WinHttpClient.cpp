@@ -5,7 +5,7 @@
 #include <string>
 #include "resource.h"
 
-#include "../../../MemoryCrypt/inc/MemoryCrypt.h"
+//#include "../../../MemoryCrypt/inc/MemoryCrypt.h"
 #include "../../../Error_Checks/ERROR_CHECKS.H"
 
 #pragma comment(linker, \
@@ -134,6 +134,28 @@ void onInitMainDialog(const HWND hDlg)
 
      SendDlgItemMessage(hDlg, IDC_ProtoStaticText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_PROTOCOL_TEXT)).c_str());
 
+
+
+     HRESULT hrResult = ERROR_SUCCESS;
+     IWinHttpLib* pIWinHttpLib = nullptr;
+
+     hrResult = IWinHttpLib::CreateInstance(&pIWinHttpLib);
+     hrResult = pIWinHttpLib->Open();
+     hrResult = pIWinHttpLib->Connect();
+     hrResult = pIWinHttpLib->OpenRequest();
+
+     IWinHttpLib::EAuthTargets eAuthTargets = IWinHttpLib::EAuthTargets::TargetServer;
+     IWinHttpLib::EAuthScheme  eAuthScheme = IWinHttpLib::EAuthScheme::Basic;
+     std::wstring sUserName = TEXT("marcusolini");
+     std::wstring sPassword = TEXT("be2065ea39df814f9cc77f47e98cb0a429f99917");
+
+     hrResult = pIWinHttpLib->SetCredentials(eAuthTargets, eAuthScheme, sUserName, sPassword );
+     hrResult = pIWinHttpLib->SendRequest();
+
+     std::wstring sData;
+
+     hrResult = pIWinHttpLib->ReceiveResponseAndReadData(sData);
+     hrResult = IWinHttpLib::DeleteInstance(pIWinHttpLib);
 }
 
 

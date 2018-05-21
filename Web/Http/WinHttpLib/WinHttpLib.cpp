@@ -6,9 +6,23 @@
 #pragma comment(lib, "Winhttp.lib")
 
 #include "../../../Error_Checks/ERROR_CHECKS.H"
+#include "../../../MemoryCrypt/inc/MemoryCrypt.h"
 
 #include <mutex>
 
+
+// GLOBALS
+
+const std::wstring IWinHttpLib::NO_PROXY_NAME = TEXT("");
+const std::wstring IWinHttpLib::NO_PROXY_BYPASS = TEXT("");
+
+const std::wstring IWinHttpLib::DEFAULT_VERSION = TEXT("");
+const std::wstring IWinHttpLib::NO_REFERER = TEXT("");
+
+const IWinHttpLib::VAcceptTypesArray* IWinHttpLib::NO_ACCEPT_TYPES = nullptr;
+
+const std::wstring IWinHttpLib::NO_ADDITIONAL_HEADERS = TEXT("");
+const std::wstring IWinHttpLib::NO_REQUEST_DATA = TEXT("");
 
 // DEFINITIONS
 
@@ -18,23 +32,41 @@ public:
      CWinHttpLib();
      virtual ~CWinHttpLib();
 
-     HRESULT Open( OPTIONAL IN const std::wstring&                    sApplicationName         = IWinHttpLib::DEFAULT_APP_NAME,
-                   OPTIONAL IN const IWinHttpLib::EProxyAccessType    eProxyAccessType         = IWinHttpLib::DEFAULT_PROXY_ACCESS_TYPE,
-                   OPTIONAL IN const std::wstring&                    sProxyName               = IWinHttpLib::NO_PROXY_NAME,
-                   OPTIONAL IN const std::wstring&                    sProxyBypassList         = IWinHttpLib::NO_PROXY_BYPASS
+     // WinHttpOpen
+     HRESULT Open( IN const std::wstring&                        sApplicationName         = TEXT("WinHttpClientLib/1.0"),
+                   IN const IWinHttpLib::EProxyAccessType        eProxyAccessType         = IWinHttpLib::EProxyAccessType::AutomaticProxy,
+                   OPTIONAL IN const std::wstring&               sProxyName               = IWinHttpLib::NO_PROXY_NAME,
+                   OPTIONAL IN const std::wstring&               sProxyBypassList         = IWinHttpLib::NO_PROXY_BYPASS
                  );
 
-     HRESULT Connect( IN const std::wstring&           sServerName,
+     // WinHttpConnect
+     HRESULT Connect( IN const std::wstring&           sServerName         = TEXT("api.github.com"),
                       OPTIONAL IN const WORD           wServerPort         = IWinHttpLib::DEFAULT_SERVER_PORT
                     );
 
-     HRESULT OpenRequest( IN const IWinHttpLib::EVerb                           eVerb,
-                          IN const std::wstring&                                sObjectPathName,
+     // WinHttpOpenRequest
+     HRESULT OpenRequest( IN const IWinHttpLib::EVerb                           eVerb                    = IWinHttpLib::EVerb::Get,
+                          IN const std::wstring&                                sObjectPathName          = TEXT("/user/repos"),
                           OPTIONAL IN const std::wstring&                       sVersion                 = IWinHttpLib::DEFAULT_VERSION,
                           OPTIONAL IN const std::wstring&                       sReferrer                = IWinHttpLib::NO_REFERER,
-                          OPTIONAL IN const IWinHttpLib::VAcceptTypesArray*     pAcceptTypesArray        = nullptr,
-                          OPTIONAL IN const DWORD                               dwFlags                  = IWinHttpLib::DEFAULT_FLAGS
-     );
+                          OPTIONAL IN const IWinHttpLib::VAcceptTypesArray*     pAcceptTypesArray        = IWinHttpLib::NO_ACCEPT_TYPES,
+                          OPTIONAL IN const DWORD                               dwFlags                  = ERequestFlags::Secure | ERequestFlags::Refresh
+                        );
+
+     // WinHttpSetCredentials
+     OPTIONAL HRESULT SetCredentials( IN const IWinHttpLib::EAuthTargets                   eAuthTargets           = IWinHttpLib::EAuthTargets::TargetServer,
+                                      IN const IWinHttpLib::EAuthScheme                    eAuthScheme            = IWinHttpLib::EAuthScheme::Basic,
+                                      IN const std::wstring&                               sUserName              = TEXT("username"),
+                                      IN const std::wstring&                               sPassword              = TEXT("password")
+                                    );
+
+     // WinHttpSendRequest
+     HRESULT SendRequest( OPTIONAL IN const std::wstring&        sHeaders       = IWinHttpLib::NO_ADDITIONAL_HEADERS,
+                          OPTIONAL IN const std::wstring&        sOptional      = IWinHttpLib::NO_REQUEST_DATA
+                        );
+
+     // WinHttpReceiveResponse - WinHttpQueryDataAvailable - WinHttpReadData
+     HRESULT ReceiveResponseAndReadData(IN std::wstring& sData);
 
      // TODO: Add a redo call with that uses all saved parameters???
 
@@ -49,7 +81,7 @@ private:
      // WinHttpOpen
      HINTERNET m_hSession = nullptr;
      std::wstring m_sApplicationName;
-     EProxyAccessType m_eProxyAccessType = EProxyAccessType::NoProxy;
+     EProxyAccessType m_eProxyAccessType = IWinHttpLib::EProxyAccessType::AutomaticProxy;
      std::wstring m_sProxyName;
      std::wstring m_sProxyBypassList;
      DWORD m_dwOpenFlags = 0;   // WINHTTP_FLAG_ASYNC
@@ -64,13 +96,26 @@ private:
      HINTERNET m_hRequest = nullptr;
      IWinHttpLib::EVerb m_eVerb = IWinHttpLib::EVerb::Get;
      std::wstring m_sObjectPathName;
-     std::wstring m_sVersion;
-     std::wstring m_sReferrer;
+     std::wstring m_sVersion = IWinHttpLib::DEFAULT_VERSION;
+     std::wstring m_sReferrer = IWinHttpLib::NO_REFERER;
      IWinHttpLib::VAcceptTypesArray m_vAcceptTypesArray;
-     DWORD m_dwRequestFlags = IWinHttpLib::DEFAULT_FLAGS;
+     DWORD m_dwRequestFlags = ERequestFlags::Secure | ERequestFlags::Refresh;
+
+     // WinHttpSetCredentials
+     IWinHttpLib::EAuthTargets m_eAuthTargets = IWinHttpLib::EAuthTargets::TargetServer;
+     IWinHttpLib::EAuthScheme m_eAuthScheme = IWinHttpLib::EAuthScheme::Basic;
+     std::wstring m_sUserName;
+     std::wstring m_sPasswordEncrypted;
+
+     // WinHttpSendRequest
+     std::wstring m_sHeaders = IWinHttpLib::NO_ADDITIONAL_HEADERS;
+     std::wstring m_sOptional = IWinHttpLib::NO_REQUEST_DATA;
+
 
      DWORD TranslateProxyAccessType(EProxyAccessType eProxyAccessType);
      std::wstring TranslateVerb(IWinHttpLib::EVerb eVerb);
+     DWORD TranslateAuthTargets(IWinHttpLib::EAuthTargets eAuthTargets);
+     DWORD TranslateAuthScheme(IWinHttpLib::EAuthScheme eAuthScheme);
 };
 
 
@@ -155,10 +200,10 @@ CWinHttpLib::~CWinHttpLib()
 }
 
 
-HRESULT CWinHttpLib::Open( OPTIONAL IN const std::wstring&                      sApplicationName,
-                           OPTIONAL IN const IWinHttpLib::EProxyAccessType      eProxyAccessType,
-                           OPTIONAL IN const std::wstring&                      sProxyName, 
-                           OPTIONAL IN const std::wstring&                      sProxyBypassList
+HRESULT CWinHttpLib::Open( IN const std::wstring&                          sApplicationName,
+                           IN const IWinHttpLib::EProxyAccessType          eProxyAccessType,
+                           OPTIONAL IN const std::wstring&                 sProxyName, 
+                           OPTIONAL IN const std::wstring&                 sProxyBypassList
                          )
 {
      HRESULT hrResult = ERROR_SUCCESS;
@@ -187,11 +232,6 @@ HRESULT CWinHttpLib::Open( OPTIONAL IN const std::wstring&                      
           {
                pwszProxyName = WINHTTP_NO_PROXY_NAME;
                pwszProxyBypassList = WINHTTP_NO_PROXY_BYPASS;
-          }
-
-          if (0 == m_sApplicationName.size())
-          {
-               m_sApplicationName = m_sDefaultApplicationName;
           }
 
           CHECK_NOT_NULL_LAST_ERROR_LOG_THROW( m_hSession = WinHttpOpen(m_sApplicationName.c_str(), dwProxyAccessType, pwszProxyName, pwszProxyBypassList, m_dwOpenFlags) );
@@ -301,6 +341,162 @@ HRESULT CWinHttpLib::OpenRequest( IN const IWinHttpLib::EVerb                   
 }
 
 
+OPTIONAL HRESULT CWinHttpLib::SetCredentials( IN const IWinHttpLib::EAuthTargets    eAuthTargets,
+                                              IN const IWinHttpLib::EAuthScheme     eAuthScheme,
+                                              IN const std::wstring&                sUserName,
+                                              IN const std::wstring&                sPassword
+                                             ) 
+{
+     HRESULT hrResult = ERROR_SUCCESS;
+
+     DWORD dwAuthTargets = WINHTTP_AUTH_TARGET_SERVER;
+     DWORD dwAuthScheme = WINHTTP_AUTH_SCHEME_BASIC;
+     LPVOID pAuthParams = nullptr;
+
+     try
+     {
+          if (nullptr == m_hRequest) throw E_INVALIDARG;
+
+          m_eAuthTargets = eAuthTargets;
+          m_eAuthScheme = eAuthScheme;
+
+          m_sUserName = sUserName;
+          m_sPasswordEncrypted = sPassword;
+          CHECK_SUCCEEDED_LOG_THROW(MemoryCrypt::Encrypt(m_sPasswordEncrypted));
+
+          dwAuthTargets = TranslateAuthTargets(m_eAuthTargets);
+          dwAuthScheme = TranslateAuthScheme(m_eAuthScheme);
+
+          CHECK_SUCCEEDED_LOG_THROW(MemoryCrypt::Decrypt(m_sPasswordEncrypted));
+
+          CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW( WinHttpSetCredentials(m_hRequest, dwAuthTargets, dwAuthScheme, m_sUserName.c_str(), m_sPasswordEncrypted.c_str(), pAuthParams) );
+
+          CHECK_SUCCEEDED_LOG_THROW(MemoryCrypt::Encrypt(m_sPasswordEncrypted));
+     }
+     catch (HRESULT& check_catch_hresult)
+     {
+          hrResult = check_catch_hresult;
+     }
+
+     return hrResult;
+}
+
+
+HRESULT CWinHttpLib::SendRequest( OPTIONAL IN const std::wstring&      sHeaders,
+                                  OPTIONAL IN const std::wstring&      sOptional
+                                )
+{
+     HRESULT hrResult = ERROR_SUCCESS;
+
+     LPCWSTR pwszHeaders = WINHTTP_NO_ADDITIONAL_HEADERS;
+     DWORD   dwHeadersLength = 0;
+
+     LPVOID lpOptional = WINHTTP_NO_REQUEST_DATA;
+     DWORD   dwOptionalLength = 0;
+
+     DWORD dwTotalLength = 0;  // For subsequent WinHttpWriteData
+
+     DWORD_PTR dwContext = 0;
+
+     try
+     {
+          if (nullptr == m_hRequest) throw E_INVALIDARG;
+
+          m_sHeaders = sHeaders;
+          m_sOptional = sOptional;
+
+          pwszHeaders = m_sHeaders.size() ? m_sHeaders.c_str() : WINHTTP_NO_ADDITIONAL_HEADERS;
+          dwHeadersLength = m_sHeaders.size();
+
+          lpOptional = m_sOptional.size() ? (LPVOID)m_sOptional.c_str() : WINHTTP_NO_REQUEST_DATA;
+          dwOptionalLength = m_sOptional.size();
+
+          CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW( WinHttpSendRequest(m_hRequest, pwszHeaders, dwHeadersLength, lpOptional, dwOptionalLength, dwTotalLength, dwContext) );
+     }
+     catch (HRESULT& check_catch_hresult)
+     {
+          hrResult = check_catch_hresult;
+     }
+
+     return hrResult;
+}
+
+
+// WinHttpReceiveResponse
+HRESULT CWinHttpLib::ReceiveResponseAndReadData(IN std::wstring&  sData)
+{
+     HRESULT hrResult = ERROR_SUCCESS;
+     
+     DWORD dwNumberOfBytesAvailable = 0;
+     DWORD dwNumberOfBytesToRead = 0;
+     DWORD dwNumberOfBytesRead = 0;
+
+     LPVOID pszBuffer = nullptr;  
+     LPVOID pszReallocBuffer = nullptr;
+     DWORD dwAllocatedBufferSize = 0;
+
+     sData.clear();
+
+     try
+     {
+          CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW( WinHttpReceiveResponse(m_hRequest, nullptr) );
+
+          do
+          {
+               dwNumberOfBytesAvailable = 0;
+
+               CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW( WinHttpQueryDataAvailable(m_hRequest, &dwNumberOfBytesAvailable) );
+
+               if (0 != dwNumberOfBytesAvailable)
+               {
+                    if (nullptr == pszBuffer)
+                    {
+                         dwAllocatedBufferSize = dwNumberOfBytesAvailable + 1;
+                         CHECK_NEW_ALLOC_LOG_THROW(pszBuffer = calloc(dwNumberOfBytesAvailable, 1));
+                    }
+                    else
+                    {
+                         if (dwAllocatedBufferSize < dwNumberOfBytesAvailable)
+                         {
+                              CHECK_NEW_ALLOC_LOG_THROW(pszReallocBuffer = realloc(pszBuffer, dwNumberOfBytesAvailable + 1));
+
+                              dwAllocatedBufferSize = dwNumberOfBytesAvailable;
+
+                              pszBuffer = pszReallocBuffer;
+                              pszReallocBuffer = nullptr;
+                         }
+                    }
+
+                    CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(WinHttpReadData(m_hRequest, pszBuffer, dwNumberOfBytesAvailable, &dwNumberOfBytesRead));
+
+                    sData.append((LPCWSTR)pszBuffer, dwNumberOfBytesRead);
+
+                    dwNumberOfBytesRead = 0;
+               }
+          } while (0 != dwNumberOfBytesAvailable);
+     }
+     catch (HRESULT& check_catch_hresult)
+     {
+          hrResult = check_catch_hresult;
+     }
+
+     if (pszBuffer)
+     {
+          free(pszBuffer);
+          pszBuffer = nullptr;
+     }
+
+     if (pszReallocBuffer)
+     {
+          free(pszReallocBuffer);
+          pszReallocBuffer = nullptr;
+     }
+
+     return hrResult;
+}
+
+
+
 std::wstring CWinHttpLib::TranslateVerb(IWinHttpLib::EVerb eVerb)
 {
      std::wstring sVerb;
@@ -349,13 +545,13 @@ DWORD CWinHttpLib::TranslateProxyAccessType(IWinHttpLib::EProxyAccessType eProxy
 
      switch (eProxyAccessType)
      {
-     case EProxyAccessType::NoProxy:
+     case IWinHttpLib::EProxyAccessType::NoProxy:
           dwProxyAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
           break;
-     case EProxyAccessType::NamedProxy:
+     case IWinHttpLib::EProxyAccessType::NamedProxy:
           dwProxyAccessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
           break;
-     case EProxyAccessType::AutomaticProxy:
+     case IWinHttpLib::EProxyAccessType::AutomaticProxy:
           dwProxyAccessType = WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY;
           break;
      default:
@@ -364,4 +560,53 @@ DWORD CWinHttpLib::TranslateProxyAccessType(IWinHttpLib::EProxyAccessType eProxy
      };
 
      return dwProxyAccessType;
+}
+
+DWORD CWinHttpLib::TranslateAuthTargets(IWinHttpLib::EAuthTargets eAuthTargets)
+{
+     DWORD dwAuthTargets = WINHTTP_AUTH_TARGET_SERVER;
+
+     switch (eAuthTargets)
+     {
+     case IWinHttpLib::EAuthTargets::TargetServer:
+          dwAuthTargets = WINHTTP_AUTH_TARGET_SERVER;
+          break;
+     case IWinHttpLib::EAuthTargets::TargetProxy:
+          dwAuthTargets = WINHTTP_AUTH_TARGET_PROXY;
+          break;
+     default:
+          dwAuthTargets = WINHTTP_AUTH_TARGET_SERVER;
+          break;
+     };
+
+     return dwAuthTargets;
+}
+
+DWORD CWinHttpLib::TranslateAuthScheme(IWinHttpLib::EAuthScheme eAuthScheme)
+{
+     DWORD dwAuthScheme = WINHTTP_AUTH_SCHEME_BASIC;
+
+     switch (eAuthScheme)
+     {
+     case IWinHttpLib::EAuthScheme::Basic:
+          dwAuthScheme = WINHTTP_AUTH_SCHEME_BASIC;
+          break;
+     case IWinHttpLib::EAuthScheme::Ntlm:
+          dwAuthScheme = WINHTTP_AUTH_SCHEME_NTLM;
+          break;
+     case IWinHttpLib::EAuthScheme::Passport:
+          dwAuthScheme = WINHTTP_AUTH_SCHEME_PASSPORT;
+          break;
+     case IWinHttpLib::EAuthScheme::Digest:
+          dwAuthScheme = WINHTTP_AUTH_SCHEME_DIGEST;
+          break;
+     case IWinHttpLib::EAuthScheme::Negotiate:
+          dwAuthScheme = WINHTTP_AUTH_SCHEME_NEGOTIATE;
+          break;
+     default:
+          dwAuthScheme = WINHTTP_AUTH_SCHEME_BASIC;
+          break;
+     };
+
+     return dwAuthScheme;
 }

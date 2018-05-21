@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <sstream>
 
 
 enum class ERequestFlags : DWORD {
