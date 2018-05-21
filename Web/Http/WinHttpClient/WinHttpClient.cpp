@@ -146,7 +146,7 @@ void onInitMainDialog(const HWND hDlg)
 
      IWinHttpLib::EAuthTargets eAuthTargets = IWinHttpLib::EAuthTargets::TargetServer;
      IWinHttpLib::EAuthScheme  eAuthScheme = IWinHttpLib::EAuthScheme::Basic;
-     std::wstring sUserName = TEXT("marcusolini");
+     std::wstring sUserName = TEXT("");
      std::wstring sPassword = TEXT("");
 
      hrResult = pIWinHttpLib->SetCredentials(eAuthTargets, eAuthScheme, sUserName, sPassword );

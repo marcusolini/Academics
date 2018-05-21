@@ -9,6 +9,7 @@
 #include "../../../MemoryCrypt/inc/MemoryCrypt.h"
 
 #include <mutex>
+#include <memory>
 
 
 // GLOBALS
@@ -206,6 +207,8 @@ HRESULT CWinHttpLib::Open( IN const std::wstring&                          sAppl
                            OPTIONAL IN const std::wstring&                 sProxyBypassList
                          )
 {
+     std::lock_guard<std::recursive_mutex> lock(m_mutex);
+
      HRESULT hrResult = ERROR_SUCCESS;
 
      LPCWSTR pwszProxyName = WINHTTP_NO_PROXY_NAME;
@@ -250,6 +253,8 @@ HRESULT CWinHttpLib::Connect( IN const std::wstring&        sServerName,
                               OPTIONAL IN const WORD        wServerPort
                             )
 {
+     std::lock_guard<std::recursive_mutex> lock(m_mutex);
+
      HRESULT hrResult = ERROR_SUCCESS;
 
      try
@@ -279,6 +284,8 @@ HRESULT CWinHttpLib::OpenRequest( IN const IWinHttpLib::EVerb                   
                                   OPTIONAL IN const DWORD                            dwFlags
                                 )
 {
+     std::lock_guard<std::recursive_mutex> lock(m_mutex);
+
      HRESULT hrResult = ERROR_SUCCESS;
 
      std::wstring sVerb;
@@ -347,6 +354,8 @@ OPTIONAL HRESULT CWinHttpLib::SetCredentials( IN const IWinHttpLib::EAuthTargets
                                               IN const std::wstring&                sPassword
                                              ) 
 {
+     std::lock_guard<std::recursive_mutex> lock(m_mutex);
+
      HRESULT hrResult = ERROR_SUCCESS;
 
      DWORD dwAuthTargets = WINHTTP_AUTH_TARGET_SERVER;
@@ -386,6 +395,8 @@ HRESULT CWinHttpLib::SendRequest( OPTIONAL IN const std::wstring&      sHeaders,
                                   OPTIONAL IN const std::wstring&      sOptional
                                 )
 {
+     std::lock_guard<std::recursive_mutex> lock(m_mutex);
+
      HRESULT hrResult = ERROR_SUCCESS;
 
      LPCWSTR pwszHeaders = WINHTTP_NO_ADDITIONAL_HEADERS;
@@ -425,17 +436,16 @@ HRESULT CWinHttpLib::SendRequest( OPTIONAL IN const std::wstring&      sHeaders,
 // WinHttpReceiveResponse
 HRESULT CWinHttpLib::ReceiveResponseAndReadData(IN std::wstring&  sData)
 {
+     std::lock_guard<std::recursive_mutex> lock(m_mutex);
+
      HRESULT hrResult = ERROR_SUCCESS;
      
      DWORD dwNumberOfBytesAvailable = 0;
-     DWORD dwNumberOfBytesToRead = 0;
      DWORD dwNumberOfBytesRead = 0;
 
-     LPVOID pszBuffer = nullptr;  
-     LPVOID pszReallocBuffer = nullptr;
-     DWORD dwAllocatedBufferSize = 0;
-
      sData.clear();
+
+     std::string sAsciiData;
 
      try
      {
@@ -449,47 +459,24 @@ HRESULT CWinHttpLib::ReceiveResponseAndReadData(IN std::wstring&  sData)
 
                if (0 != dwNumberOfBytesAvailable)
                {
-                    if (nullptr == pszBuffer)
-                    {
-                         dwAllocatedBufferSize = dwNumberOfBytesAvailable + 1;
-                         CHECK_NEW_ALLOC_LOG_THROW(pszBuffer = calloc(dwNumberOfBytesAvailable, 1));
-                    }
-                    else
-                    {
-                         if (dwAllocatedBufferSize < dwNumberOfBytesAvailable)
-                         {
-                              CHECK_NEW_ALLOC_LOG_THROW(pszReallocBuffer = realloc(pszBuffer, dwNumberOfBytesAvailable + 1));
+                    std::unique_ptr<char[]> up(new char[dwNumberOfBytesAvailable]);  // Could have used calloc and realloc
 
-                              dwAllocatedBufferSize = dwNumberOfBytesAvailable;
+                    std::memset(up.get(), 0, dwNumberOfBytesAvailable);
 
-                              pszBuffer = pszReallocBuffer;
-                              pszReallocBuffer = nullptr;
-                         }
-                    }
+                    CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(WinHttpReadData(m_hRequest, (LPVOID)up.get(), dwNumberOfBytesAvailable, &dwNumberOfBytesRead));
 
-                    CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(WinHttpReadData(m_hRequest, pszBuffer, dwNumberOfBytesAvailable, &dwNumberOfBytesRead));
-
-                    sData.append((LPCWSTR)pszBuffer, dwNumberOfBytesRead);
+                    sAsciiData.append(up.get(), dwNumberOfBytesRead);
 
                     dwNumberOfBytesRead = 0;
                }
+
           } while (0 != dwNumberOfBytesAvailable);
+
+          sData.assign(sAsciiData.begin(), sAsciiData.end());
      }
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-     }
-
-     if (pszBuffer)
-     {
-          free(pszBuffer);
-          pszBuffer = nullptr;
-     }
-
-     if (pszReallocBuffer)
-     {
-          free(pszReallocBuffer);
-          pszReallocBuffer = nullptr;
      }
 
      return hrResult;
