@@ -66,6 +66,7 @@
 #define IDS_OPTIONAL_REQUEST_DATA_TEXT  159
 #define IDS_USERNAME_TEXT               160
 #define IDS_PASSWORD_TOKEN_TEXT         161
+#define IDS_APP_NAME_SAMPLE             162
 #define IDC_HttpCombo                   1001
 #define IDC_ProtocolCombo               1001
 #define IDC_ProtoStaticText             1002

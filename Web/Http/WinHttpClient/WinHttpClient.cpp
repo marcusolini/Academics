@@ -128,6 +128,10 @@ void onInitMainDialog(const HWND hDlg)
      SendMessage(hDlg, DM_SETDEFID, (WPARAM)IDCLOSE, (LPARAM)IDCLOSE);
      SendDlgItemMessage(hDlg, IDCLOSE, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_CLOSE)).c_str());
 
+     SendDlgItemMessage(hDlg, IDC_AppNameEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_APP_NAME_SAMPLE)).c_str());
+
+     
+
      SendDlgItemMessage(hDlg, IDC_ProtoStaticText, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_PROTOCOL_TEXT)).c_str());
      hTemp = GetDlgItem(hDlg, IDC_ProtocolCombo);
      SendMessage(hTemp, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_PROTO_HTTP)).c_str());
