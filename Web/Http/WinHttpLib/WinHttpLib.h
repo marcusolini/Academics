@@ -35,7 +35,6 @@ public:
      // OpenRequest
      static const std::wstring DEFAULT_VERSION;
      static const std::wstring NO_REFERER;
-
      static const VAcceptTypesArray* NO_ACCEPT_TYPES;
      
      // SendRequest

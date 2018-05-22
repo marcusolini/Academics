@@ -16,6 +16,9 @@
 
 #include "../../Error_Checks/ERROR_CHECKS.H"
 
+
+// DECLARATIONS
+
 class MemoryCrypt
 {
 public:
@@ -23,7 +26,10 @@ public:
      static HRESULT Decrypt(IN OUT std::wstring& sData);
 };
 
-HRESULT MemoryCrypt::Encrypt(IN OUT std::wstring& sData)
+
+// DEFINITIONS
+
+inline HRESULT MemoryCrypt::Encrypt(IN OUT std::wstring& sData)
 {
      HRESULT hrResult = ERROR_SUCCESS;
      std::size_t nDataSize = sData.size();
@@ -57,7 +63,8 @@ HRESULT MemoryCrypt::Encrypt(IN OUT std::wstring& sData)
      return hrResult;
 }
 
-HRESULT MemoryCrypt::Decrypt(IN OUT std::wstring& sData)
+
+inline HRESULT MemoryCrypt::Decrypt(IN OUT std::wstring& sData)
 {
      HRESULT hrResult = ERROR_SUCCESS;
 

@@ -207,8 +207,6 @@ HRESULT CWinHttpLib::Open( IN const std::wstring&                          sAppl
                            OPTIONAL IN const std::wstring&                 sProxyBypassList
                          )
 {
-     std::lock_guard<std::recursive_mutex> lock(m_mutex);
-
      HRESULT hrResult = ERROR_SUCCESS;
 
      LPCWSTR pwszProxyName = WINHTTP_NO_PROXY_NAME;
