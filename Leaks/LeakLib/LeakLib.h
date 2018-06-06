@@ -5,10 +5,10 @@
 
 #pragma once
 
+#ifdef _WIN32
 #include "stdafx.h"
 
-#ifdef _WIN32
-     #ifdef LEAKLIB_EXPORTS  
+#ifdef LEAKLIB_EXPORTS  
           #define CLASS_DECLSPEC    __declspec(dllexport)  
      #else  
           #define CLASS_DECLSPEC    __declspec(dllimport)  
@@ -20,8 +20,11 @@
 class CLeakLib
 {
 public:
-     CLASS_DECLSPEC static DWORD LeakNewMemory(const size_t numberOfCalls, const size_t bytesEachCall);
-     CLASS_DECLSPEC static DWORD LeakMallocMemory(const size_t numberOfCalls, const size_t bytesEachCall);
-     CLASS_DECLSPEC static DWORD LeakCallocMemory(const size_t numberOfCalls, const size_t bytesEachCall);
-     CLASS_DECLSPEC static DWORD LeakHandle(const size_t numberOfCalls);
+     CLASS_DECLSPEC static int LeakNewMemory(const size_t numberOfCalls, const size_t bytesEachCall);
+     CLASS_DECLSPEC static int LeakMallocMemory(const size_t numberOfCalls, const size_t bytesEachCall);
+     CLASS_DECLSPEC static int LeakCallocMemory(const size_t numberOfCalls, const size_t bytesEachCall);
+     
+     #ifdef _WIN32
+     CLASS_DECLSPEC static int LeakHandle(const size_t numberOfCalls);
+     #endif // _WIN32
 };
