@@ -7,11 +7,15 @@
 
 #include "stdafx.h"
 
-#ifdef LEAKLIB_EXPORTS  
-#define CLASS_DECLSPEC    __declspec(dllexport)  
-#else  
-#define CLASS_DECLSPEC    __declspec(dllimport)  
-#endif  
+#ifdef _WIN32
+     #ifdef LEAKLIB_EXPORTS  
+          #define CLASS_DECLSPEC    __declspec(dllexport)  
+     #else  
+          #define CLASS_DECLSPEC    __declspec(dllimport)  
+     #endif  // LEAKLIB_EXPORTS
+#else
+     #define CLASS_DECLSPEC
+#endif // _WIN32
 
 class CLeakLib
 {
