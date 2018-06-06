@@ -14,17 +14,19 @@
           #define CLASS_DECLSPEC    __declspec(dllimport)  
      #endif  // LEAKLIB_EXPORTS
 #else
-     #define CLASS_DECLSPEC
+    #define CLASS_DECLSPEC
 #endif // _WIN32
+
+#include <cstddef>
 
 class CLeakLib
 {
 public:
-     CLASS_DECLSPEC static int LeakNewMemory(const size_t numberOfCalls, const size_t bytesEachCall);
-     CLASS_DECLSPEC static int LeakMallocMemory(const size_t numberOfCalls, const size_t bytesEachCall);
-     CLASS_DECLSPEC static int LeakCallocMemory(const size_t numberOfCalls, const size_t bytesEachCall);
+     CLASS_DECLSPEC static int LeakNewMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
+     CLASS_DECLSPEC static int LeakMallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
+     CLASS_DECLSPEC static int LeakCallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
      
      #ifdef _WIN32
-     CLASS_DECLSPEC static int LeakHandle(const size_t numberOfCalls);
+     CLASS_DECLSPEC static int LeakHandle(const std::size_t numberOfCalls);
      #endif // _WIN32
 };

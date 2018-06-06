@@ -29,16 +29,16 @@ int main(int argc, char** argv) {
      int nExitStatus = 0;
      int nStatus = 0;
      
-     size_t leakNewCalls = 1000000;
-     size_t leakNewBytes = 10000;
+     std::size_t leakNewCalls = 1000000;
+     std::size_t leakNewBytes = 10000;
 
-     size_t leakMallocCalls = 100000;
-     size_t leakMallocBytes = 20000;
+     std::size_t leakMallocCalls = 100000;
+     std::size_t leakMallocBytes = 20000;
 
-     size_t leakCallocCalls = 1000000;
-     size_t leakCallocBytes = 40000;
+     std::size_t leakCallocCalls = 1000000;
+     std::size_t leakCallocBytes = 40000;
 
-     size_t leakHandleCalls = 1000;
+     std::size_t leakHandleCalls = 1000;
 
      //system("pause");
 
