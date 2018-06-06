@@ -9,7 +9,7 @@
 // https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/finding-a-user-mode-memory-leak
 
 #ifdef _WIN32
-#include "stdafx.h"
+     #include "targetver.h"
 #endif // _WIN32
 
 #include <cerrno>

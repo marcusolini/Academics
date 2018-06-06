@@ -6,9 +6,9 @@
 #pragma once
 
 #ifdef _WIN32
-#include "stdafx.h"
+     //#include "stdafx.h"
 
-#ifdef LEAKLIB_EXPORTS  
+     #ifdef LEAKLIB_EXPORTS  
           #define CLASS_DECLSPEC    __declspec(dllexport)  
      #else  
           #define CLASS_DECLSPEC    __declspec(dllimport)  
