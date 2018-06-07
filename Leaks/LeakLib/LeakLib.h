@@ -20,6 +20,7 @@
      #define CALL __stdcall
 #else
     #define CLASS_DECLSPEC
+    #define CALL
 #endif // _WIN32
 
 #include <cstddef>

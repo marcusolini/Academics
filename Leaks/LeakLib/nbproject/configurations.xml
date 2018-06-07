@@ -41,13 +41,6 @@
       <compileType>
         <ccTool>
           <standard>8</standard>
-          <commandLine>-mthreads</commandLine>
-          <preprocessorList>
-            <Elem>LEAKLIB_EXPORTS</Elem>
-            <Elem>UNICODE</Elem>
-            <Elem>_GLIBCXX_USE_NANOSLEEP</Elem>
-            <Elem>_UNICODE</Elem>
-          </preprocessorList>
         </ccTool>
       </compileType>
       <item path="LeakLib.cpp" ex="false" tool="1" flavor2="0">
@@ -68,12 +61,6 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>8</standard>
-          <commandLine>-mthreads</commandLine>
-          <preprocessorList>
-            <Elem>LEAKLIB_EXPORTS</Elem>
-            <Elem>UNICODE</Elem>
-            <Elem>_UNICODE</Elem>
-          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

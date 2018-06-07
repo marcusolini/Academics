@@ -23,7 +23,7 @@ AS=as
 # Macros
 CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
-CND_CONF=Debug
+CND_CONF=Release-Win32
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 
@@ -42,8 +42,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-mthreads
+CXXFLAGS=-mthreads
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -65,7 +65,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT}: ${OBJECTF
 ${OBJECTDIR}/LeakLib.o: LeakLib.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
+	$(COMPILE.cc) -O2 -DLEAKLIB_EXPORTS -DUNICODE -D_GLIBCXX_USE_NANOSLEEP -D_UNICODE -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
 
 # Subprojects
 .build-subprojects:

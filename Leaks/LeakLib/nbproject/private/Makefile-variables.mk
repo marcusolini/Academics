@@ -6,3 +6,4 @@
 # Debug configuration
 # Release configuration
 # Debug-Win32 configuration
+# Release-Win32 configuration
