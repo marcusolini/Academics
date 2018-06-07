@@ -8,6 +8,11 @@
 
 #include <QDialog>
 
+#include <atomic>
+#include <mutex>
+
+#include "resourceleaktest.h"
+
 namespace Ui {
 class ProgressDialog;
 }
@@ -20,11 +25,23 @@ public:
     explicit ProgressDialog(QWidget *parent = 0);
     ~ProgressDialog();
 
+    static void ProgressThreadFunction(ProgressDialog* pProgressDialog, CResourceLeakTest* iTest);
+
 public slots:
     void handleStopButton();
+    void handlePauseButton();
 
 private:
     Ui::ProgressDialog *ui;
+
+    std::atomic<bool> m_bThreadContinue;
+    std::atomic<bool> m_bThreadPause;
+
+    std::recursive_mutex m_mutex;
+
+    void Complete();
+
+signals:
 };
 
 #endif // PROGRESSDIALOG_H

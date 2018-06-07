@@ -28,6 +28,8 @@ public:
 public slots:
     void handleCloseButton();
     void handleNewOperatorCheckBox(int state);
+    void handleMallocCheckBox(int state);
+    void handleCallocCheckBox(int state);
     void handleRunTestsButton();
 
 private:
