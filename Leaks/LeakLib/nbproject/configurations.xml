@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>/home/marcusolini/projects/academics/Leaks/LeakLib/LeakLib.h</itemPath>
+      <itemPath>LeakLib.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -13,7 +13,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>/home/marcusolini/projects/academics/Leaks/LeakLib/LeakLib.cpp</itemPath>
+      <itemPath>LeakLib.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -43,15 +43,9 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="/home/marcusolini/projects/academics/Leaks/LeakLib/LeakLib.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="LeakLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="/home/marcusolini/projects/academics/Leaks/LeakLib/LeakLib.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
+      <item path="LeakLib.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -75,15 +69,9 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="/home/marcusolini/projects/academics/Leaks/LeakLib/LeakLib.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="LeakLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="/home/marcusolini/projects/academics/Leaks/LeakLib/LeakLib.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
+      <item path="LeakLib.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

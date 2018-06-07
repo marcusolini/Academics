@@ -40,15 +40,15 @@ public:
         RunTestsLabel->setGeometry(QRect(10, 10, 166, 20));
         RunTestsProgressBar = new QProgressBar(ProgressDialog);
         RunTestsProgressBar->setObjectName(QStringLiteral("RunTestsProgressBar"));
-        RunTestsProgressBar->setGeometry(QRect(10, 40, 271, 23));
+        RunTestsProgressBar->setGeometry(QRect(10, 40, 281, 23));
         RunTestsProgressBar->setValue(24);
         RunTestsProgressBar->setTextVisible(false);
         StopPushButton = new QPushButton(ProgressDialog);
         StopPushButton->setObjectName(QStringLiteral("StopPushButton"));
-        StopPushButton->setGeometry(QRect(310, 10, 83, 28));
+        StopPushButton->setGeometry(QRect(310, 10, 91, 28));
         PausePushButton = new QPushButton(ProgressDialog);
         PausePushButton->setObjectName(QStringLiteral("PausePushButton"));
-        PausePushButton->setGeometry(QRect(310, 50, 83, 28));
+        PausePushButton->setGeometry(QRect(310, 50, 91, 28));
 
         retranslateUi(ProgressDialog);
 

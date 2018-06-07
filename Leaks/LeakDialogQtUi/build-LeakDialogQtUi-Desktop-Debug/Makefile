@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++0x -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../../LeakDialogQtUi -I. -I../../LeakLib -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I../../LeakDialogQtUi -I. -I../../LeakLib -I../../LeakLib -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -502,11 +502,12 @@ compiler_moc_header_clean:
 moc_leakdialogqtui.cpp: ../resourceleaktest.h \
 		../leakdialogqtui.h \
 		moc_predefs.h
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/marcusolini/projects/academics/Leaks/LeakDialogQtUi -I/home/marcusolini/projects/academics/Leaks/LeakLib -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include ../leakdialogqtui.h -o moc_leakdialogqtui.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/marcusolini/projects/academics/Leaks/LeakDialogQtUi -I/home/marcusolini/projects/academics/Leaks/LeakLib -I/home/marcusolini/projects/academics/Leaks/LeakLib -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include ../leakdialogqtui.h -o moc_leakdialogqtui.cpp
 
-moc_progressdialog.cpp: ../progressdialog.h \
+moc_progressdialog.cpp: ../resourceleaktest.h \
+		../progressdialog.h \
 		moc_predefs.h
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/marcusolini/projects/academics/Leaks/LeakDialogQtUi -I/home/marcusolini/projects/academics/Leaks/LeakLib -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include ../progressdialog.h -o moc_progressdialog.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/marcusolini/projects/academics/Leaks/LeakDialogQtUi -I/home/marcusolini/projects/academics/Leaks/LeakLib -I/home/marcusolini/projects/academics/Leaks/LeakLib -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include ../progressdialog.h -o moc_progressdialog.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -540,9 +541,9 @@ leakdialogqtui.o: ../leakdialogqtui.cpp ../leakdialogqtui.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o leakdialogqtui.o ../leakdialogqtui.cpp
 
 progressdialog.o: ../progressdialog.cpp ../progressdialog.h \
+		../resourceleaktest.h \
 		ui_progressdialog.h \
 		../leakdialogqtui.h \
-		../resourceleaktest.h \
 		../../LeakLib/LeakLib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o progressdialog.o ../progressdialog.cpp
 
