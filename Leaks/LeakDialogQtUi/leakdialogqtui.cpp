@@ -8,6 +8,7 @@
 
 #include "progressdialog.h"
 
+#include <QIntValidator>
 #include <QMessageBox>
 
 LeakDialogQtUi::LeakDialogQtUi(QWidget *parent) :
