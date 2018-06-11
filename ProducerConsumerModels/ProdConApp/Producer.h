@@ -101,7 +101,7 @@ void CProducer<DATA>::operator()()
      try
      {
 
-     for (int count = 0; count < m_quantity; count++)
+     for (std::size_t count = 0; count < m_quantity; count++)
      {
           PROD_CON_DATA data = Create();
           Add(data);

@@ -35,7 +35,7 @@
      try
      {
 
-          for (auto nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
+          for (std::size_t nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
           {
                pChars = new (std::nothrow) char[bytesEachCall];
                if (nullptr == pChars) nStatus = ENOMEM;
@@ -63,7 +63,7 @@
 
      try
      {
-          for (auto nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
+          for (std::size_t nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
           {
                pVoid = malloc(bytesEachCall);
                if (nullptr == pVoid) nStatus = ENOMEM;
@@ -90,7 +90,7 @@
 
      try
      {
-          for (auto nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
+          for (std::size_t nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
           {
                pVoid = calloc(1, bytesEachCall);
                if (nullptr == pVoid) nStatus = ENOMEM;
@@ -119,7 +119,7 @@
 
      try
      {
-          for (auto nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
+          for (std::size_t nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
           {
                std::wstring sMutexName = L"Local\\LeakedMutex" + nCalls;
                hMutex = CreateMutex(nullptr, true, sMutexName.c_str());

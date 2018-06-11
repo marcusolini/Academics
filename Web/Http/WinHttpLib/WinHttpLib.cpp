@@ -317,7 +317,7 @@ HRESULT CWinHttpLib::OpenRequest( IN const IWinHttpLib::EVerb                   
           else
           {
                m_vAcceptTypesArray = *pAcceptTypesArray;
-               size_t nvAcceptTypesArray = m_vAcceptTypesArray.size();
+               std::size_t nvAcceptTypesArray = m_vAcceptTypesArray.size();
 
                pwszAcceptTypes = new LPCWSTR[nvAcceptTypesArray];
 
@@ -398,10 +398,10 @@ HRESULT CWinHttpLib::SendRequest( OPTIONAL IN const std::wstring&      sHeaders,
      HRESULT hrResult = ERROR_SUCCESS;
 
      LPCWSTR pwszHeaders = WINHTTP_NO_ADDITIONAL_HEADERS;
-     DWORD   dwHeadersLength = 0;
+     std::size_t nHeadersLength = 0;
 
      LPVOID lpOptional = WINHTTP_NO_REQUEST_DATA;
-     DWORD   dwOptionalLength = 0;
+	 std::size_t nOptionalLength = 0;
 
      DWORD dwTotalLength = 0;  // For subsequent WinHttpWriteData
 
@@ -415,12 +415,12 @@ HRESULT CWinHttpLib::SendRequest( OPTIONAL IN const std::wstring&      sHeaders,
           m_sOptional = sOptional;
 
           pwszHeaders = m_sHeaders.size() ? m_sHeaders.c_str() : WINHTTP_NO_ADDITIONAL_HEADERS;
-          dwHeadersLength = m_sHeaders.size();
+          nHeadersLength = m_sHeaders.size();
 
           lpOptional = m_sOptional.size() ? (LPVOID)m_sOptional.c_str() : WINHTTP_NO_REQUEST_DATA;
-          dwOptionalLength = m_sOptional.size();
+          nOptionalLength = m_sOptional.size();
 
-          CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW( WinHttpSendRequest(m_hRequest, pwszHeaders, dwHeadersLength, lpOptional, dwOptionalLength, dwTotalLength, dwContext) );
+          CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW( WinHttpSendRequest(m_hRequest, pwszHeaders, (DWORD)nHeadersLength, lpOptional, (DWORD)nOptionalLength, dwTotalLength, dwContext) );
      }
      catch (HRESULT& check_catch_hresult)
      {

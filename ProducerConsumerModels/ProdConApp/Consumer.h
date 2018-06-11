@@ -83,7 +83,7 @@ void CConsumer<DATA>::operator()()
      {
 
      //for (auto& count : m_quantity)
-     for (int count = 0; count < m_quantity; count++)
+     for (std::size_t count = 0; count < m_quantity; count++)
      {
           PROD_CON_DATA data = Remove();
           //LOG("Removed Data: ", data);

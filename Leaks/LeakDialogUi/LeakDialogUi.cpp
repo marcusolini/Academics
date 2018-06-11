@@ -41,7 +41,7 @@ enum class ERESOURCE_ALLOCATION_COMPLETED_STATE;
 // THREADS
 std::atomic<bool> gbThreadContinue = true;
 std::atomic<bool> gbThreadPause = false;
-void AllocationThreadFunc(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eAllocationType, const size_t nIterations, const size_t nBytesPerIteration);
+void AllocationThreadFunc(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eAllocationType, const std::size_t nIterations, const std::size_t nBytesPerIteration);
 
 class ResourceLeakTest;
 std::vector<ResourceLeakTest> gTests;
@@ -58,7 +58,7 @@ void onMainOk(const HWND hDlg);
 void onMainCancel(const HWND hDlg);
 void onMainClose(const HWND hDlg);
 void onCheckBox(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
-void onGetData(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eType, bool& bChecked, size_t& nIterations, size_t& nBytesPerIteration);
+void onGetData(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eType, bool& bChecked, std::size_t& nIterations, std::size_t& nBytesPerIteration);
 
 
 // PROGRESS DIALOG
@@ -95,13 +95,13 @@ enum class ERESOURCE_ALLOCATION_COMPLETED_STATE
 class ResourceLeakTest
 {
 public:
-     ResourceLeakTest(const ERESOURCE_ALLOCATION_TYPES eResourceAllocationType, const size_t nIterations, const size_t nBytesPerIteration)
+     ResourceLeakTest(const ERESOURCE_ALLOCATION_TYPES eResourceAllocationType, const std::size_t nIterations, const std::size_t nBytesPerIteration)
           : m_eResourceAllocationType(eResourceAllocationType), m_nIterations(nIterations), m_nBytesPerIteration(nBytesPerIteration){}
      virtual ~ResourceLeakTest() {}
 
      ERESOURCE_ALLOCATION_TYPES GetResourceAllocationType() { return m_eResourceAllocationType; }
-     size_t GetInterations() { return m_nIterations; }
-     size_t GetBytesPerIteration() { return m_nBytesPerIteration; }
+     std::size_t GetInterations() { return m_nIterations; }
+     std::size_t GetBytesPerIteration() { return m_nBytesPerIteration; }
      void SetIsComplete() { m_bComplete = true; }
      bool IsComplete() { return m_bComplete; }
      void SetState(const ERESOURCE_ALLOCATION_COMPLETED_STATE state) { m_state = state; }
@@ -110,8 +110,8 @@ public:
      uint64_t GetThreadId() { return m_threadId; }
 private:
      ERESOURCE_ALLOCATION_TYPES m_eResourceAllocationType;
-     size_t m_nIterations = 0;
-     size_t m_nBytesPerIteration = 0;
+     std::size_t m_nIterations = 0;
+     std::size_t m_nBytesPerIteration = 0;
      bool m_bComplete = false;
      ERESOURCE_ALLOCATION_COMPLETED_STATE m_state = ERESOURCE_ALLOCATION_COMPLETED_STATE::UNDEFINED;
      uint64_t m_threadId = 0;
@@ -120,7 +120,7 @@ private:
 
 std::wstring LoadStringFromResourceId(const UINT id)
 {
-     const size_t nString = 2048;
+     const std::size_t nString = 2048;
      wchar_t szString[nString] = {};
      if (LoadString(GetModuleHandle(nullptr), id, szString, nString - 1))
      {
@@ -231,8 +231,8 @@ void onMainOk(const HWND hDlg)
      gbThreadContinue = true;
 
      bool bChecked = false;
-     size_t nIterations = 0;
-     size_t nBytesPerIteration = 0;
+     std::size_t nIterations = 0;
+     std::size_t nBytesPerIteration = 0;
 
      bool bLeakTesting = false;
 
@@ -392,7 +392,7 @@ void onCheckBox(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
      }
 }
 
-void onGetData(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eType, bool& bChecked, size_t& nIterations, size_t& nBytesPerIteration)
+void onGetData(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eType, bool& bChecked, std::size_t& nIterations, std::size_t& nBytesPerIteration)
 {
      LRESULT checked = BST_INDETERMINATE;
      int IdIternations = 0;
@@ -443,7 +443,11 @@ void onGetData(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eType, bool& bC
           wTemp = (WORD)SendDlgItemMessage(hDlg, IdIternations, EM_LINELENGTH, (WPARAM)0, (LPARAM)0);
           *((LPWORD)szTemp) = wTemp;
           SendDlgItemMessage(hDlg, IdIternations, EM_GETLINE, (WPARAM)0, (LPARAM)szTemp);
-          nIterations = _wtoi64(szTemp);
+          #ifdef _WIN64
+		  nIterations = _wtoi64(szTemp);
+          #else
+		  nIterations = _wtoi(szTemp);
+          #endif // _WIN64
 
           std::memset(szTemp, 0, nSize);
           wTemp = 0;
@@ -451,7 +455,12 @@ void onGetData(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eType, bool& bC
           wTemp = (WORD)SendDlgItemMessage(hDlg, IdBytesPerIterations, EM_LINELENGTH, (WPARAM)0, (LPARAM)0);
           *((LPWORD)szTemp) = wTemp;
           SendDlgItemMessage(hDlg, IdBytesPerIterations, EM_GETLINE, (WPARAM)0, (LPARAM)szTemp);
-          nBytesPerIteration = _wtoi64(szTemp);
+		  
+          #ifdef _WIN64
+		  nBytesPerIteration = _wtoi64(szTemp);
+          #else
+		  nBytesPerIteration = _wtoi(szTemp);
+          #endif // _WIN64
      }
 }
 
@@ -612,7 +621,7 @@ void onProgressClose(const HWND hDlg, const WPARAM wParam)
 }
 
 
-void AllocationThreadFunc(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eAllocationType, const size_t nIterations, const size_t nBytesPerIteration)
+void AllocationThreadFunc(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eAllocationType, const std::size_t nIterations, const std::size_t nBytesPerIteration)
 {
      DWORD dwStatus = ERROR_SUCCESS;
      ERESOURCE_ALLOCATION_COMPLETED_STATE state = ERESOURCE_ALLOCATION_COMPLETED_STATE::UNDEFINED;
@@ -628,7 +637,7 @@ void AllocationThreadFunc(const HWND hDlg, const ERESOURCE_ALLOCATION_TYPES eAll
 
      std::this_thread::yield();
 
-     for (size_t nIteration = 0; (nIteration < nIterations) && gbThreadContinue && SUCCEEDED(dwStatus); nIteration++)
+     for (std::size_t nIteration = 0; (nIteration < nIterations) && gbThreadContinue && SUCCEEDED(dwStatus); nIteration++)
      {
           state = ERESOURCE_ALLOCATION_COMPLETED_STATE::RUNNING;
 
