@@ -7,13 +7,13 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=GNU-Linux
-CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=libLeakLib.so
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/libLeakLib.so
-CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=libLeakLib.so.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/libLeakLib.so.tar
+CND_PLATFORM_Debug=MinGW-Windows
+CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW-Windows
+CND_ARTIFACT_NAME_Debug=libLeakLib.dll
+CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW-Windows/libLeakLib.dll
+CND_PACKAGE_DIR_Debug=dist/Debug/MinGW-Windows/package
+CND_PACKAGE_NAME_Debug=libLeakLib.dll.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/MinGW-Windows/package/libLeakLib.dll.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
@@ -22,6 +22,14 @@ CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/libLeakLib.so
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
 CND_PACKAGE_NAME_Release=libLeakLib.so.tar
 CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/libLeakLib.so.tar
+# Debug-Win32 configuration
+CND_PLATFORM_Debug-Win32=MinGW-Windows
+CND_ARTIFACT_DIR_Debug-Win32=dist/Debug-Win32/MinGW-Windows
+CND_ARTIFACT_NAME_Debug-Win32=libLeakLib.dll
+CND_ARTIFACT_PATH_Debug-Win32=dist/Debug-Win32/MinGW-Windows/libLeakLib.dll
+CND_PACKAGE_DIR_Debug-Win32=dist/Debug-Win32/MinGW-Windows/package
+CND_PACKAGE_NAME_Debug-Win32=libLeakLib.dll.tar
+CND_PACKAGE_PATH_Debug-Win32=dist/Debug-Win32/MinGW-Windows/package/libLeakLib.dll.tar
 #
 # include compiler specific variables
 #

@@ -24,9 +24,7 @@
 #include <cstdlib>
 
 
-
-
-/*static*/ int CLeakLib::LeakNewMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
+/*static*/ int CALL CLeakLib::LeakNewMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
 {    
      int nStatus = 0;
 
@@ -55,7 +53,7 @@
      return nStatus;
 }
 
-/*static*/ int CLeakLib::LeakMallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
+/*static*/ int CALL CLeakLib::LeakMallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
 {
      int nStatus = 0;
 
@@ -82,7 +80,7 @@
      return nStatus;
 }
 
-/*static*/ int CLeakLib::LeakCallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
+/*static*/ int CALL CLeakLib::LeakCallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
 {
      int nStatus = 0;
 
@@ -111,7 +109,7 @@
 }
 
 #ifdef _WIN32
-/*static*/ int CLeakLib::LeakHandle(const std::size_t numberOfCalls)
+/*static*/ int CALL CLeakLib::LeakHandle(const std::size_t numberOfCalls)
 {
      int nStatus = 0;
 
@@ -139,3 +137,5 @@
      return nStatus;
 }
 #endif // _WIN32
+
+
