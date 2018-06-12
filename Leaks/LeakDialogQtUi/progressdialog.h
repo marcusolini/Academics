@@ -30,6 +30,7 @@ public:
 public slots:
     void handleStopButton();
     void handlePauseButton();
+    void handleCloseSignal();
 
 private:
     Ui::ProgressDialog *ui;
@@ -42,6 +43,7 @@ private:
     void Complete();
 
 signals:
+    void closeSignal();
 };
 
 #endif // PROGRESSDIALOG_H
