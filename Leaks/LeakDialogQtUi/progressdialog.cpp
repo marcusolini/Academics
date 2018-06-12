@@ -124,7 +124,10 @@ void ProgressDialog::Complete()
 
     if (true == bAllCompleted)
     {
-        this->close();
+        // Windows execution...
+        //ASSERT failure in QCoreApplication::sendEvent: "Cannot send events to objects owned by a different thread. Current thread 0x0x19a4e8d0. Receiver 'ProgressDialog' (of type 'ProgressDialog') was created in thread 0x0x15b78800", file kernel\qcoreapplication.cpp, line 576
+        //QObject::~QObject: Timers cannot be stopped from another thread
+        //this->close();
         //emit ui->StopPushButton->released();
     }
 }
@@ -135,9 +138,12 @@ void ProgressDialog::ProgressThreadFunction(ProgressDialog* pProgressDialog, CRe
     std::wstringstream ss;
     uint64_t id = 0;
 
-    QMessageBox msgBox;
-    msgBox.setText("Failure");
-    msgBox.setIcon(QMessageBox::Critical);
+    // Windows execution...
+    // ASSERT failure in QWidget: "Widgets must be created in the GUI thread.", file kernel\qwidget.cpp, line 1144
+    // QObject::~QObject: Timers cannot be stopped from another thread
+    //QMessageBox msgBox;
+    //msgBox.setText("Failure");
+    //msgBox.setIcon(QMessageBox::Critical);
 
     iTest->SetState(CResourceLeakTest::ERESOURCE_ALLOCATION_COMPLETED_STATE::STARTED);
 
@@ -160,37 +166,37 @@ void ProgressDialog::ProgressThreadFunction(ProgressDialog* pProgressDialog, CRe
               nStatus = CLeakLib::LeakNewMemory(1, iTest->GetBytesPerIteration());
               if (0 != nStatus)
               {
-                  msgBox.setInformativeText("new operator failure.");
-                  msgBox.exec();
+                  //msgBox.setInformativeText("new operator failure.");
+                  //msgBox.exec();
               }
               break;
          case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::MALLOC_FUNCTION:
               nStatus = CLeakLib::LeakMallocMemory(1, iTest->GetBytesPerIteration());
               if (0 != nStatus)
               {
-                  msgBox.setInformativeText("malloc function failure.");
-                  msgBox.exec();
+                  //msgBox.setInformativeText("malloc function failure.");
+                  //msgBox.exec();
               }
               break;
          case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::CALLOC_FUNCTION:
               nStatus = CLeakLib::LeakCallocMemory(1, iTest->GetBytesPerIteration());
               if (0 != nStatus)
               {
-                  msgBox.setInformativeText("calloc function failure.");
-                  msgBox.exec();
+                  //msgBox.setInformativeText("calloc function failure.");
+                  //msgBox.exec();
               }
               break;
          //case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::HANDLE_FUNCTION:
          //     nStatus = CLeakLib::LeakHandle(1);
          //     if (0 != nStatus)
          //     {
-         //         msgBox.setInformativeText("handle function failure.");
-         //         msgBox.exec();
+         //         //msgBox.setInformativeText("handle function failure.");
+         //         //msgBox.exec();
          //     }
          //     break;
          default:
-              msgBox.setInformativeText("Invalid allocation type.");
-              msgBox.exec();
+              //msgBox.setInformativeText("Invalid allocation type.");
+              //msgBox.exec();
               break;
          }
 

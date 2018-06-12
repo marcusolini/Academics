@@ -37,7 +37,7 @@
           {
                pChars = new (std::nothrow) char[bytesEachCall];
                if (nullptr == pChars) nStatus = ENOMEM;
-               std::this_thread::sleep_for(std::chrono::milliseconds{ 2 });
+               //std::this_thread::sleep_for(std::chrono::milliseconds{ 2 });
           }
 
      }
@@ -65,7 +65,7 @@
           {
                pVoid = malloc(bytesEachCall);
                if (nullptr == pVoid) nStatus = ENOMEM;
-               std::this_thread::sleep_for(std::chrono::milliseconds{ 3 });
+               //std::this_thread::sleep_for(std::chrono::milliseconds{ 3 });
           }
      }
      catch (std::bad_alloc)
@@ -92,7 +92,7 @@
           {
                pVoid = calloc(1, bytesEachCall);
                if (nullptr == pVoid) nStatus = ENOMEM;
-               std::this_thread::sleep_for(std::chrono::milliseconds{ 5 });
+               //std::this_thread::sleep_for(std::chrono::milliseconds{ 5 });
           }
      }
      catch (std::bad_alloc)
@@ -122,7 +122,7 @@
                std::wstring sMutexName = L"Local\\LeakedMutex" + nCalls;
                hMutex = CreateMutex(nullptr, true, sMutexName.c_str());
                if (INVALID_HANDLE_VALUE == hMutex) nStatus = ENOMEM;
-               std::this_thread::sleep_for(std::chrono::milliseconds{ 7 });
+               //std::this_thread::sleep_for(std::chrono::milliseconds{ 7 });
           }
      }
      catch (std::bad_alloc)

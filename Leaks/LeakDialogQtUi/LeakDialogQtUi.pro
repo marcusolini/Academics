@@ -47,8 +47,7 @@ unix:!macx: LIBS += -L$$PWD/../LeakLib/dist/Debug/GNU-Linux/ -lLeakLib
 INCLUDEPATH += $$PWD/../LeakLib
 DEPENDPATH += $$PWD/../LeakLib
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../release/ -lLeakLib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../debug/ -lLeakLib
-
-INCLUDEPATH += $$PWD/../LeakLib
-DEPENDPATH += $$PWD/../LeakLib
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../release/ -lLeakLib
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../debug/ -lLeakLib
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../LeakLib/dist/Debug-Win32/MinGW-Windows/ -lLeakLib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../LeakLib/dist/Debug-Win32/MinGW-Windows/ -lLeakLib

@@ -42,8 +42,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-mthreads
-CXXFLAGS=-mthreads
+CCFLAGS=-Wall -W -Wextra -fexceptions -mthreads -std=gnu++11
+CXXFLAGS=-Wall -W -Wextra -fexceptions -mthreads -std=gnu++11
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -60,12 +60,12 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -mwindows -shared
 
 ${OBJECTDIR}/LeakLib.o: LeakLib.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DLEAKLIB_EXPORTS -D_UNICODE -DUNICODE -D_GLIBCXX_USE_NANOSLEEP -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
+	$(COMPILE.cc) -g -s -DLEAKLIB_EXPORTS -DUNICODE -DWIN32 -D_GLIBCXX_USE_NANOSLEEP -D_UNICODE -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
 
 # Subprojects
 .build-subprojects:

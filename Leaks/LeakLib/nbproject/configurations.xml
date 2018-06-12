@@ -86,15 +86,19 @@
           <standard>10</standard>
         </cTool>
         <ccTool>
-          <standard>8</standard>
-          <commandLine>-mthreads</commandLine>
+          <stripSymbols>true</stripSymbols>
+          <commandLine>-Wall -W -Wextra -fexceptions -mthreads -std=gnu++11</commandLine>
           <preprocessorList>
             <Elem>LEAKLIB_EXPORTS</Elem>
             <Elem>UNICODE</Elem>
+            <Elem>WIN32</Elem>
             <Elem>_GLIBCXX_USE_NANOSLEEP</Elem>
             <Elem>_UNICODE</Elem>
           </preprocessorList>
         </ccTool>
+        <linkerTool>
+          <commandLine>-mwindows</commandLine>
+        </linkerTool>
       </compileType>
       <item path="LeakLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
