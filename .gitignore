@@ -286,14 +286,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-/Leaks/LeakLibNB/LeakLibNB/build/
-/Leaks/LeakLibNB/LeakLibNB/dist/
-/Leaks/LeakLibNB/LeakConNB/build/
-/Leaks/LeakLibNB/LeakConNB/dist/
-/Leaks/LeakLib/build/
-/Leaks/LeakLib/dist/
-/Leaks/LeakTest/dist/
-/Leaks/LeakTest/build/
 
 // QT Creator
 # C++ objects and libs
