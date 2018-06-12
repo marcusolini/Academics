@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Resource Leak Tests~~~~~</string>
+   <string>Resource Leak Tests</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Starting Leak Tests...~~~~</string>
+    <string>Starting Leak Tests...</string>
    </property>
   </widget>
   <widget class="QProgressBar" name="RunTestsProgressBar">
@@ -55,7 +55,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Stop~~~~</string>
+    <string>Stop</string>
    </property>
   </widget>
   <widget class="QPushButton" name="PausePushButton">
@@ -68,7 +68,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Pause~~~~</string>
+    <string>Pause</string>
    </property>
   </widget>
  </widget>

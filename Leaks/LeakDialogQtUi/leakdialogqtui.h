@@ -30,6 +30,7 @@ public slots:
     void handleNewOperatorCheckBox(int state);
     void handleMallocCheckBox(int state);
     void handleCallocCheckBox(int state);
+    void handleHandleCheckBox(int state);
     void handleRunTestsButton();
 
 private:

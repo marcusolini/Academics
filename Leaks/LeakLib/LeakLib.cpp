@@ -108,9 +108,11 @@
      return nStatus;
 }
 
-#ifdef _WIN32
 /*static*/ int CALL CLeakLib::LeakHandle(const std::size_t numberOfCalls)
 {
+#ifndef _WIN32
+     int nStatus = ENOMEM;
+#else
      int nStatus = 0;
 
      HANDLE hMutex = INVALID_HANDLE_VALUE;
@@ -133,9 +135,9 @@
      {
           nStatus = ENOMEM;
      }
-
+#endif // _WIN32
      return nStatus;
 }
-#endif // _WIN32
+
 
 

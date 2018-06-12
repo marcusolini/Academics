@@ -37,7 +37,7 @@ ProgressDialog::ProgressDialog(QWidget *parent) :
     {
         std::thread progressThread = std::thread(ProgressDialog::ProgressThreadFunction, this, &iTest);
         progressThread.detach();
-        ui->RunTestsLabel->setText("Running Leak Tests...~~~~~");
+        ui->RunTestsLabel->setText(tr("Running Leak Tests..."));
     }
 }
 
@@ -58,8 +58,8 @@ void ProgressDialog::handleStopButton()
     }
 
     QMessageBox msgBox;
-    msgBox.setText("Stop");
-    msgBox.setInformativeText("Stop Resource Leak Tests?");
+    msgBox.setText(tr("Stop"));
+    msgBox.setInformativeText(tr("Stop Resource Leak Tests?"));
     msgBox.setIcon(QMessageBox::Question);
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::No);
@@ -86,11 +86,11 @@ void ProgressDialog::handlePauseButton()
 {
     QString sText = ui->PausePushButton->text();
 
-    if (sText.toUpper().contains("PAUSE"))
+    if (sText.toUpper().contains(tr("PAUSE")))
     {
         m_bThreadPause = true;
-        ui->RunTestsLabel->setText("Paused Leak Tests~~~~");
-        ui->PausePushButton->setText("Resume~~~~");
+        ui->RunTestsLabel->setText(tr("Paused Leak Tests"));
+        ui->PausePushButton->setText(tr("Resume"));
         ui->RunTestsProgressBar->setMinimum(0);
         ui->RunTestsProgressBar->setMaximum(100);
         ui->RunTestsProgressBar->setValue(0);
@@ -98,8 +98,8 @@ void ProgressDialog::handlePauseButton()
     else
     {
         m_bThreadPause = false;
-        ui->RunTestsLabel->setText("Running Leak Tests...~~~~~");
-        ui->PausePushButton->setText("Pause~~~~");
+        ui->RunTestsLabel->setText(tr("Running Leak Tests..."));
+        ui->PausePushButton->setText(tr("Pause"));
         ui->RunTestsProgressBar->setMinimum(0);
         ui->RunTestsProgressBar->setMaximum(0);
     }
@@ -109,7 +109,7 @@ void ProgressDialog::handleCloseSignal()
 {
     // Message any failures before closing
     QMessageBox msgBox;
-    msgBox.setText("Failure");
+    msgBox.setText(tr("Failure"));
     msgBox.setIcon(QMessageBox::Critical);
 
     LeakDialogQtUi* pLeakDialogQtUi = dynamic_cast<LeakDialogQtUi*>(parentWidget());
@@ -121,23 +121,23 @@ void ProgressDialog::handleCloseSignal()
             switch (iTest.GetResourceAllocationType())
             {
             case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::NEW_OPERATOR:
-                msgBox.setInformativeText("new operator failure.");
+                msgBox.setInformativeText(tr("new operator failure."));
                 msgBox.exec();
             break;
             case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::MALLOC_FUNCTION:
-                msgBox.setInformativeText("malloc function failure.");
+                msgBox.setInformativeText(tr("malloc function failure."));
                 msgBox.exec();
             break;
             case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::CALLOC_FUNCTION:
-                msgBox.setInformativeText("calloc function failure.");
+                msgBox.setInformativeText(tr("calloc function failure."));
                 msgBox.exec();
                 break;
             case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::HANDLE_FUNCTION:
-                msgBox.setInformativeText("handle function.");
+                msgBox.setInformativeText(tr("handle function."));
                 msgBox.exec();
                 break;
             default:
-                msgBox.setInformativeText("Invalid allocation type.");
+                msgBox.setInformativeText(tr("Invalid allocation type."));
                 msgBox.exec();
             break;
             }
@@ -215,13 +215,13 @@ void ProgressDialog::ProgressThreadFunction(ProgressDialog* pProgressDialog, CRe
                   iTest->SetState(CResourceLeakTest::ERESOURCE_ALLOCATION_COMPLETED_STATE::FAILED);
               }
               break;
-         //case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::HANDLE_FUNCTION:
-         //     nStatus = CLeakLib::LeakHandle(1);
-         //     if (0 != nStatus)
-         //     {
-         //         //iTest->SetState(CResourceLeakTest::ERESOURCE_ALLOCATION_COMPLETED_STATE::FAILED);
-         //     }
-         //     break;
+         case CResourceLeakTest::ERESOURCE_ALLOCATION_TYPES::HANDLE_FUNCTION:
+              nStatus = CLeakLib::LeakHandle(1);
+              if (0 != nStatus)
+              {
+                  iTest->SetState(CResourceLeakTest::ERESOURCE_ALLOCATION_COMPLETED_STATE::FAILED);
+              }
+              break;
          default:
               iTest->SetState(CResourceLeakTest::ERESOURCE_ALLOCATION_COMPLETED_STATE::FAILED);
               break;
