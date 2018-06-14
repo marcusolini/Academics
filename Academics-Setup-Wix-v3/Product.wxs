@@ -3,19 +3,40 @@
   <Product Id="*" Name="Academics Binaries" Language="1033" Version="1.0.0.0" Manufacturer="marcusolini" UpgradeCode="f3db718e-cd8a-452c-a07a-d1417c2fe97f">
     <Package InstallerVersion="301" Compressed="yes" InstallScope="perMachine" Platform="x64" />
     <CustomAction Id="DIRCA_TARGETDIR" Property="TARGETDIR" Value="[ProgramFiles64Folder]\[ProductName]" Execute="firstSequence" />
-    <CustomAction Id="_F8900C60_0208_4B25_9D10_B2B58BF22835" Execute="deferred" Impersonate="no" FileKey="_39719A5B_6936_4EF0_9B13_F100F9D195F3" adx:VSName="VC_redist.x64.exe" ExeCommand="/Install /Passive" />
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <!--- <MediaTemplate /> -->
     <Feature Id="ProductFeature" Title="Academics Binaries" Level="1">
-      <ComponentRef Id="comp_B22A513B_107B_4D0D_853F_5FEA97ED1AA2" />
-      <ComponentRef Id="comp_1AB5909B_111C_4F1D_9BE0_AD1DD5BF429F" />
-      <ComponentRef Id="comp_15212430_FEB5_43BA_A8AA_A0603685539C" />
-      <ComponentRef Id="comp_7CF8DA73_520D_4FD1_81A5_EF55026882B4" />
-      <ComponentRef Id="comp_725209D8_9377_4635_AA84_CE850C83465F" />
+      <ComponentRef Id="comp_B9074322_8B55_4700_984D_6542F8010337" />
+
+      <ComponentRef Id="comp_05E4ACF3_E674_4199_87AB_4ABD32095D2A" />
+      <ComponentRef Id="comp_15E4ACF3_E674_4199_87AB_4ABD32095D2A" />
+      <ComponentRef Id="comp_25E4ACF3_E674_4199_87AB_4ABD32095D2A" />
+
+      <ComponentRef Id="comp_36C66323_5109_4E32_B9CB_90EE1C8DA783" />
+      <ComponentRef Id="comp_16C66323_5109_4E32_B9CB_90EE1C8DA783" />
+      <ComponentRef Id="comp_46C66323_5109_4E32_B9CB_90EE1C8DA783" />
+      <ComponentRef Id="comp_56C66323_5109_4E32_B9CB_90EE1C8DA783" />
+      <ComponentRef Id="comp_66C66323_5109_4E32_B9CB_90EE1C8DA783" />
+      <ComponentRef Id="comp_76C66323_5109_4E32_B9CB_90EE1C8DA783" />
+      <ComponentRef Id="comp_A6C66323_5109_4E32_B9CB_90EE1C8DA783" />
+      <ComponentRef Id="comp_B6C66323_5109_4E32_B9CB_90EE1C8DA783" />
+      
+      <ComponentRef Id="comp_B5329BE0_AAB5_48F4_A608_DA70D3062E95" />
+      <ComponentRef Id="comp_15329BE0_AAB5_48F4_A608_DA70D3062E95" />
+      <ComponentRef Id="comp_25329BE0_AAB5_48F4_A608_DA70D3062E95" />
+      <ComponentRef Id="comp_35329BE0_AAB5_48F4_A608_DA70D3062E95" />
+      <ComponentRef Id="comp_45329BE0_AAB5_48F4_A608_DA70D3062E95" />
+      <ComponentRef Id="comp_55329BE0_AAB5_48F4_A608_DA70D3062E95" />
+      <ComponentRef Id="comp_A5329BE0_AAB5_48F4_A608_DA70D3062E95" />
+      <ComponentRef Id="comp_C5329BE0_AAB5_48F4_A608_DA70D3062E95" />
+         
+      <MergeRef Id="merge_F1E8213E_5190_4AF3_A1B1_AAE6F6584556" />
+      <MergeRef Id="merge_B5846420_14B4_4E91_B321_F9FCC67A2D31" />
+      <MergeRef Id="merge_7E77BE3D_B713_4F38_BCE1_9AE68884870A" />
+      <MergeRef Id="merge_1C478EE5_2DF4_4E44_815D_9780C62047C4" />
     </Feature>
     <InstallExecuteSequence>
       <Custom Action="DIRCA_TARGETDIR" Before="CostInitialize"><![CDATA[TARGETDIR=""]]></Custom>
-      <Custom Action="_F8900C60_0208_4B25_9D10_B2B58BF22835" After="StartServices"><![CDATA[$comp_725209D8_9377_4635_AA84_CE850C83465F>2]]></Custom>
     </InstallExecuteSequence>
     <InstallUISequence>
       <Custom Action="DIRCA_TARGETDIR" Before="CostInitialize"><![CDATA[TARGETDIR=""]]></Custom>
@@ -324,27 +345,82 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="dir_2D747EC2_2D50_4350_8FE0_86B028FF96B9" Name="x64">
         <Directory Id="dir_0FCDC7CB_4E66_4851_8A4B_BFFEF874F051" Name="release">
-          <Component Id="comp_B22A513B_107B_4D0D_853F_5FEA97ED1AA2" Guid="EE7EC0D2-AEE3-41F8-81AC-293E28A14975" Permanent="no" SharedDllRefCount="no" Transitive="no">
-            <File Id="_F2C68B39_2EFF_4A40_B43E_6A4C7325BDB5" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="BasicLogger.exe" Source="..\x64\Release\BasicLogger.exe" KeyPath="yes" />
+          <Component Id="comp_B5329BE0_AAB5_48F4_A608_DA70D3062E95" Guid="8DFE3867-7A96-494D-83B5-AD497736BD5C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_9D30492D_8230_4143_9701_5579536EB705" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.dll" Source="..\x64\Release\LeakLib.dll" KeyPath="yes" />
           </Component>
-          <Component Id="comp_1AB5909B_111C_4F1D_9BE0_AD1DD5BF429F" Guid="34E82911-4E16-433D-B980-0A4F60A9C852" Permanent="no" SharedDllRefCount="no" Transitive="no">
-            <File Id="_216BA28A_73C3_45DC_AD2C_A4F6B14CAED8" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="BasicLogger.pdb" Source="..\x64\Release\BasicLogger.pdb" KeyPath="yes" />
+          <Component Id="comp_15329BE0_AAB5_48F4_A608_DA70D3062E95" Guid="1DFE3867-7A96-494D-83B5-AD497736BD5C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_1D30492D_8230_4143_9701_5579536EB705" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.pdb" Source="..\x64\Release\LeakLib.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_25329BE0_AAB5_48F4_A608_DA70D3062E95" Guid="2DFE3867-7A96-494D-83B5-AD497736BD5C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_2D30492D_8230_4143_9701_5579536EB705" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakTester.exe" Source="..\x64\Release\LeakTester.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_35329BE0_AAB5_48F4_A608_DA70D3062E95" Guid="3DFE3867-7A96-494D-83B5-AD497736BD5C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_3D30492D_8230_4143_9701_5579536EB705" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakTester.pdb" Source="..\x64\Release\LeakTester.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_45329BE0_AAB5_48F4_A608_DA70D3062E95" Guid="4DFE3867-7A96-494D-83B5-AD497736BD5C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_4D30492D_8230_4143_9701_5579536EB705" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="MSXML-XML-Reader-ui.exe" Source="..\x64\Release\MSXML-XML-Reader-ui.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_55329BE0_AAB5_48F4_A608_DA70D3062E95" Guid="5DFE3867-7A96-494D-83B5-AD497736BD5C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_5D30492D_8230_4143_9701_5579536EB705" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="MSXML-XML-Reader-ui.pdb" Source="..\x64\Release\MSXML-XML-Reader-ui.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_A5329BE0_AAB5_48F4_A608_DA70D3062E95" Guid="ADFE3867-7A96-494D-83B5-AD497736BD5C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_AD30492D_8230_4143_9701_5579536EB705" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="WinHttpClient.exe" Source="..\x64\Release\WinHttpClient.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_C5329BE0_AAB5_48F4_A608_DA70D3062E95" Guid="CDFE3867-7A96-494D-83B5-AD497736BD5C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_CD30492D_8230_4143_9701_5579536EB705" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="WinHttpClient.pdb" Source="..\x64\Release\WinHttpClient.pdb" KeyPath="yes" />
           </Component>
         </Directory>
         <Directory Id="dir_6CDAE980_32FC_45BD_9E3C_4211B88F4243" Name="debug">
-          <Component Id="comp_15212430_FEB5_43BA_A8AA_A0603685539C" Guid="6811FD29-98EE-47EA-A8F9-A3E2AECBE4B2" Permanent="no" SharedDllRefCount="no" Transitive="no">
-            <File Id="_0292D626_AB49_47B0_9992_94E7757D2402" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="BasicLogger.exe" Source="..\x64\Debug\BasicLogger.exe" KeyPath="yes" />
+          <Component Id="comp_36C66323_5109_4E32_B9CB_90EE1C8DA783" Guid="2ED96526-B79A-41D4-AB19-76A44BDB0BB6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_360BD8D0_A239_479D_AD95_EA462353CD55" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.dll" Source="..\x64\Debug\LeakLib.dll" KeyPath="yes" />
           </Component>
-          <Component Id="comp_7CF8DA73_520D_4FD1_81A5_EF55026882B4" Guid="F13129FE-F512-4C48-A518-178D3E2B2C7A" Permanent="no" SharedDllRefCount="no" Transitive="no">
-            <File Id="_7BA71FE6_4D30_42BD_9767_1BFF43D318E5" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="BasicLogger.pdb" Source="..\x64\Debug\BasicLogger.pdb" KeyPath="yes" />
+          <Component Id="comp_16C66323_5109_4E32_B9CB_90EE1C8DA783" Guid="1ED96526-B79A-41D4-AB19-76A44BDB0BB6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_160BD8D0_A239_479D_AD95_EA462353CD55" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.pdb" Source="..\x64\Debug\LeakLib.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_46C66323_5109_4E32_B9CB_90EE1C8DA783" Guid="4ED96526-B79A-41D4-AB19-76A44BDB0BB6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_460BD8D0_A239_479D_AD95_EA462353CD55" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakTester.exe" Source="..\x64\Debug\LeakTester.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_56C66323_5109_4E32_B9CB_90EE1C8DA783" Guid="5ED96526-B79A-41D4-AB19-76A44BDB0BB6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_560BD8D0_A239_479D_AD95_EA462353CD55" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakTester.pdb" Source="..\x64\Debug\LeakTester.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_66C66323_5109_4E32_B9CB_90EE1C8DA783" Guid="6ED96526-B79A-41D4-AB19-76A44BDB0BB6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_660BD8D0_A239_479D_AD95_EA462353CD55" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="MSXML-XML-Reader-ui.exe" Source="..\x64\Debug\MSXML-XML-Reader-ui.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_76C66323_5109_4E32_B9CB_90EE1C8DA783" Guid="7ED96526-B79A-41D4-AB19-76A44BDB0BB6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_760BD8D0_A239_479D_AD95_EA462353CD55" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="MSXML-XML-Reader-ui.pdb" Source="..\x64\Debug\MSXML-XML-Reader-ui.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_A6C66323_5109_4E32_B9CB_90EE1C8DA783" Guid="AED96526-B79A-41D4-AB19-76A44BDB0BB6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_A60BD8D0_A239_479D_AD95_EA462353CD55" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="WinHttpClient.exe" Source="..\x64\Debug\WinHttpClient.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_B6C66323_5109_4E32_B9CB_90EE1C8DA783" Guid="BED96526-B79A-41D4-AB19-76A44BDB0BB6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_B60BD8D0_A239_479D_AD95_EA462353CD55" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="WinHttpClient.pdb" Source="..\x64\Debug\WinHttpClient.pdb" KeyPath="yes" />
           </Component>
         </Directory>
       </Directory>
       <Directory Id="TempFolder">
-        <Component Id="comp_725209D8_9377_4635_AA84_CE850C83465F" Guid="BDDA5E0A-3EDE-4652-A92B-9FE307F1B0B7" Permanent="no" SharedDllRefCount="no" Transitive="no">
-          <File Id="_39719A5B_6936_4EF0_9B13_F100F9D195F3" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="VC_redist.x64.exe" Source="..\..\..\Users\marcu\Downloads\VC_redist.x64.exe" KeyPath="yes" />
-        </Component>
       </Directory>
+      <Directory Id="dir_3191A4E6_EDA5_4EDB_B038_D9CC92232349" Name="x86">
+        <Directory Id="dir_96DC625E_6A99_428D_AAD1_FFC45CAFC668" Name="debug">
+          <Component Id="comp_B9074322_8B55_4700_984D_6542F8010337" Guid="31C4C317-29CF-4DFC-BE78-9D157782216A" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_CBA3145F_89D9_40A4_A54D_915BC5C50182" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.dll" Source="..\Debug\LeakLib.dll" KeyPath="yes" />
+          </Component>
+        </Directory>
+        <Directory Id="dir_024ACAB1_486F_4733_B3C2_BF31D3AC6823" Name="release">
+          <Component Id="comp_05E4ACF3_E674_4199_87AB_4ABD32095D2A" Guid="0F81701A-4F1E-4697-A7E3-6B9B92CB0D14" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_4855E338_0F23_4F8D_ACEB_8A9868E4C196" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.dll" Source="..\Release\LeakLib.dll" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_15E4ACF3_E674_4199_87AB_4ABD32095D2A" Guid="1F81701A-4F1E-4697-A7E3-6B9B92CB0D14" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_1855E338_0F23_4F8D_ACEB_8A9868E4C196" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakDialogQtUi.exe" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\LeakDialogQtUi.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_25E4ACF3_E674_4199_87AB_4ABD32095D2A" Guid="2F81701A-4F1E-4697-A7E3-6B9B92CB0D14" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_2855E338_0F23_4F8D_ACEB_8A9868E4C196" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libLeakLib.dll" Source="..\Leaks\LeakLib\dist\Release-Win32\MinGW-Windows\libLeakLib.dll" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Merge Id="merge_F1E8213E_5190_4AF3_A1B1_AAE6F6584556" Language="0" DiskId="1" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.13.26020\MergeModules\Microsoft_VC141_CRT_x64.msm" />
+      <Merge Id="merge_B5846420_14B4_4E91_B321_F9FCC67A2D31" Language="0" DiskId="1" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.13.26020\MergeModules\Microsoft_VC141_DebugCRT_x64.msm" />
+      <Merge Id="merge_7E77BE3D_B713_4F38_BCE1_9AE68884870A" Language="0" DiskId="1" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.13.26020\MergeModules\Microsoft_VC141_DebugCRT_x86.msm" />
+      <Merge Id="merge_1C478EE5_2DF4_4E44_815D_9780C62047C4" Language="0" DiskId="1" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.13.26020\MergeModules\Microsoft_VC141_CRT_x86.msm" />
     </Directory>
   </Fragment>
   <Fragment>
