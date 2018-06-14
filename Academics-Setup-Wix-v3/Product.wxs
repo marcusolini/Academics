@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:adx="http://schemas.add-in-express.com/wixdesigner">
   <Product Id="*" Name="Academics Binaries" Language="1033" Version="1.0.0.0" Manufacturer="marcusolini" UpgradeCode="f3db718e-cd8a-452c-a07a-d1417c2fe97f">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x64" />
+    <Package InstallerVersion="301" Compressed="yes" InstallScope="perMachine" Platform="x64" />
     <CustomAction Id="DIRCA_TARGETDIR" Property="TARGETDIR" Value="[ProgramFiles64Folder]\[ProductName]" Execute="firstSequence" />
+    <CustomAction Id="_F8900C60_0208_4B25_9D10_B2B58BF22835" Execute="deferred" Impersonate="no" FileKey="_39719A5B_6936_4EF0_9B13_F100F9D195F3" adx:VSName="VC_redist.x64.exe" ExeCommand="/Install /Passive" />
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <!--- <MediaTemplate /> -->
     <Feature Id="ProductFeature" Title="Academics Binaries" Level="1">
       <ComponentRef Id="comp_B22A513B_107B_4D0D_853F_5FEA97ED1AA2" />
       <ComponentRef Id="comp_1AB5909B_111C_4F1D_9BE0_AD1DD5BF429F" />
-      <ComponentRef Id="comp_543719B1_017C_4818_9D63_DFF250DCF774" />
-      <ComponentRef Id="comp_3AC7326A_D960_427B_8F45_ACA40A6DEF2A" />
+      <ComponentRef Id="comp_15212430_FEB5_43BA_A8AA_A0603685539C" />
+      <ComponentRef Id="comp_7CF8DA73_520D_4FD1_81A5_EF55026882B4" />
+      <ComponentRef Id="comp_725209D8_9377_4635_AA84_CE850C83465F" />
     </Feature>
     <InstallExecuteSequence>
       <Custom Action="DIRCA_TARGETDIR" Before="CostInitialize"><![CDATA[TARGETDIR=""]]></Custom>
+      <Custom Action="_F8900C60_0208_4B25_9D10_B2B58BF22835" After="StartServices"><![CDATA[$comp_725209D8_9377_4635_AA84_CE850C83465F>2]]></Custom>
     </InstallExecuteSequence>
     <InstallUISequence>
       <Custom Action="DIRCA_TARGETDIR" Before="CostInitialize"><![CDATA[TARGETDIR=""]]></Custom>
@@ -37,6 +40,7 @@
     <UIRef Id="FinishedDlg" />
     <UIRef Id="ProgressDlg" />
     <UIRef Id="ConfirmDlg" />
+    <UIRef Id="WelcomeDlg" />
     <UI Id="Base">
       <Property Id="VSDNETURLMSG" Value="This setup requires the .NET Framework version [1].  Please install the .NET Framework and run this setup again.  The .NET Framework can be obtained from the web.  Would you like to do this now?" />
       <Property Id="VSDIISMSG" Value="This setup requires Internet Information Server 5.1 or higher and Windows XP or higher.  This setup cannot be installed on Windows 2000.  Please install Internet Information Server or a newer operating system and run this setup again." />
@@ -328,13 +332,18 @@
           </Component>
         </Directory>
         <Directory Id="dir_6CDAE980_32FC_45BD_9E3C_4211B88F4243" Name="debug">
-          <Component Id="comp_543719B1_017C_4818_9D63_DFF250DCF774" Guid="37EE116F-7D43-4504-9CD1-C6AA73D76F8E" Permanent="no" SharedDllRefCount="no" Transitive="no">
-            <File Id="_797828CC_07F2_4795_B18B_2D7480F77038" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="BasicLogger.exe" Source="..\x64\Debug\BasicLogger.exe" KeyPath="yes" />
+          <Component Id="comp_15212430_FEB5_43BA_A8AA_A0603685539C" Guid="6811FD29-98EE-47EA-A8F9-A3E2AECBE4B2" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_0292D626_AB49_47B0_9992_94E7757D2402" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="BasicLogger.exe" Source="..\x64\Debug\BasicLogger.exe" KeyPath="yes" />
           </Component>
-          <Component Id="comp_3AC7326A_D960_427B_8F45_ACA40A6DEF2A" Guid="DB6E90D8-D418-45CF-8609-4F57936D03CE" Permanent="no" SharedDllRefCount="no" Transitive="no">
-            <File Id="_BB438F62_B7A3_4AF6_AEA8_1790D7AAB00D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="BasicLogger.pdb" Source="..\x64\Debug\BasicLogger.pdb" KeyPath="yes" />
+          <Component Id="comp_7CF8DA73_520D_4FD1_81A5_EF55026882B4" Guid="F13129FE-F512-4C48-A518-178D3E2B2C7A" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_7BA71FE6_4D30_42BD_9767_1BFF43D318E5" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="BasicLogger.pdb" Source="..\x64\Debug\BasicLogger.pdb" KeyPath="yes" />
           </Component>
         </Directory>
+      </Directory>
+      <Directory Id="TempFolder">
+        <Component Id="comp_725209D8_9377_4635_AA84_CE850C83465F" Guid="BDDA5E0A-3EDE-4652-A92B-9FE307F1B0B7" Permanent="no" SharedDllRefCount="no" Transitive="no">
+          <File Id="_39719A5B_6936_4EF0_9B13_F100F9D195F3" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="VC_redist.x64.exe" Source="..\..\..\Users\marcu\Downloads\VC_redist.x64.exe" KeyPath="yes" />
+        </Component>
       </Directory>
     </Directory>
   </Fragment>

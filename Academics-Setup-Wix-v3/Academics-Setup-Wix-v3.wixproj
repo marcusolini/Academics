@@ -36,6 +36,12 @@
     <Content Include="XSLT\XslProjectOutput.xslt" />
     <Content Include="XSLT\XslRegisterForCOM.xslt" />
   </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="VDWExtension">
+      <HintPath>C:\Users\marcu\AppData\Local\Microsoft\VisualStudio\15.0_09dff132\Extensions\sjf2hw20.h4g\WiX Extensions\v3.x\VDWExtension.dll</HintPath>
+      <Name>VDWExtension</Name>
+    </WixExtension>
+  </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
