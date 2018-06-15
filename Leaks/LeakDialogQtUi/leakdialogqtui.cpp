@@ -41,9 +41,7 @@ LeakDialogQtUi::LeakDialogQtUi(QWidget *parent) :
     ui->handleCheckBox->setDisabled(true);
 #endif // _WIN32
     ui->handleIterationsLineEdit->setDisabled(true);
-    ui->handleBytesPerLineEdit->setDisabled(true);
     ui->handleIterationsLineEdit->setValidator( new QIntValidator(1, 999999999, this));
-    ui->handleBytesPerLineEdit->setValidator( new QIntValidator(1, 999999999, this));
 
     ui->RunTestsButton->setDisabled(true);
     ui->CloseButton->setEnabled(true);
@@ -202,14 +200,7 @@ void LeakDialogQtUi::handleRunTestsButton()
             nIterations = 0;
         }
 
-        sBytesPer = ui->handleBytesPerLineEdit->text();
-        nBytesPer = sBytesPer.toInt(&bIntConversion);
-        if (false == bIntConversion)
-        {
-            nBytesPer = 0;
-        }
-
-        if ( (0 <nIterations) && (0 < nBytesPer) )
+        if ( (0 < nIterations) )
         {
             bRunTests = true;
 
@@ -328,12 +319,10 @@ void LeakDialogQtUi::handleHandleCheckBox(int state)
     case Qt::Checked:
     case Qt::PartiallyChecked:
         ui->handleIterationsLineEdit->setEnabled(true);
-        ui->handleBytesPerLineEdit->setEnabled(true);
         ui->RunTestsButton->setEnabled(true);
         break;
     case Qt::Unchecked:
         ui->handleIterationsLineEdit->setDisabled(true);
-        ui->handleBytesPerLineEdit->setDisabled(true);
 
         if ( (false == ui->newOperatorCheckBox->isChecked()) &&
              (false == ui->mallocCheckBox->isChecked()) &&

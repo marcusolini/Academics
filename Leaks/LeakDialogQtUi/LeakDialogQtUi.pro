@@ -49,10 +49,22 @@ CP_SOURCE = ..\..\LeakLib\dist\Release-Win32\MinGW-Windows\libLeakLib.dll
 CP_DEST = ..\..\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release
 QMAKE_POST_LINK = $$quote(cmd /c copy /y $$CP_SOURCE $$CP_DEST)$$escape_expand(\n\t)
 QMAKE_POST_LINK += $$(QTDIR)/bin/windeployqt $$PWD/build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release/release/LeakDialogQtUi.exe
-}else{
+}else:win32:CONFIG(debug, debug|release){
 LIBS += -L$$PWD/../LeakLib/dist/Debug-Win32/MinGW-Windows/ -lLeakLib
 CP_SOURCE = ..\..\LeakLib\dist\Debug-Win32\MinGW-Windows\libLeakLib.dll
 CP_DEST = ..\..\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug
 QMAKE_POST_LINK = $$quote(cmd /c copy /y $$CP_SOURCE $$CP_DEST)$$escape_expand(\n\t)
 QMAKE_POST_LINK += $$(QTDIR)/bin/windeployqt $$PWD/build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug/debug/LeakDialogQtUi.exe
+}
+
+unix:!macx:CONFIG(release, debug|release){
+LIBS += -L$$PWD/../LeakLib/dist/Release/GNU-Linux/ -lLeakLib
+CP_SOURCE = ../../LeakLib/dist/Release/GNU-Linux/libLeakLib.so
+CP_DEST = ../../LeakDialogQtUi/build-LeakDialogQtUi-Desktop-Release
+QMAKE_POST_LINK = $$quote(cp $$CP_SOURCE $$CP_DEST)$$escape_expand(\n\t)
+}else:unix:!macx:CONFIG(debug, debug|release){
+LIBS += -L$$PWD/../LeakLib/dist/Debug/GNU-Linux/ -lLeakLib
+CP_SOURCE = ../../LeakLib/dist/Debug/GNU-Linux/libLeakLib.so
+CP_DEST = ../../LeakDialogQtUi/build-LeakDialogQtUi-Desktop-Debug
+QMAKE_POST_LINK = $$quote(cp $$CP_SOURCE $$CP_DEST)$$escape_expand(\n\t)
 }
