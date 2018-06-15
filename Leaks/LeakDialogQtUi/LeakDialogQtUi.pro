@@ -38,16 +38,21 @@ FORMS += \
     progressdialog.ui
 
 
-#LIBS += -L"../../LeakLib/dist/Debug/GNU-Linux" -lLeakLib
-#INCLUDEPATH += ../LeakLib
-
-
 unix:!macx: LIBS += -L$$PWD/../LeakLib/dist/Debug/GNU-Linux/ -lLeakLib
 
 INCLUDEPATH += $$PWD/../LeakLib
 DEPENDPATH += $$PWD/../LeakLib
 
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../release/ -lLeakLib
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../debug/ -lLeakLib
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../LeakLib/dist/Debug-Win32/MinGW-Windows/ -lLeakLib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../LeakLib/dist/Debug-Win32/MinGW-Windows/ -lLeakLib
+win32:CONFIG(release, debug|release){
+LIBS += -L$$PWD/../LeakLib/dist/Release-Win32/MinGW-Windows/ -lLeakLib
+CP_SOURCE = ..\..\LeakLib\dist\Release-Win32\MinGW-Windows\libLeakLib.dll
+CP_DEST = ..\..\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release
+QMAKE_POST_LINK = $$quote(cmd /c copy /y $$CP_SOURCE $$CP_DEST)$$escape_expand(\n\t)
+QMAKE_POST_LINK += $$(QTDIR)/bin/windeployqt $$PWD/build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release/release/LeakDialogQtUi.exe
+}else{
+LIBS += -L$$PWD/../LeakLib/dist/Debug-Win32/MinGW-Windows/ -lLeakLib
+CP_SOURCE = ..\..\LeakLib\dist\Debug-Win32\MinGW-Windows\libLeakLib.dll
+CP_DEST = ..\..\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug
+QMAKE_POST_LINK = $$quote(cmd /c copy /y $$CP_SOURCE $$CP_DEST)$$escape_expand(\n\t)
+QMAKE_POST_LINK += $$(QTDIR)/bin/windeployqt $$PWD/build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug/debug/LeakDialogQtUi.exe
+}
