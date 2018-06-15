@@ -7,11 +7,7 @@
     <!--- <MediaTemplate /> -->
     <Feature Id="ProductFeature" Title="Academics Binaries" Level="1">
       <ComponentRef Id="comp_B9074322_8B55_4700_984D_6542F8010337" />
-
       <ComponentRef Id="comp_05E4ACF3_E674_4199_87AB_4ABD32095D2A" />
-      <ComponentRef Id="comp_15E4ACF3_E674_4199_87AB_4ABD32095D2A" />
-      <ComponentRef Id="comp_25E4ACF3_E674_4199_87AB_4ABD32095D2A" />
-
       <ComponentRef Id="comp_36C66323_5109_4E32_B9CB_90EE1C8DA783" />
       <ComponentRef Id="comp_16C66323_5109_4E32_B9CB_90EE1C8DA783" />
       <ComponentRef Id="comp_46C66323_5109_4E32_B9CB_90EE1C8DA783" />
@@ -20,7 +16,6 @@
       <ComponentRef Id="comp_76C66323_5109_4E32_B9CB_90EE1C8DA783" />
       <ComponentRef Id="comp_A6C66323_5109_4E32_B9CB_90EE1C8DA783" />
       <ComponentRef Id="comp_B6C66323_5109_4E32_B9CB_90EE1C8DA783" />
-      
       <ComponentRef Id="comp_B5329BE0_AAB5_48F4_A608_DA70D3062E95" />
       <ComponentRef Id="comp_15329BE0_AAB5_48F4_A608_DA70D3062E95" />
       <ComponentRef Id="comp_25329BE0_AAB5_48F4_A608_DA70D3062E95" />
@@ -29,11 +24,116 @@
       <ComponentRef Id="comp_55329BE0_AAB5_48F4_A608_DA70D3062E95" />
       <ComponentRef Id="comp_A5329BE0_AAB5_48F4_A608_DA70D3062E95" />
       <ComponentRef Id="comp_C5329BE0_AAB5_48F4_A608_DA70D3062E95" />
-         
       <MergeRef Id="merge_F1E8213E_5190_4AF3_A1B1_AAE6F6584556" />
       <MergeRef Id="merge_B5846420_14B4_4E91_B321_F9FCC67A2D31" />
       <MergeRef Id="merge_7E77BE3D_B713_4F38_BCE1_9AE68884870A" />
       <MergeRef Id="merge_1C478EE5_2DF4_4E44_815D_9780C62047C4" />
+      <ComponentRef Id="comp_F14B8C4E_ED7F_4225_BDE8_C62497076BA3" />
+      <ComponentRef Id="comp_86CEF0DC_49FE_4598_A75C_C7AC39C60E4B" />
+      <ComponentRef Id="comp_E0A62846_4B49_4629_AB54_D338F44B4B3B" />
+      <ComponentRef Id="comp_0FCAED08_05EC_4044_B312_2D970D04EEB1" />
+      <ComponentRef Id="comp_B55312E3_BF0E_4586_B2B0_7058504D448B" />
+      <ComponentRef Id="comp_24FCA0F2_2B49_4922_B1E8_B537BA29622D" />
+      <ComponentRef Id="comp_40FB2211_2918_4836_AC75_5B2E0D773B32" />
+      <ComponentRef Id="comp_64E1AA74_0365_4B7A_B8BA_0FD7F57920A3" />
+      <ComponentRef Id="comp_0D4DA5F7_3828_486D_9B3C_4022F08B3B8E" />
+      <ComponentRef Id="comp_42C94B29_83DC_42E8_9846_1A41953E9DF7" />
+      <ComponentRef Id="comp_7C2713ED_49BF_4DBE_9201_88A583D29634" />
+      <ComponentRef Id="comp_8087DB52_BDBA_44DA_88CF_0B09517BA778" />
+      <ComponentRef Id="comp_1FE34DB8_A232_44E2_92E3_6E688BFD178B" />
+      <ComponentRef Id="comp_CA69684A_45E0_4DFC_8C65_98CA5B403D1E" />
+      <ComponentRef Id="comp_9D86EC3C_2DD1_4F75_8F06_5665B915CD66" />
+      <ComponentRef Id="comp_D32F3C44_A54B_4A42_A486_22C7CE516441" />
+      <ComponentRef Id="comp_5D29282B_1A29_4F69_8055_E63E1E135432" />
+      <ComponentRef Id="comp_E6865A5A_71C2_4545_8A11_7CBEED92A0C2" />
+      <ComponentRef Id="comp_68720DC6_44E2_4D48_A936_30C9D4272519" />
+      <ComponentRef Id="comp_33B5CC80_38B4_42B0_9913_5C9483CF4AAA" />
+      <ComponentRef Id="comp_714291A8_C23B_4F09_8A3B_28B52AB9F4DC" />
+      <ComponentRef Id="comp_2A069B36_475E_4097_B06A_19371432FE54" />
+      <ComponentRef Id="comp_F19C3233_990B_4D28_B5E0_09C76981DA53" />
+      <ComponentRef Id="comp_B19DBD34_7759_468D_BBD0_BB846EEF40DB" />
+      <ComponentRef Id="comp_75E71232_6D32_49CC_80D9_72C266B06EB4" />
+      <ComponentRef Id="comp_BB2CA1A1_6D51_42B9_8E49_3D42003ABDC1" />
+      <ComponentRef Id="comp_6E641C9F_587C_47FD_8E1F_78E5A99071FB" />
+      <ComponentRef Id="comp_E0EE9569_FA08_4E1C_BB6B_6BEBE9A1196B" />
+      <ComponentRef Id="comp_AA7CDD7F_8B31_454B_8BE1_00C3A8D0177B" />
+      <ComponentRef Id="comp_A882F946_99B8_48E0_BEFC_1A171ACB7308" />
+      <ComponentRef Id="comp_98C026C8_4CF4_4C6E_88B7_9A901CA4B566" />
+      <ComponentRef Id="comp_3418B351_7F9C_4645_A9D7_7BF6B42404AF" />
+      <ComponentRef Id="comp_9B554070_FF82_489D_B82D_1ADA412B39CB" />
+      <ComponentRef Id="comp_B368AF0F_3069_4415_AF42_A4A7F75BA526" />
+      <ComponentRef Id="comp_6A0008BC_67A8_448D_BD59_0EBD7DBFAA7D" />
+      <ComponentRef Id="comp_285C287E_74C5_4D2F_9F10_95C9CD79012B" />
+      <ComponentRef Id="comp_61FEF99D_11AF_4A94_915D_E3ED529053CF" />
+      <ComponentRef Id="comp_2643CB1F_A4B1_428F_8BB8_966823790A12" />
+      <ComponentRef Id="comp_93E37DF0_6E81_4108_BCDD_4C4C5DDF807F" />
+      <ComponentRef Id="comp_3094E3CF_D917_4E7C_A17C_99FCB761413A" />
+      <ComponentRef Id="comp_1B418F70_1D25_4921_A802_08849B4EEA09" />
+      <ComponentRef Id="comp_2E5D5B54_20AA_446B_84E3_C2AA538CDDAD" />
+      <ComponentRef Id="comp_A95A5092_8D30_47D4_B2F9_81ED8EE76206" />
+      <ComponentRef Id="comp_490DC25D_458F_4A14_8776_D98211901750" />
+      <ComponentRef Id="comp_D9E967BF_D89A_4D59_928F_670F53040167" />
+      <ComponentRef Id="comp_8DA5E51D_6D63_4D3D_820D_FE4DB9467016" />
+      <ComponentRef Id="comp_4B429BA5_9C4C_43CD_98A6_5A7FD9632028" />
+      <ComponentRef Id="comp_5FD333F6_679C_44AC_8D38_B43F9FF6CEB8" />
+      <ComponentRef Id="comp_0DEBA605_25E3_466C_BCCA_53B2A707496F" />
+      <ComponentRef Id="comp_9819CA46_7446_468A_AF75_721DDCAC1A92" />
+      <ComponentRef Id="comp_CD50F8C9_53FA_494E_8FE6_DE146BC23EE5" />
+      <ComponentRef Id="comp_3AC0553C_2B76_4D8E_A241_C5A2C6824C49" />
+      <ComponentRef Id="comp_127FB093_2FBD_491F_B0BD_68A0FA102B34" />
+      <ComponentRef Id="comp_9CD6486F_727D_4D33_90CC_B859755F6CF9" />
+      <ComponentRef Id="comp_3CE2DA5A_749E_4272_8B4D_51F5357F2BEF" />
+      <ComponentRef Id="comp_7650D394_E931_429E_BC34_BFC174DBE530" />
+      <ComponentRef Id="comp_F3B35953_BD64_4234_931C_2DD643B84160" />
+      <ComponentRef Id="comp_7C3737B3_D6DB_49FF_B6E9_952FA19CB376" />
+      <ComponentRef Id="comp_4E2DE6AA_83FE_4B00_A9C8_24B8609256D0" />
+      <ComponentRef Id="comp_E76C306A_33AE_4428_889A_3561A5AAD441" />
+      <ComponentRef Id="comp_306E91C6_E480_40CB_AD65_FA49BAB07107" />
+      <ComponentRef Id="comp_96F9A908_3294_4CE2_9BE9_FB1C8F4F44E0" />
+      <ComponentRef Id="comp_AE0AB43F_ECC4_4032_BED0_B6889011CADA" />
+      <ComponentRef Id="comp_DD108565_AD9F_4D1F_A419_20AC03CDC9DE" />
+      <ComponentRef Id="comp_975D04B8_A9DE_4DAF_B4CA_1979D51B61F5" />
+      <ComponentRef Id="comp_BBD7D200_B3B2_4166_A4F7_89384E36596D" />
+      <ComponentRef Id="comp_AC51F038_EDF1_4267_8A71_336CC0270809" />
+      <ComponentRef Id="comp_94145A05_1E1F_40EC_8F1B_31CC36BE64F8" />
+      <ComponentRef Id="comp_687191DA_5543_4FE0_9223_6754B4809E3A" />
+      <ComponentRef Id="comp_F4E51102_EC7A_43E4_84B1_19AEDB0647CD" />
+      <ComponentRef Id="comp_26565288_B196_47C1_8E5E_C939B5B4D5F4" />
+      <ComponentRef Id="comp_F78BC69C_2E7A_404A_9013_2978C039F2A5" />
+      <ComponentRef Id="comp_138D63EC_4DCD_45E6_87AA_8FA2D367C88B" />
+      <ComponentRef Id="comp_83B82DC2_E9F4_4585_AB00_845156C0495A" />
+      <ComponentRef Id="comp_3872B587_C73E_4E0D_873F_DE0D42999C0F" />
+      <ComponentRef Id="comp_25BCD3BF_45F0_46DC_90B6_42BE08AEE42D" />
+      <ComponentRef Id="comp_4493135C_F04B_4CFB_A94D_8306C208FA46" />
+      <ComponentRef Id="comp_9AF5F24F_E67B_4371_8E30_8BEDDD63576C" />
+      <ComponentRef Id="comp_922AD283_D47C_4165_8F3D_795E51C11001" />
+      <ComponentRef Id="comp_EBFF20D7_0221_46BB_800C_C8C69A1E9898" />
+      <ComponentRef Id="comp_8598F5DA_D5F7_4989_A576_93C520F760F5" />
+      <ComponentRef Id="comp_8CBA7FE3_4BC4_410E_941E_AF6DFF94E523" />
+      <ComponentRef Id="comp_EBCAA55A_1618_4D8C_A71C_4CE8C467462B" />
+      <ComponentRef Id="comp_EECB9D6D_440F_4F64_AB2A_2B92B0798BB9" />
+      <ComponentRef Id="comp_07F7DE2C_A755_4A81_AF66_1A0DA39FA627" />
+      <ComponentRef Id="comp_7E477C82_4B96_4C59_BB46_F81F7D0F3DBD" />
+      <ComponentRef Id="comp_93324DDD_5944_4A1F_83FE_195CA57E1FD2" />
+      <ComponentRef Id="comp_67B2DF17_369A_407D_8B4F_DBEB38260428" />
+      <ComponentRef Id="comp_396B1B25_A08C_4C8D_88B7_EFED45DB9339" />
+      <ComponentRef Id="comp_95177B68_0A94_48DA_A6C9_19E049DEEC68" />
+      <ComponentRef Id="comp_F9AFE1AB_CA73_4E9E_888B_2F8B4D3FE649" />
+      <ComponentRef Id="comp_90E5E2CA_5561_4AC7_AA84_D36F0F64B164" />
+      <ComponentRef Id="comp_18C89578_DD07_4825_8823_62AD9A87F43B" />
+      <ComponentRef Id="comp_A4AF8A5D_2C6A_46D2_9528_E417C58374DA" />
+      <ComponentRef Id="comp_277B5B91_9C4C_4B5A_ADE9_4CCC86B9EFAB" />
+      <ComponentRef Id="comp_15A389D6_8BC9_408C_8879_9B171810F99D" />
+      <ComponentRef Id="comp_9CE01625_B613_44C2_8935_FC05ECD5912B" />
+      <ComponentRef Id="comp_2C0F757D_96FE_44A0_8CC0_FB5626E086D6" />
+      <ComponentRef Id="comp_C1B7823E_834B_4488_81F9_FD2C5B4810ED" />
+      <ComponentRef Id="comp_35842033_41A0_478D_B164_C93756E9A72A" />
+      <ComponentRef Id="comp_62282111_22C2_49D5_ABBB_3EDE5E2BE3BA" />
+      <ComponentRef Id="comp_AD98A1CA_7085_485D_BFFF_51AE9CE4BB61" />
+      <ComponentRef Id="comp_DDD5D47F_C542_4718_B312_2AC51B6D8A11" />
+      <ComponentRef Id="comp_7FC3B348_3BF0_48EE_ABD4_A8C17BF85393" />
+      <ComponentRef Id="comp_CC574D9D_E33E_4C65_923E_99929204BB6C" />
+      <ComponentRef Id="comp_C15E90BE_B14A_4CDB_9253_957B182FD30E" />
     </Feature>
     <InstallExecuteSequence>
       <Custom Action="DIRCA_TARGETDIR" Before="CostInitialize"><![CDATA[TARGETDIR=""]]></Custom>
@@ -404,17 +504,353 @@
           <Component Id="comp_B9074322_8B55_4700_984D_6542F8010337" Guid="31C4C317-29CF-4DFC-BE78-9D157782216A" Permanent="no" SharedDllRefCount="no" Transitive="no">
             <File Id="_CBA3145F_89D9_40A4_A54D_915BC5C50182" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.dll" Source="..\Debug\LeakLib.dll" KeyPath="yes" />
           </Component>
+          <Component Id="comp_F14B8C4E_ED7F_4225_BDE8_C62497076BA3" Guid="F7563B20-6541-4F67-8AF0-395A692EFEF9" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_39435BC0_B94D_4E18_9B15_D7120182BD5D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakTester.exe" Source="..\Debug\LeakTester.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_86CEF0DC_49FE_4598_A75C_C7AC39C60E4B" Guid="89793596-15B3-4C6D-8549-D04B79A05AFC" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_24AB2806_2423_434D_9E89_FC0EB1CC8D8A" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakTester.pdb" Source="..\Debug\LeakTester.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_E0A62846_4B49_4629_AB54_D338F44B4B3B" Guid="0C108312-9F0B-4DEA-9A5F-65A45A80D26E" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_015B346C_4503_4BB4_A9F9_F98CC782BFAE" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="MSXML-XML-Reader-Ui.exe" Source="..\Debug\MSXML-XML-Reader-Ui.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_0FCAED08_05EC_4044_B312_2D970D04EEB1" Guid="1F85CE4C-0965-4AF0-A550-87E014EA8951" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_6E1ED010_95EA_4058_A8B3_535F9310BE9B" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="MSXML-XML-Reader-Ui.pdb" Source="..\Debug\MSXML-XML-Reader-Ui.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_B55312E3_BF0E_4586_B2B0_7058504D448B" Guid="C803B62F-BE49-41C0-90C0-705D6E2C5A1A" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_4420F0AE_7167_4C8C_8D74_DE0F9691E3FA" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="WinHttpClient.exe" Source="..\Debug\WinHttpClient.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_24FCA0F2_2B49_4922_B1E8_B537BA29622D" Guid="D5A4CD26-619D-4938-AA64-D13453926BFE" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_0EB4041E_FAAC_479C_818B_25F58AF25009" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="WinHttpClient.pdb" Source="..\Debug\WinHttpClient.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_40FB2211_2918_4836_AC75_5B2E0D773B32" Guid="16AF5584-F355-4E9E-8BD4-9B5040AF50D0" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_9DFBF232_6D8E_4401_83FC_CE1866009A70" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.pdb" Source="..\Debug\LeakLib.pdb" KeyPath="yes" />
+          </Component>
+          <Directory Id="dir_7734A00D_ED3D_48A6_9C92_A58D4FADCC89" Name="LeakDialogQtUi">
+            <Component Id="comp_9D86EC3C_2DD1_4F75_8F06_5665B915CD66" Guid="97F8DF45-5078-4F55-8B03-5AABC78C345F" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_5677DDDD_695B_42EB_8A24_A96C84A96A96" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="D3Dcompiler_47.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\D3Dcompiler_47.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_D32F3C44_A54B_4A42_A486_22C7CE516441" Guid="E5E002CF-6FE9-4D57-9522-D799CCAFF65A" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_C62E609F_325F_406A_A4B2_4172E67A62F1" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakDialogQtUi.exe" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\LeakDialogQtUi.exe" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_5D29282B_1A29_4F69_8055_E63E1E135432" Guid="37DDA180-CF9E-4FE9-847F-A11216448ACB" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_771B1F39_86F7_46E0_BC72_B6F68DF62621" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libEGLd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\libEGLd.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_E6865A5A_71C2_4545_8A11_7CBEED92A0C2" Guid="668F932B-840C-45A8-AD11-962CA56A9912" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_9FA6C4C2_5203_4479_BE01_67080FD24073" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libgcc_s_dw2-1.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\libgcc_s_dw2-1.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_68720DC6_44E2_4D48_A936_30C9D4272519" Guid="6CE1746F-ABFF-4A67-B8E0-3B18698A1EA4" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_BC78347B_8A42_4E96_9B9C_B333044DB3E4" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libGLESV2d.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\libGLESV2d.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_33B5CC80_38B4_42B0_9913_5C9483CF4AAA" Guid="13493814-FE01-4463-8AF0-F75A1379B81C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_54844662_2C92_47EF_A985_4D66F06B511F" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libLeakLib.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\libLeakLib.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_714291A8_C23B_4F09_8A3B_28B52AB9F4DC" Guid="0B730462-2B7D-4420-8022-AA8B0C11CF03" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_0E42EE33_2F53_4A57_970A_9197A85B5992" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libstdc++-6.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\libstdc++-6.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_2A069B36_475E_4097_B06A_19371432FE54" Guid="1298D4CC-4A9B-4B26-AEBC-F29EA01F1A35" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_FC2FB508_E8F7_4578_BACB_88DD230CFC33" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libwinpthread-1.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\libwinpthread-1.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_F19C3233_990B_4D28_B5E0_09C76981DA53" Guid="2A9FB946-3B0E-4B2F-8EF8-CD92DEA3C0B7" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_3F94EF44_352B_4F97_9ABF_8E8128AC5BF7" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="opengl32sw.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\opengl32sw.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_B19DBD34_7759_468D_BBD0_BB846EEF40DB" Guid="1D60CBFF-059B-4403-A3C7-297B76F01D80" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_9C49BF70_D9A7_4677_87EF_4DB14152BB98" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="Qt5Cored.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\Qt5Cored.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_75E71232_6D32_49CC_80D9_72C266B06EB4" Guid="ED56C813-B647-494A-9D93-BC71317C40C5" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_46D8F5AB_A313_4913_A0CD_992D814AEDD0" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="Qt5Guid.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\Qt5Guid.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_BB2CA1A1_6D51_42B9_8E49_3D42003ABDC1" Guid="7132CFFA-740D-4252-9709-2F9253B83D27" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_B232D80B_D65E_459D_8BCA_835D2C865BD2" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="Qt5Svgd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\Qt5Svgd.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_6E641C9F_587C_47FD_8E1F_78E5A99071FB" Guid="95513F80-09B7-497C-8816-D38BD045081D" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_139E88A8_BAA3_448B_8B0A_83EFD9731BBB" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="Qt5Widgetsd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\Qt5Widgetsd.dll" KeyPath="yes" />
+            </Component>
+            <Directory Id="dir_E2C3737F_2087_40CF_9215_9CAF79E4AD0A" Name="iconengines">
+              <Component Id="comp_83B82DC2_E9F4_4585_AB00_845156C0495A" Guid="10BF481A-495A-4919-841E-DD995B06986C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_B9E0088F_0726_4A10_9BA0_8B347EA29CFF" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qsvgicond.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\iconengines\qsvgicond.dll" KeyPath="yes" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_A70B13B3_B353_4BA0_8402_B4360FC54B0D" Name="imageformats">
+              <Component Id="comp_3872B587_C73E_4E0D_873F_DE0D42999C0F" Guid="4B3710BB-9F09-462B-9410-6C55E978EA89" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_EF513F07_745D_48C9_BE4A_FDD87308EE22" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qgifd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qgifd.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_25BCD3BF_45F0_46DC_90B6_42BE08AEE42D" Guid="0468F5DB-67E3-4F7C-B12D-89ACCCD5B8FD" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_46EE8509_50E4_4CE5_BCEF_A00DEBD77C27" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qicnsd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qicnsd.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_4493135C_F04B_4CFB_A94D_8306C208FA46" Guid="2FB1FEE6-CDDC-46FC-B662-B02CC986E287" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_CF41434F_3546_4CEC_AFC0_E30ECC9AF7C9" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qicod.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qicod.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_9AF5F24F_E67B_4371_8E30_8BEDDD63576C" Guid="39D39E01-1B0A-47C2-A038-7DA4B70022A1" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_DB2D4C35_1C1E_48F7_B3E1_DFC9CDFFF37C" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qjpegd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qjpegd.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_922AD283_D47C_4165_8F3D_795E51C11001" Guid="8422C8A5-DB8A-4A99-A500-222B72680F58" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_CD70C1E3_0DA3_46ED_B29C_82BD51D8D7DE" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qsvgd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qsvgd.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_EBFF20D7_0221_46BB_800C_C8C69A1E9898" Guid="74666256-9156-4F55-838C-6ECB09C9843C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_35AC61ED_E601_4333_A645_D930F0B829A2" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qtgad.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qtgad.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_8598F5DA_D5F7_4989_A576_93C520F760F5" Guid="8FE318A5-7ACD-4F02-B78F-3B7BFB098EE1" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_E144F900_0A39_48D2_9B79_1B23BEC552FA" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qtiffd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qtiffd.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_8CBA7FE3_4BC4_410E_941E_AF6DFF94E523" Guid="793FE7EC-7081-4B8A-BB87-EBC718CA60EB" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_B0A7E16C_38D7_4CAE_97C4_5998B2D4CAF6" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qwbmpd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qwbmpd.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_EBCAA55A_1618_4D8C_A71C_4CE8C467462B" Guid="62317FA3-4481-4431-9B48-130FB15E7417" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_18E06A01_D2DA_4567_A354_7F801A43277D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qwebpd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\imageformats\qwebpd.dll" KeyPath="yes" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_103D4F7C_10F0_456B_A589_57B3A206226F" Name="translations">
+              <Component Id="comp_7E477C82_4B96_4C59_BB46_F81F7D0F3DBD" Guid="219781B1-C6E5-4D26-B47B-9AEA5D709272" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_10842C7C_DBD5_4A93_AEFD_F868612D1804" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ar.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_ar.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_93324DDD_5944_4A1F_83FE_195CA57E1FD2" Guid="66663153-BEBD-4307-BF93-32E7287516B9" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_6745448C_B1AA_4227_9485_1792AEDD17FD" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_bg.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_bg.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_67B2DF17_369A_407D_8B4F_DBEB38260428" Guid="29D0270B-1687-472A-B1FA-B3C37095E23E" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_87BE5836_0D5D_485B_9142_9F2779DD36DA" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ca.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_ca.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_396B1B25_A08C_4C8D_88B7_EFED45DB9339" Guid="E746FA38-7A15-45FD-BC60-AEA90ED4C70D" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_9CA7B690_7A09_498C_890B_B2297B00F362" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_cs.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_cs.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_95177B68_0A94_48DA_A6C9_19E049DEEC68" Guid="77000E81-AA2E-4BD8-A18B-D5E7D77E23D7" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_ED7DF70F_6E2E_4CBD_B522_4EB10B042AA0" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_da.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_da.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_F9AFE1AB_CA73_4E9E_888B_2F8B4D3FE649" Guid="12C2C9CE-B81D-47BE-9E91-0E36C247BC54" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_50504C6D_6ACE_4E12_AD84_1F879C9DD06A" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_de.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_de.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_90E5E2CA_5561_4AC7_AA84_D36F0F64B164" Guid="D4FBF788-B793-464A-94E9-7D3E16DE7195" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_B303985F_D509_4EF1_99B8_E51DAE52D971" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_en.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_en.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_18C89578_DD07_4825_8823_62AD9A87F43B" Guid="6B017F80-267D-4A68-8C58-02CDD0352252" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_017205A3_982C_469B_A53C_28D585037161" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_es.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_es.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_A4AF8A5D_2C6A_46D2_9528_E417C58374DA" Guid="25F14B50-BD04-4606-AD47-2AF7C9AAF11E" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_484A98E3_4565_45E0_8DF9_EF0D9501C0C7" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_fi.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_fi.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_277B5B91_9C4C_4B5A_ADE9_4CCC86B9EFAB" Guid="44EBD040-6E43-4E70-8283-B3AD72098F6F" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_89B38E63_EA9C_4BC6_9BF3_999DFEBB8BDD" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_fr.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_fr.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_15A389D6_8BC9_408C_8879_9B171810F99D" Guid="2C5DBDC8-9E89-4B1E-9803-29E9E235B8DD" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_4CB2240A_731B_46B3_9DD8_79AEB2D5425C" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_gd.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_gd.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_9CE01625_B613_44C2_8935_FC05ECD5912B" Guid="F8E5AD05-6838-4626-A588-00F3CD3AB96A" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_939CC291_AAC7_4B94_BDEE_34978CE40FBA" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_he.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_he.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_2C0F757D_96FE_44A0_8CC0_FB5626E086D6" Guid="2E10268A-A1C3-4DD8-AF9C-9FEDC06C9FBB" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_1BF99E37_CD87_4400_A53C_602B287A234D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_hu.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_hu.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_C1B7823E_834B_4488_81F9_FD2C5B4810ED" Guid="BAA01CDF-A90A-4E3F-9381-0E7454B58BE8" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_62067FCD_5F11_4246_A2DB_0284364B7761" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_it.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_it.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_35842033_41A0_478D_B164_C93756E9A72A" Guid="A39D1090-2B8E-4B0C-929B-9238B50EEF77" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_DAD0D525_57F8_4B84_B4C2_92FAABA12208" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ja.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_ja.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_62282111_22C2_49D5_ABBB_3EDE5E2BE3BA" Guid="FBFD1300-2AAC-4C3C-B595-236F4DB416E3" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_DC8F0A4B_E12E_44D2_93EA_697D659E9AEA" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ko.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_ko.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_AD98A1CA_7085_485D_BFFF_51AE9CE4BB61" Guid="9000D2B8-764F-4F8C-A14E-F17FD395D147" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_A8122133_0904_432E_8064_A4210D1676BC" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_lv.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_lv.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_DDD5D47F_C542_4718_B312_2AC51B6D8A11" Guid="941205F1-9D1F-4F31-B803-D05500333174" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_6F711B46_B356_4B24_B01B_44D5A3221022" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_pl.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_pl.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_7FC3B348_3BF0_48EE_ABD4_A8C17BF85393" Guid="328772EB-CD91-4A4F-AF4B-185BE6985166" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_1A4166C0_7C80_4EE9_B7CD_68B814CA96E5" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ru.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_ru.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_CC574D9D_E33E_4C65_923E_99929204BB6C" Guid="D6092FC8-E026-4A8A-A9C1-3CE17B98131C" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_F1E05034_A972_43EF_8E4D_9636DE670A41" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_sk.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_sk.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_C15E90BE_B14A_4CDB_9253_957B182FD30E" Guid="8AEA8B3D-877E-4AAD-828C-259E30A89E43" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_11C077EE_34BD_444D_97FE_C4268E01C24B" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_uk.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\translations\qt_uk.qm" KeyPath="yes" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_F51C8373_9766_4F80_A963_F22D4702AB59" Name="styles">
+              <Component Id="comp_07F7DE2C_A755_4A81_AF66_1A0DA39FA627" Guid="027A809C-DC85-47EE-9F6C-36234CADCD80" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_06E6EE08_9C60_4599_AB9E_5886C79D2B93" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qwindowsvistastyled.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\styles\qwindowsvistastyled.dll" KeyPath="yes" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_082EBE6E_65F7_411E_BDBE_CE5C1F12FDB0" Name="platforms">
+              <Component Id="comp_EECB9D6D_440F_4F64_AB2A_2B92B0798BB9" Guid="6EB5047E-7311-43DA-902E-1B715B216EE8" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_BC763925_2172_47CA_9FF1_7E7C7FDB78E9" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qwindowsd.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug\debug\platforms\qwindowsd.dll" KeyPath="yes" />
+              </Component>
+            </Directory>
+          </Directory>
         </Directory>
         <Directory Id="dir_024ACAB1_486F_4733_B3C2_BF31D3AC6823" Name="release">
           <Component Id="comp_05E4ACF3_E674_4199_87AB_4ABD32095D2A" Guid="0F81701A-4F1E-4697-A7E3-6B9B92CB0D14" Permanent="no" SharedDllRefCount="no" Transitive="no">
             <File Id="_4855E338_0F23_4F8D_ACEB_8A9868E4C196" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.dll" Source="..\Release\LeakLib.dll" KeyPath="yes" />
           </Component>
-          <Component Id="comp_15E4ACF3_E674_4199_87AB_4ABD32095D2A" Guid="1F81701A-4F1E-4697-A7E3-6B9B92CB0D14" Permanent="no" SharedDllRefCount="no" Transitive="no">
-            <File Id="_1855E338_0F23_4F8D_ACEB_8A9868E4C196" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakDialogQtUi.exe" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\LeakDialogQtUi.exe" KeyPath="yes" />
+          <Component Id="comp_64E1AA74_0365_4B7A_B8BA_0FD7F57920A3" Guid="D7ABA4EC-0855-401D-A5B3-0692BAEC4165" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_AFC1D23B_DA26_46F8_BB3D_DD2778816748" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakLib.pdb" Source="..\Debug\LeakLib.pdb" KeyPath="yes" />
           </Component>
-          <Component Id="comp_25E4ACF3_E674_4199_87AB_4ABD32095D2A" Guid="2F81701A-4F1E-4697-A7E3-6B9B92CB0D14" Permanent="no" SharedDllRefCount="no" Transitive="no">
-            <File Id="_2855E338_0F23_4F8D_ACEB_8A9868E4C196" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libLeakLib.dll" Source="..\Leaks\LeakLib\dist\Release-Win32\MinGW-Windows\libLeakLib.dll" KeyPath="yes" />
+          <Component Id="comp_0D4DA5F7_3828_486D_9B3C_4022F08B3B8E" Guid="ABEFF8F1-4649-4290-ABA6-56592BB2B6E6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_A4B03079_2823_439E_8641_332B868FFA78" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakTester.exe" Source="..\Debug\LeakTester.exe" KeyPath="yes" />
           </Component>
+          <Component Id="comp_42C94B29_83DC_42E8_9846_1A41953E9DF7" Guid="E547A858-C358-40FD-A065-F5440E5B188F" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_F0118576_16E2_45EA_AB13_8311014978F6" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakTester.pdb" Source="..\Debug\LeakTester.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_7C2713ED_49BF_4DBE_9201_88A583D29634" Guid="80E0E2BA-0447-4BC3-81EC-230846137C3A" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_362BB098_4D05_42B6_A5A9_202168B11D5E" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="WinHttpClient.exe" Source="..\Debug\WinHttpClient.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_8087DB52_BDBA_44DA_88CF_0B09517BA778" Guid="0A926EC0-0498-4407-A2B2-6B49A0A52383" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_9CB23F48_DD5F_4B7E_8212_C4F99AF70A46" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="WinHttpClient.pdb" Source="..\Debug\WinHttpClient.pdb" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_1FE34DB8_A232_44E2_92E3_6E688BFD178B" Guid="146AE657-F5E5-4248-92D9-F0462772986A" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_A24FA8FC_30AE_42CA_AFB6_0E2C3BF3D8AD" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="MSXML-XML-Reader-Ui.exe" Source="..\Debug\MSXML-XML-Reader-Ui.exe" KeyPath="yes" />
+          </Component>
+          <Component Id="comp_CA69684A_45E0_4DFC_8C65_98CA5B403D1E" Guid="DEF7C156-203A-4BEC-8C61-4DF719DE6F07" Permanent="no" SharedDllRefCount="no" Transitive="no">
+            <File Id="_DE8348E7_B1A5_465A_93A9_FBB80B3CD9BE" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="MSXML-XML-Reader-Ui.pdb" Source="..\Debug\MSXML-XML-Reader-Ui.pdb" KeyPath="yes" />
+          </Component>
+          <Directory Id="dir_4AF0B252_048C_4518_99B9_760BABF50D0D" Name="LeakDialogQtUi">
+            <Component Id="comp_E0EE9569_FA08_4E1C_BB6B_6BEBE9A1196B" Guid="A1F24DDF-F308-47DA-A5EA-02D26DF8E980" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_DD6F77C7_0ABC_47BF_9D23_A400BD44DEEA" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="D3Dcompiler_47.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\D3Dcompiler_47.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_AA7CDD7F_8B31_454B_8BE1_00C3A8D0177B" Guid="0DF8BD59-0EC9-4395-99AF-A7CD4ABCF0F8" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_D57AE1A6_A422_4D6B_BF77_A6C4594296FF" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="LeakDialogQtUi.exe" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\LeakDialogQtUi.exe" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_A882F946_99B8_48E0_BEFC_1A171ACB7308" Guid="E936E70A-AB67-40F6-AD2D-29690DAF188F" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_F1CCBC60_C8DA_4965_8E72_4304F90154F9" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libEGL.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\libEGL.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_98C026C8_4CF4_4C6E_88B7_9A901CA4B566" Guid="802EACBA-0C9C-45DB-A497-4CE94ED34184" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_0E98CFE1_E093_4766_9FAF_8D06C82FF48D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libgcc_s_dw2-1.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\libgcc_s_dw2-1.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_3418B351_7F9C_4645_A9D7_7BF6B42404AF" Guid="A1D509FF-C91B-41F1-99BC-E900949A8996" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_CA7E9A4C_4630_4979_AD59_5B117F4B0CB8" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libGLESV2.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\libGLESV2.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_9B554070_FF82_489D_B82D_1ADA412B39CB" Guid="989422AE-31D6-406F-8B30-95ABEFB2138D" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_F14702F7_4536_4347_8F4C_724FE1415964" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libLeakLib.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\libLeakLib.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_B368AF0F_3069_4415_AF42_A4A7F75BA526" Guid="7043E232-F859-487E-9019-D94147893135" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_5F45A66D_2C15_4D40_B5F7_4D913549FECB" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libstdc++-6.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\libstdc++-6.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_6A0008BC_67A8_448D_BD59_0EBD7DBFAA7D" Guid="BA764F27-58F8-4DD0-96A4-A90A9D0273AB" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_E277158D_0276_4825_8A3F_4708F4180261" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="libwinpthread-1.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\libwinpthread-1.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_285C287E_74C5_4D2F_9F10_95C9CD79012B" Guid="9861D343-0D03-4168-9D82-7932D8D45170" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_C5A8EF9B_16CB_4880_9DC5_6CEB6842FEB3" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="opengl32sw.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\opengl32sw.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_61FEF99D_11AF_4A94_915D_E3ED529053CF" Guid="3B285C23-41FE-471F-8392-FF5CB045D1EC" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_37667421_6414_4638_BD35_0AA7BEDF46F7" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="Qt5Core.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\Qt5Core.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_2643CB1F_A4B1_428F_8BB8_966823790A12" Guid="6428BD73-B48A-4B31-8EEB-2D76F4C4B084" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_22FAA615_9074_4E15_B01A_005A78138463" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="Qt5Gui.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\Qt5Gui.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_93E37DF0_6E81_4108_BCDD_4C4C5DDF807F" Guid="BC81E9E9-E41B-48D7-9A1E-B50004D79DCF" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_596073DA_B1DB_4456_994B_61275A4043C5" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="Qt5Svg.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\Qt5Svg.dll" KeyPath="yes" />
+            </Component>
+            <Component Id="comp_3094E3CF_D917_4E7C_A17C_99FCB761413A" Guid="8B662C28-3D36-469F-B0C4-B40223C16CCD" Permanent="no" SharedDllRefCount="no" Transitive="no">
+              <File Id="_B38B45EC_1DC5_48CE_8AD7_3FE9FAFA0B92" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="Qt5Widgets.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\Qt5Widgets.dll" KeyPath="yes" />
+            </Component>
+            <Directory Id="dir_C7DDD610_B4C2_4F09_BF55_15A7E0548AD9" Name="iconengines">
+              <Component Id="comp_1B418F70_1D25_4921_A802_08849B4EEA09" Guid="FB78C1B5-5677-433F-A44A-F8669DC63E65" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_031BBBB0_1060_4487_B005_5B90CE3EF82B" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qsvgicon.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\iconengines\qsvgicon.dll" KeyPath="yes" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_115EE727_95A9_44D0_8CC8_7C6E01486837" Name="imageformats">
+              <Component Id="comp_2E5D5B54_20AA_446B_84E3_C2AA538CDDAD" Guid="3149F38A-FAC0-48A3-8193-03FAADFB00F4" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_62CBCD2E_19F9_4D63_86DC_DC4ACEBDC06D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qgif.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qgif.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_A95A5092_8D30_47D4_B2F9_81ED8EE76206" Guid="8F85B03B-754F-462F-A9FF-09105814962A" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_B366EFE6_3493_4D55_86ED_A3604D8BDAEB" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qicns.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qicns.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_490DC25D_458F_4A14_8776_D98211901750" Guid="45B17B87-2184-491D-AB4D-E4CEFB150E31" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_B0F27301_479E_4C0D_9608_23291DF125BC" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qico.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qico.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_D9E967BF_D89A_4D59_928F_670F53040167" Guid="BB754259-6653-462C-B02D-50BD6F10B2B4" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_89772D18_B42E_401D_AB05_0EE58617E7C2" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qjpeg.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qjpeg.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_8DA5E51D_6D63_4D3D_820D_FE4DB9467016" Guid="B942BB5E-C0FC-4585-A678-3D633D102836" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_19D2C62F_DF43_43E4_8EB4_31EF960E581B" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qsvg.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qsvg.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_4B429BA5_9C4C_43CD_98A6_5A7FD9632028" Guid="5DC8399F-B68F-4007-A6F0-AD49738AD9AE" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_D1C94C7E_7FB7_4D96_A9B2_2BA1CD8829DE" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qtga.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qtga.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_5FD333F6_679C_44AC_8D38_B43F9FF6CEB8" Guid="DF06BE19-A3AF-4489-9D52-005040097E88" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_D9947197_5A99_4AE6_B2F7_6055F9A565B2" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qtiff.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qtiff.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_0DEBA605_25E3_466C_BCCA_53B2A707496F" Guid="64FA1666-0951-4887-A12B-0234C3741754" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_82347D5C_20D7_438A_A6FF_C1ED71444585" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qwbmp.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qwbmp.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_9819CA46_7446_468A_AF75_721DDCAC1A92" Guid="76DCCBDA-7695-4BB3-90FB-0864D20B3D8E" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_3B79D5B5_2E7C_4CC5_99C0_C3E5E33AB384" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qwebp.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\imageformats\qwebp.dll" KeyPath="yes" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_7EACF954_EE3D_4A62_A2B9_8BE4D3771908" Name="platforms">
+              <Component Id="comp_CD50F8C9_53FA_494E_8FE6_DE146BC23EE5" Guid="3F97EF2D-4F07-446D-9F7D-D91849D52F0D" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_104B50C9_B971_4ED2_A0AC_C0E6AA33180F" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qwindows.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\platforms\qwindows.dll" KeyPath="yes" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_5A7792F3_72C4_471B_A951_620F05A325DF" Name="styles">
+              <Component Id="comp_3AC0553C_2B76_4D8E_A241_C5A2C6824C49" Guid="B65B5049-40B8-4360-90E9-6B360B0AB03F" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_D80B5A57_B67B_4E7A_9505_7ED4885847D6" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qwindowsvistastyle.dll" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\styles\qwindowsvistastyle.dll" KeyPath="yes" />
+              </Component>
+            </Directory>
+            <Directory Id="dir_9C105B8C_C4B6_4442_9042_11F930B958FB" Name="translations">
+              <Component Id="comp_127FB093_2FBD_491F_B0BD_68A0FA102B34" Guid="A4C5B698-748B-4EA0-9DC7-CB4CFA82EFB9" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_B1D61786_9592_4014_972C_DD8D9928505F" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ar.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_ar.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_9CD6486F_727D_4D33_90CC_B859755F6CF9" Guid="B098794E-2967-404E-B803-A7417F006B67" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_A940922C_89D3_4746_A22A_A5A86B6602AE" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_bg.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_bg.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_3CE2DA5A_749E_4272_8B4D_51F5357F2BEF" Guid="870C64DF-4A95-45E9-8F5F-D2C11ED471F6" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_4BEBD011_413E_4161_A217_EB1E424B3C9D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ca.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_ca.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_7650D394_E931_429E_BC34_BFC174DBE530" Guid="5E48A34A-3D94-4388-AD6B-128C14101919" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_0B3F805D_81AB_41D9_81FA_26AE81A5C38D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_cs.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_cs.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_F3B35953_BD64_4234_931C_2DD643B84160" Guid="FCA5B50E-722B-4A97-BA68-E1E5C42FF955" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_A1EA282C_36C5_49A5_9C41_D61182A6E5EC" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_da.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_da.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_7C3737B3_D6DB_49FF_B6E9_952FA19CB376" Guid="869FEAC8-FD5F-4F6F-BFEA-C056DA3B6144" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_F6AFA3D9_3C6B_4986_B77E_58E0E868F1F4" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_de.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_de.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_4E2DE6AA_83FE_4B00_A9C8_24B8609256D0" Guid="2C4DCDC8-6D84-4E30-9595-5BA6847193D8" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_9704AED7_4A22_4297_A430_EBCC99502732" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_en.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_en.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_E76C306A_33AE_4428_889A_3561A5AAD441" Guid="84A410A0-F1E9-43FC-9C3E-7CAA1873C2C9" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_D5A7C824_6AB0_47BE_9A5C_C1536C0F3B7D" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_es.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_es.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_306E91C6_E480_40CB_AD65_FA49BAB07107" Guid="8E070AF0-B303-444E-BE35-11C25B0C6342" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_798836EE_0798_4ED0_9E52_5D1398EFEBB2" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_fi.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_fi.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_96F9A908_3294_4CE2_9BE9_FB1C8F4F44E0" Guid="ED7887B3-0020-4967-84EB-2824EA8889CA" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_24200833_99F3_4BA8_A31A_7074DC78EF41" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_fr.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_fr.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_AE0AB43F_ECC4_4032_BED0_B6889011CADA" Guid="8C2135CF-25E1-4FB1-8C7F-7AE45F8F33AB" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_BDB3EFFE_EE6E_4F6F_9E04_4BC5E4383B52" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_gd.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_gd.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_DD108565_AD9F_4D1F_A419_20AC03CDC9DE" Guid="4D1DB87D-61C7-4519-879E-B16183D646CC" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_A3E55158_913F_41EB_AD81_A2A9A43F211A" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_he.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_he.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_975D04B8_A9DE_4DAF_B4CA_1979D51B61F5" Guid="B7204557-1436-4ACA-91EF-A6A044AC5843" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_558D212F_FA22_42B8_B40C_F634A0ABC90B" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_hu.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_hu.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_BBD7D200_B3B2_4166_A4F7_89384E36596D" Guid="EFD26AA0-E603-42BB-B339-4947BB22E8A0" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_74EBC149_4087_4A85_896D_5F99DFAD9F71" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_it.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_it.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_AC51F038_EDF1_4267_8A71_336CC0270809" Guid="5F759B27-BE1C-4AE0-878A-AF811AE8BCBD" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_BA3D64C7_2CAD_4921_AFE3_D06F42B471C1" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ja.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_ja.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_94145A05_1E1F_40EC_8F1B_31CC36BE64F8" Guid="1B2D04EB-F857-424A-B0EA-05A7D460BA42" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_400B42ED_ABF5_43D1_9B15_6FDE66005220" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ko.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_ko.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_687191DA_5543_4FE0_9223_6754B4809E3A" Guid="465E48D6-09B2-43F0-9F38-2DC637197D96" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_41994770_31CD_4FE1_A8D5_A5CF6248C701" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_lv.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_lv.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_F4E51102_EC7A_43E4_84B1_19AEDB0647CD" Guid="A4E5D3DD-6342-4457-8A77-16FE37BD8BA2" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_71951867_6780_41B8_A1FA_1AA7A3535597" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_pl.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_pl.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_26565288_B196_47C1_8E5E_C939B5B4D5F4" Guid="6520E9C9-365E-42EE-8638-F32DB7AFFA71" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_4B3D353B_B9CB_4111_B51E_2E54F70A31C7" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_ru.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_ru.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_F78BC69C_2E7A_404A_9013_2978C039F2A5" Guid="03C67693-9552-4A6F-BA8A-78291C4FB4EF" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_425C8BB0_9EA0_4D06_BE73_024E5CDD6317" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_sk.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_sk.qm" KeyPath="yes" />
+              </Component>
+              <Component Id="comp_138D63EC_4DCD_45E6_87AA_8FA2D367C88B" Guid="C1DE3A1C-CCD7-4455-81ED-0642E78316C0" Permanent="no" SharedDllRefCount="no" Transitive="no">
+                <File Id="_51B2DF9B_DC93_442F_9D42_729840FA9F00" DiskId="1" Hidden="no" ReadOnly="no" TrueType="no" System="no" Vital="yes" Name="qt_uk.qm" Source="..\Leaks\LeakDialogQtUi\build-LeakDialogQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release\release\translations\qt_uk.qm" KeyPath="yes" />
+              </Component>
+            </Directory>
+          </Directory>
         </Directory>
       </Directory>
       <Merge Id="merge_F1E8213E_5190_4AF3_A1B1_AAE6F6584556" Language="0" DiskId="1" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.13.26020\MergeModules\Microsoft_VC141_CRT_x64.msm" />
