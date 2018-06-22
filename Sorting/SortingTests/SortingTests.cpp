@@ -1,5 +1,7 @@
-﻿// SortingTests.cpp : Defines the entry point for the console application.
+// Copyright 2018 marcusolini@outlook.com
 //
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
 
 
 #ifdef _WIN32
@@ -11,34 +13,22 @@
 
 #endif // _WIN32
 
+#include <cstdlib>
+#include <cstddef>
 #include <string>
 #include <chrono>
 #include <errno.h>
 #include <memory>
 
-#include "../../Error_Checks/ERROR_CHECKS.H"
-#include "../SortingTemplateLib/SortingLib.h"
-
-
-// DECLARATIONS
-
-template < class T, class U > struct ArraysStruct;
-
-long TestNegatives();
-long TestInts();
-long TestAlpas();
-
-template<class T, class U> long RunTests(ArraysStruct<T,U> arrays[], std::size_t arraysSize);
-template < class T, class U > long PrintArray(const T* array, const U arraySize);
-
-
-// TESTING
+#include "SortingTests.h"
 
 int main()
 {
-     auto start = std::chrono::high_resolution_clock::now();
-
      long nStatus = EXIT_SUCCESS;
+
+     std::wcout << L"TESTING..." << std::endl;
+
+     auto start = std::chrono::high_resolution_clock::now();
 
      nStatus += TestNegatives();
      nStatus += TestInts();
@@ -54,38 +44,7 @@ int main()
 }
 
 
-
-// DEFINITIONS
-
-template < class T, class U >
-struct ArraysStruct
-{
-     T* array;
-     U size;
-};
-
-
-
-template < class T, class U >
-long PrintArray(const T* array, const U arraySize)
-{
-     long nStatus = 0;
-
-     if ((0 == array) || (0 == arraySize))
-     {
-          std::wcout << L"Invalid array" << std::endl;
-          return EINVAL;
-     }
-
-     for (U iIndex = 0; iIndex < arraySize; iIndex++)
-     {
-          std::wcout << array[iIndex] << L" ";
-     }
-     std::wcout << std::endl;
-
-     return nStatus;
-}
-
+// TESTS
 
 long TestNegatives()
 {
@@ -189,58 +148,3 @@ long TestAlpas()
 
      return nStatus;
 }
-
-
-template<class T, class U> long RunTests(ArraysStruct<T, U> arrays[], std::size_t arraysSize)
-{
-     long nStatus = EXIT_SUCCESS;
-
-     bool bSortCorrect = false;
-     std::size_t nNumberOfSorts = 0;
-     std::chrono::duration<double> duration;
-
-     for (auto arraysIndex = 0; arraysIndex < arraysSize; arraysIndex++)
-     {
-          for (ESortingTypes eSortType = ESortingTypes::QuickSort; eSortType <= ESortingTypes::BubbleSort; eSortType++)
-          {
-               try
-               {
-                    nNumberOfSorts = 0;
-
-                    std::shared_ptr<T[]> tempArray(new T[arrays[arraysIndex].size]);
-
-                    for (auto nIndex = 0; nIndex < arrays[arraysIndex].size; nIndex++)
-                         tempArray[nIndex] = arrays[arraysIndex].array[nIndex];
-
-                    std::wcout << L"SORTING TYPE: " << eSortType;
-
-                    std::wcout << L" -- INPUT ARRAY: ";
-                    //    CHECK_SUCCEEDED_LOG_THROW((PrintArray<PIntArray, std::size_t>(iTestArrays.array, iTestArrays.size)));
-                    CHECK_SUCCEEDED_LOG_THROW((PrintArray<T, U>(tempArray.get(), arrays[arraysIndex].size)));
-
-                    CHECK_SUCCEEDED_LOG_THROW((CSorting<T, U>::Sort(eSortType, tempArray.get(), arrays[arraysIndex].size, &nNumberOfSorts, &duration)));
-
-                    std::wcout << L"SORTED ARRAY: ";
-                    CHECK_SUCCEEDED_LOG_THROW((PrintArray<T, U>(tempArray.get(), arrays[arraysIndex].size)));
-
-                    auto nNumberOfMircosecondsToSort = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-
-                    std::wcout << L"SORTS: " << nNumberOfSorts << L" - " << L"TIME: " << nNumberOfMircosecondsToSort.count() << L" microseconds: " << std::endl;
-
-                    CHECK_SUCCEEDED_LOG_THROW((CSorting<T, U>::VerifySort(tempArray.get(), arrays[arraysIndex].size, bSortCorrect)));
-                    std::wcout << L"RESULT: " << (bSortCorrect ? L"SUCCESSFUL" : L"FAILURE") << std::endl << std::endl;
-
-                    CHECK_BOOL_TRUE_LOG_THROW(bSortCorrect);
-               }
-               catch (long& check_catch_lresult)
-               {
-                    nStatus += check_catch_lresult;
-               }
-          }
-     }
-
-     return nStatus;
-}
-
-
-
