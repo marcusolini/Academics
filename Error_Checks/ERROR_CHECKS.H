@@ -8,6 +8,7 @@
 #define ERROR_CHECKS_H
 
 #include <iostream>
+#include <cstddef>
 
 #ifdef _WIN32
      #include <winerror.h>
@@ -19,7 +20,7 @@
      #define GetLastError() (ENOMSG)
      #define HRESULT_FROM_WIN32(x) (x)
      #ifndef SUCCEEDED
-          #define SUCCEEDED(x) ((0 < x))
+          #define SUCCEEDED(x) ((0 == x))
      #endif
 #endif // _WIN32
 
@@ -93,7 +94,7 @@
 #define CHECK_NEW_ALLOC_NOLOG_NOTHROW( error_check_call )  CHECK_NEW_ALLOC_HANDLER( error_check_call, CHECK_NOLOG_ERROR, CHECK_NOTHROW_ERROR )
 #define CHECK_NEW_ALLOC_HANDLER( error_check_call, error_check_log, error_check_throw ) \
 { \
-     if ( nullptr == (error_check_call) ) \
+     if ( (nullptr == (error_check_call) ) ) \
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(ENOMEM); \
         if ( CHECK_LOG_ERROR == error_check_log ) \

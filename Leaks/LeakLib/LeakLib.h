@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 
-#pragma once
-
+#ifndef LEAK_LIB_H
+#define LEAK_LIB_H
 
 #ifdef _WIN32
      //#include "stdafx.h"
@@ -36,3 +36,5 @@ public:
      CLASS_DECLSPEC static int CALL LeakHandle(const std::size_t numberOfCalls);
 };
 }
+
+#endif // LEAK_LIB_H

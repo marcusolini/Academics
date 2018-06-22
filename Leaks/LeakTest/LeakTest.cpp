@@ -20,6 +20,7 @@
 #include <new>
 
 #include "../LeakLib/LeakLib.h"
+#include "../../Error_Checks/ERROR_CHECKS.H"
 
 /*
  * 
@@ -29,7 +30,7 @@ int main(int argc, char** argv) {
      int nExitStatus = 0;
      int nStatus = 0;
      
-     std::size_t leakNewCalls = 1000000;
+     std::size_t leakNewCalls = 1;
      std::size_t leakNewBytes = 10000;
 
      std::size_t leakMallocCalls = 100000;
@@ -44,39 +45,19 @@ int main(int argc, char** argv) {
 
      try
      {
-          nStatus = CLeakLib::LeakNewMemory(leakNewCalls, leakNewBytes);
+          CHECK_SUCCEEDED_LOG_THROW(CLeakLib::LeakNewMemory(leakNewCalls, leakNewBytes));
+         
+          CHECK_SUCCEEDED_LOG_THROW(CLeakLib::LeakMallocMemory(leakMallocCalls, leakMallocBytes));
 
-          if (0 != nStatus)
-          {
-               std::wcerr << L"New Memory Failure" << std::endl;
-               nExitStatus += nStatus;
-          }
-
-          nStatus = CLeakLib::LeakMallocMemory(leakMallocCalls, leakMallocBytes);
-
-          if (0 != nStatus)
-          {
-               std::wcerr << L"Malloc Memory Failure" << std::endl;
-               nExitStatus += nStatus;
-          }
-
-          nStatus = CLeakLib::LeakCallocMemory(leakCallocCalls, leakCallocBytes);
-
-          if (0 != nStatus)
-          {
-               std::wcerr << L"Calloc Memory Failure" << std::endl;
-               nExitStatus += nStatus;
-          }
+          CHECK_SUCCEEDED_LOG_THROW(CLeakLib::LeakCallocMemory(leakCallocCalls, leakCallocBytes));
           
           #ifdef _WIN32
-          nStatus = CLeakLib::LeakHandle(leakHandleCalls);
-          
-          if (0 != nStatus)
-          {
-               std::wcerr << L"Handle Leak Failure" << std::endl;
-               nExitStatus += nStatus;
-          }
+          CHECK_SUCCEEDED_LOG_THROW(CLeakLib::LeakHandle(leakHandleCalls));
           #endif // _WIN32
+     }
+     catch (long& check_catch_lresult)
+     {
+         nExitStatus = check_catch_lresult;
      }
      catch ( std::bad_alloc )
      {

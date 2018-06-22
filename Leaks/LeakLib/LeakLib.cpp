@@ -7,12 +7,13 @@
 //
 
 #ifdef _WIN32
-     #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+     #define WIN32_LEAN_AND_MEAN
      #include "targetver.h"
      #include <windows.h>
 #endif // _WIN32
 
 #include "LeakLib.h"
+#include "../../Error_Checks/ERROR_CHECKS.H"
 
 #include <malloc.h>
 #include <new>
@@ -35,11 +36,14 @@
 
           for (std::size_t nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
           {
-               pChars = new (std::nothrow) char[bytesEachCall];
-               if (nullptr == pChars) nStatus = ENOMEM;
+               CHECK_NEW_ALLOC_LOG_THROW(pChars = new (std::nothrow) char[bytesEachCall]);
                //std::this_thread::sleep_for(std::chrono::milliseconds{ 2 });
           }
 
+     }
+     catch (long& check_catch_lresult)
+     {
+         nStatus = check_catch_lresult;
      }
      catch (std::bad_alloc)
      {
@@ -63,10 +67,13 @@
      {
           for (std::size_t nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
           {
-               pVoid = malloc(bytesEachCall);
-               if (nullptr == pVoid) nStatus = ENOMEM;
+               CHECK_NEW_ALLOC_LOG_THROW(pVoid = malloc(bytesEachCall));
                //std::this_thread::sleep_for(std::chrono::milliseconds{ 3 });
           }
+     }
+     catch (long& check_catch_lresult)
+     {
+          nStatus = check_catch_lresult;
      }
      catch (std::bad_alloc)
      {
@@ -90,10 +97,13 @@
      {
           for (std::size_t nCalls = 0; (nCalls < numberOfCalls) && (0 == nStatus); nCalls++)
           {
-               pVoid = calloc(1, bytesEachCall);
-               if (nullptr == pVoid) nStatus = ENOMEM;
+               CHECK_NEW_ALLOC_LOG_THROW(pVoid = calloc(1, bytesEachCall));
                //std::this_thread::sleep_for(std::chrono::milliseconds{ 5 });
           }
+     }
+     catch (long& check_catch_lresult)
+     {
+          nStatus = check_catch_lresult;
      }
      catch (std::bad_alloc)
      {
@@ -126,6 +136,10 @@
                if (INVALID_HANDLE_VALUE == hMutex) nStatus = ENOMEM;
                //std::this_thread::sleep_for(std::chrono::milliseconds{ 7 });
           }
+     }
+     catch (long& check_catch_lresult)
+     {
+          nStatus = check_catch_lresult;
      }
      catch (std::bad_alloc)
      {
