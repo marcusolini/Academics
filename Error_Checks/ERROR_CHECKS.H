@@ -46,7 +46,7 @@
      if ( !SUCCEEDED(lresult_error_check_result) ) \
      { \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcout << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -64,7 +64,7 @@
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(ENOMSG); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcout << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -82,7 +82,7 @@
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(GetLastError()); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcout << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -98,7 +98,7 @@
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(ENOMEM); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcout << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -114,7 +114,7 @@
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(GetLastError()); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcout << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
