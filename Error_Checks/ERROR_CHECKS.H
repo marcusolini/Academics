@@ -4,7 +4,8 @@
 // you may not use this file except in compliance with the License.
 //
 
-#pragma once
+#ifndef ERROR_CHECKS_H
+#define ERROR_CHECKS_H
 
 #include <iostream>
 
@@ -26,13 +27,13 @@
 #define CHECK_SUCCEEDED_NOLOG_NOTHROW( error_check_call )  CHECK_SUCCEEDED_HANDLER( error_check_call, CHECK_NOLOG_ERROR, CHECK_NOTHROW_ERROR )
 #define CHECK_SUCCEEDED_HANDLER( error_check_call, error_check_log, error_check_throw ) \
 { \
-     HRESULT hresult_error_check_result = HRESULT_FROM_WIN32(error_check_call);  \
-     if ( !SUCCEEDED(hresult_error_check_result) ) \
+     long lresult_error_check_result = HRESULT_FROM_WIN32(error_check_call);  \
+     if ( (0 > lresult_error_check_result) ) \
      { \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcout << TEXT("OPERATION:") << #error_check_call << TEXT(" STATUS:") << std::hex << std::showbase << hresult_error_check_result << std::dec << TEXT(" LOCATION:") << __FUNCTION__ << TEXT(":") << __LINE__ << std::endl; \
+          std::wcout << TEXT("OPERATION:") << #error_check_call << TEXT(" STATUS:") << std::hex << std::showbase << lresult_error_check_result << std::dec << TEXT(" LOCATION:") << __FUNCTION__ << TEXT(":") << __LINE__ << std::endl; \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
-          throw hresult_error_check_result; \
+          throw lresult_error_check_result; \
      } \
 } \
 
@@ -102,3 +103,5 @@
           throw hresult_error_check_result; \
      } \
 } \
+
+#endif //ERROR_CHECKS_H
