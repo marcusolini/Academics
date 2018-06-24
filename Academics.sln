@@ -112,6 +112,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SortingTemplateLIb", "Sorti
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SortingTests", "Sorting\SortingTests\SortingTests.vcxproj", "{73C9A8C0-BBB5-492F-91FB-A38A1539E1B6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SortingTestsUi", "Sorting\SortingTestsUi\SortingTestsUi.vcxproj", "{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -256,6 +258,14 @@ Global
 		{73C9A8C0-BBB5-492F-91FB-A38A1539E1B6}.Release|x64.Build.0 = Release|x64
 		{73C9A8C0-BBB5-492F-91FB-A38A1539E1B6}.Release|x86.ActiveCfg = Release|Win32
 		{73C9A8C0-BBB5-492F-91FB-A38A1539E1B6}.Release|x86.Build.0 = Release|Win32
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}.Debug|x64.ActiveCfg = Debug|x64
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}.Debug|x64.Build.0 = Debug|x64
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}.Debug|x86.ActiveCfg = Debug|Win32
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}.Debug|x86.Build.0 = Debug|Win32
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}.Release|x64.ActiveCfg = Release|x64
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}.Release|x64.Build.0 = Release|x64
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}.Release|x86.ActiveCfg = Release|Win32
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -285,6 +295,7 @@ Global
 		{0EDAB88B-B94B-4610-9981-744F07E84D3E} = {ECA7F063-2908-42DD-8103-7FF09F831A15}
 		{0EBA269E-C85D-4193-BEF8-1FCFAEA38CA8} = {E2CCF2AF-68B9-4CDD-A18F-F678F05B7C9C}
 		{73C9A8C0-BBB5-492F-91FB-A38A1539E1B6} = {E2CCF2AF-68B9-4CDD-A18F-F678F05B7C9C}
+		{2C782669-6F1B-4B99-8FBD-C0FEB75B4169} = {E2CCF2AF-68B9-4CDD-A18F-F678F05B7C9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F83E4DC3-BF69-4AD1-9984-6581AABB0BD1}
