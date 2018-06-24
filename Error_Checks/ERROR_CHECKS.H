@@ -136,4 +136,21 @@
      } \
 } \
 
+
+#define CHECK_THROW_LOG_THROW( error_check_call )  CHECK_THROW_HANDLER( error_check_call, CHECK_LOG_ERROR, CHECK_THROW_ERROR )
+#define CHECK_THROW_NOLOG_THROW( error_check_call )  CHECK_THROW_HANDLER( error_check_call, CHECK_NOLOG_ERROR, CHECK_THROW_ERROR )
+#define CHECK_THROW_LOG_NOTHROW( error_check_call )  CHECK_THROW_HANDLER( error_check_call, CHECK_LOG_ERROR, CHECK_NOTHROW_ERROR )
+#define CHECK_THROW_NOLOG_NOTHROW( error_check_call )  CHECK_THROW_HANDLER( error_check_call, CHECK_NOLOG_ERROR, CHECK_NOTHROW_ERROR )
+#define CHECK_THROW_HANDLER( error_check_call, error_check_log, error_check_throw ) \
+{ \
+     long lresult_error_check_result = HRESULT_FROM_WIN32(error_check_call);  \
+     if ( !SUCCEEDED(lresult_error_check_result) ) \
+     { \
+        if ( CHECK_LOG_ERROR == error_check_log ) \
+          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+        if ( CHECK_THROW_ERROR == error_check_throw ) \
+          throw lresult_error_check_result; \
+     } \
+} \
+
 #endif //ERROR_CHECKS_H

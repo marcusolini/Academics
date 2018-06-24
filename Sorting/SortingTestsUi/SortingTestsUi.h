@@ -19,32 +19,40 @@
 #include <sstream>
 #include <mutex>
 
-class CSortTest;
-
 // DECLARATIONS
+
+#define WM_USER_THREAD_COMPLETE (WM_USER + 100)
+
+class CSortTest;
 
 void ThreadFunc(const HWND hDlg, CSortTest * iTest);
 
 // MAIN DIALOG
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow);
 INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
-void onInitMainDialog(const HWND hDlg);
+void onMainInitDialog(const HWND hDlg);
 void onMainRunSortTestsButton(const HWND hDlg);
 void onMainCancel(const HWND hDlg);
 void onMainClose(const HWND hDlg);
-void onChange(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+void onMainChange(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 long GetInput(IN const HWND hDlg, OUT std::vector<int>& vArray, IN OPTIONAL bool* pbDataPresent = nullptr);
 long ParseInput(IN const std::wstring& sToParse, OUT std::vector<int>& vArray);
 
 // PROGRESS DIALOG
 INT_PTR CALLBACK ProgressDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void onProgressInit(const HWND hDlg);
-void onProgressPauseContinue(const HWND hDlg);
-void onProgressThreadState(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 void onProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 void onProgressClose(const HWND hDlg, const WPARAM wParam);
 
+// RESULTS DIALOG
+INT_PTR CALLBACK SortResultsDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+void onSortResultsInit(const HWND hDlg);
+void onSortResultsClose(const HWND hDlg, const WPARAM wParam);
+
 std::wstring LoadStringFromResourceId(const UINT id);
+
+
+// DEFINITIONS
 
 class CSortTest
 {
@@ -60,21 +68,30 @@ public:
 
      virtual ~CSortTest() {}
 
-     ESORT_TYPE GetResourceAllocationType() { return m_eSortType; }
-     void SetIsComplete() { std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex); m_bComplete = true; }
-     bool IsComplete() { std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex); return m_bComplete; }
-     void SetState(const ESTATE_TYPE state) { std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex); m_state = state; }
-     ESTATE_TYPE GetState() { std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);  return m_state; }
-     void SetThreadId(uint64_t id) { std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);  m_threadId = id; }
-     uint64_t GetThreadId() { std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);  return m_threadId; }
+     ESORT_TYPE GetSortType() { return m_eSortType; }
+
+     std::vector<int> GetArray() { return m_vArray; }
+     std::vector<int> GetSortedArray() { return m_vSortedArray; }
+     void SetSortedArray(std::vector<int>& vSortedArray) { m_vSortedArray = vSortedArray; }
+
+     void SetIsComplete() { m_bComplete = true; }
+     bool IsComplete() { return m_bComplete; }
+     void SetState(const ESTATE_TYPE state) { m_state = state; }
+     ESTATE_TYPE GetState() { return m_state; }
+
+     void SetError(long nError) { nError = m_nError;  }
+     long GetError() { return m_nError; }
+     void SetThreadId(uint64_t id) { m_threadId = id; }
+     uint64_t GetThreadId() { return m_threadId; }
 
 private:
-     static std::recursive_mutex g_mutex;
      
      std::vector<int> m_vArray;
+     std::vector<int> m_vSortedArray;
      ESORT_TYPE m_eSortType = ESORT_TYPE::UNDEFINED;
      bool m_bComplete = false;
      ESTATE_TYPE m_state = ESTATE_TYPE::UNDEFINED;
+     long m_nError = 0;
      uint64_t m_threadId = 0;
 };
 

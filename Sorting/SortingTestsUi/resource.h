@@ -8,6 +8,8 @@
 #define IDD_ProgressDialog              103
 #define IDS_CLOSE                       104
 #define IDS_MAIN_SORT_MENU              105
+#define IDD_SortResuiltsDialog          105
+#define IDD_SortResultsDialog           105
 #define IDS_SORT_ARRAY                  106
 #define IDS_SORT_ALGORITHMS_GROUP       107
 #define IDS_QUICK_SORT                  108
@@ -28,14 +30,38 @@
 #define ID_RunSortTestsButton           1009
 #define IDC_ProgressBar                 1010
 #define ID_ProgressStopButton           1011
+#define IDC_QuickSortGroup              1012
+#define IDC_NumberOfSortsStatic         1013
+#define IDC_MergeSortGroup              1014
+#define IDC_NumberOfSortsStatic2        1015
+#define IDC_BubbleSortGroup             1016
+#define IDC_NumberOfSortsStatic3        1017
+#define IDC_QuickSortNumberOfSortsEditbox 1018
+#define IDC_MergeSortNumberOfSortsEditbox 1019
+#define IDC_BubbleSortNumberOfSortsEditbox 1020
+#define IDC_SortDurationStatic          1021
+#define IDC_SortDurationStatic2         1022
+#define IDC_SortDurationStatic3         1023
+#define IDC_QuickSortDurationEditbox    1024
+#define IDC_MergeSortDurationEditbox    1025
+#define IDC_BubbleSortDurationEditbox   1026
+#define IDC_SortedQuickSortArrayEditbox 1027
+#define IDC_SortedMergeSortArrayEditbox 1028
+#define IDC_SortedBubbleSortArrayEditbox 1029
+#define IDC_StatusStatic                1030
+#define IDC_StatusStatic2               1031
+#define IDC_StatusStatic3               1032
+#define IDC_QickSortStatusEditbox       1033
+#define IDC_MergeSortStatusEditbox      1034
+#define IDC_BubbleSortStatusEditbox     1035
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        105
+#define _APS_NEXT_RESOURCE_VALUE        107
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1012
+#define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
