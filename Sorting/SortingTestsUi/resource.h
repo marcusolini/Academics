@@ -8,7 +8,6 @@
 #define IDD_ProgressDialog              103
 #define IDS_CLOSE                       104
 #define IDS_MAIN_SORT_MENU              105
-#define IDD_SortResuiltsDialog          105
 #define IDD_SortResultsDialog           105
 #define IDS_SORT_ARRAY                  106
 #define IDS_SORT_ALGORITHMS_GROUP       107
@@ -21,6 +20,21 @@
 #define IDS_STOP_QUESTION               114
 #define IDS_INVALID_DATA                115
 #define IDS_INVALID_DATA_ENTERED        116
+#define IDS_SORTING_RESULTS             117
+#define IDS_SORT_NOT_RUN                118
+#define IDS_SORT_SUCCESS                119
+#define IDS_SORT_FAILED                 120
+#define IDS_SORT_ZERO                   121
+#define IDS_MICROSECONDS                122
+#define IDS_NUMBER_OF_SORTS             123
+#define IDS_SORT_DURATION               124
+#define IDS_SORT_STATUS                 125
+#define IDS_UNDEFINED                   126
+#define IDS_SORT_STARTED                127
+#define IDS_SORT_RUNNING                128
+#define IDS_SORT_PAUSED                 129
+#define IDS_SORT_INTERRUPTED            130
+#define IDS_MILLISECONDS                132
 #define IDC_SortArrayEdit               1002
 #define IDC_QuickSortCheckbox           1003
 #define IDC_MergeSortCheckbox           1004
@@ -30,11 +44,8 @@
 #define ID_RunSortTestsButton           1009
 #define IDC_ProgressBar                 1010
 #define ID_ProgressStopButton           1011
-#define IDC_QuickSortGroup              1012
 #define IDC_NumberOfSortsStatic         1013
-#define IDC_MergeSortGroup              1014
 #define IDC_NumberOfSortsStatic2        1015
-#define IDC_BubbleSortGroup             1016
 #define IDC_NumberOfSortsStatic3        1017
 #define IDC_QuickSortNumberOfSortsEditbox 1018
 #define IDC_MergeSortNumberOfSortsEditbox 1019
@@ -54,14 +65,21 @@
 #define IDC_QickSortStatusEditbox       1033
 #define IDC_MergeSortStatusEditbox      1034
 #define IDC_BubbleSortStatusEditbox     1035
+#define IDC_MergeSortUnitsEditbox       1036
+#define IDC_BubbleSortUnitsEditbox      1037
+#define IDC_QuickSortUnitsEditbox       1038
+#define IDC_QuickSortGroup              1039
+#define IDC_MergeSortGroup              1040
+#define IDC_BubbleSortGroup2            1041
+#define IDC_BubbleSortGroup             1041
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        107
+#define _APS_NEXT_RESOURCE_VALUE        121
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1036
+#define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

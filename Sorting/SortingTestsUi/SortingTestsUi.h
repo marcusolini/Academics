@@ -76,13 +76,73 @@ public:
 
      void SetIsComplete() { m_bComplete = true; }
      bool IsComplete() { return m_bComplete; }
-     void SetState(const ESTATE_TYPE state) { m_state = state; }
-     ESTATE_TYPE GetState() { return m_state; }
+     
+     void SetState(IN const ESTATE_TYPE eState) { m_eState = eState; }
+     ESTATE_TYPE GetState() { return m_eState; }
 
-     void SetError(long nError) { nError = m_nError;  }
+     void SetNumberOfSorts(IN const std::size_t nNumberOfSorts) { m_nNumberOfSorts = nNumberOfSorts; }
+     size_t GetNumberOfSorts() { return m_nNumberOfSorts; }
+
+     void SetDuration(IN const std::chrono::duration<double> duration) { m_duration = duration; }
+     std::chrono::duration<double> GetDuration() { return m_duration;  }
+
+     void SetError(IN const long nError) { m_nError = nError; }
      long GetError() { return m_nError; }
-     void SetThreadId(uint64_t id) { m_threadId = id; }
+     
+     void SetThreadId(IN uint64_t id) { m_threadId = id; }
      uint64_t GetThreadId() { return m_threadId; }
+
+     static std::wstring ConvertSortTypeToString(IN const ESORT_TYPE eSortType)
+     {
+          switch (eSortType)
+          {
+          case ESORT_TYPE::UNDEFINED: return LoadStringFromResourceId(IDS_UNDEFINED); break;
+          case ESORT_TYPE::QUICK_SORT: return LoadStringFromResourceId(IDS_QUICK_SORT); break;
+          case ESORT_TYPE::MERGE_SORT: return LoadStringFromResourceId(IDS_MERGE_SORT); break;
+          case ESORT_TYPE::BUBBLE_SORT: return LoadStringFromResourceId(IDS_BUBBLE_SORT); break;
+          default: return LoadStringFromResourceId(IDS_UNDEFINED); break;
+          }
+     }
+
+     static std::wstring ConvertSortStateToString(IN const ESTATE_TYPE eSortState)
+     {
+          switch (eSortState)
+          {
+          case ESTATE_TYPE::UNDEFINED: return LoadStringFromResourceId(IDS_UNDEFINED); break;
+          case ESTATE_TYPE::STARTED: return LoadStringFromResourceId(IDS_SORT_STARTED); break;
+          case ESTATE_TYPE::RUNNING: return LoadStringFromResourceId(IDS_SORT_RUNNING); break;
+          case ESTATE_TYPE::PAUSED: return LoadStringFromResourceId(IDS_SORT_PAUSED); break;
+          case ESTATE_TYPE::INTERRUPTED: return LoadStringFromResourceId(IDS_SORT_NOT_RUN); break;
+          case ESTATE_TYPE::SUCCESS: return LoadStringFromResourceId(IDS_SORT_SUCCESS); break;
+          case ESTATE_TYPE::FAILED: return LoadStringFromResourceId(IDS_SORT_FAILED); break;
+          default: return LoadStringFromResourceId(IDS_UNDEFINED); break;
+          }
+     }
+
+     static std::wstring ConvertVectorToString(IN const std::vector<int>& vArray)
+     {
+          std::wstring sArray;
+
+          for (auto& iArray : vArray)
+          {
+               sArray += std::to_wstring(iArray);
+               sArray += L" ";
+          }
+
+          return sArray;
+     }
+
+     static std::vector<int> ConvertFromStringToVector(IN const std::wstring& sArray)
+     {
+          std::vector<int> vArray;
+
+          for (auto& iArray : sArray)
+          {
+               vArray.push_back(iArray);
+          }
+
+          return vArray;
+     }
 
 private:
      
@@ -90,7 +150,10 @@ private:
      std::vector<int> m_vSortedArray;
      ESORT_TYPE m_eSortType = ESORT_TYPE::UNDEFINED;
      bool m_bComplete = false;
-     ESTATE_TYPE m_state = ESTATE_TYPE::UNDEFINED;
+     ESTATE_TYPE m_eState = ESTATE_TYPE::UNDEFINED;
+     std::size_t m_nNumberOfSorts = 0;
+     std::chrono::duration<double> m_duration;
+
      long m_nError = 0;
      uint64_t m_threadId = 0;
 };

@@ -229,7 +229,6 @@ void onMainChange(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
      }
 }
 
-
 void onMainRunSortTestsButton(const HWND hDlg)
 {
      long nStatus = 0;
@@ -283,6 +282,8 @@ void onMainRunSortTestsButton(const HWND hDlg)
           nStatus = check_catch_lresult;
           MessageBox(hDlg, (LoadStringFromResourceId(IDS_INVALID_DATA_ENTERED)).c_str(), (LoadStringFromResourceId(IDS_INVALID_DATA)).c_str(), (MB_ICONERROR | MB_OK));
      }
+
+     g_tests.clear();
 }
 
 void onMainCancel(const HWND hDlg)
@@ -493,13 +494,6 @@ INT_PTR CALLBACK SortResultsDialogProc(const HWND hDlg, const UINT uMsg, const W
 
      case WM_COMMAND:
      {
-          switch (LOWORD(wParam))
-          {
-          case ID_ProgressStopButton:
-               onSortResultsClose(hDlg, wParam);
-               return TRUE;
-               break;
-          }
           break;
      }
 
@@ -515,11 +509,72 @@ INT_PTR CALLBACK SortResultsDialogProc(const HWND hDlg, const UINT uMsg, const W
 
 void onSortResultsInit(const HWND hDlg)
 {
-     //SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_PROGRESS_DIALOG)).c_str());
+     SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_SORTING_RESULTS)).c_str());
+
+     SendDlgItemMessage(hDlg, IDCLOSE, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_CLOSE)).c_str());
+
+     SendDlgItemMessage(hDlg, IDC_StatusStatic, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_STATUS)).c_str());
+     SendDlgItemMessage(hDlg, IDC_StatusStatic2, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_STATUS)).c_str());
+     SendDlgItemMessage(hDlg, IDC_StatusStatic3, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_STATUS)).c_str());
+
+     SendDlgItemMessage(hDlg, IDC_NumberOfSortsStatic, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_NUMBER_OF_SORTS)).c_str());
+     SendDlgItemMessage(hDlg, IDC_NumberOfSortsStatic2, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_NUMBER_OF_SORTS)).c_str());
+     SendDlgItemMessage(hDlg, IDC_NumberOfSortsStatic3, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_NUMBER_OF_SORTS)).c_str());
+
+     SendDlgItemMessage(hDlg, IDC_SortDurationStatic, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_DURATION)).c_str());
+     SendDlgItemMessage(hDlg, IDC_SortDurationStatic2, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_DURATION)).c_str());
+     SendDlgItemMessage(hDlg, IDC_SortDurationStatic3, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_DURATION)).c_str());
+
+     SendDlgItemMessage(hDlg, IDC_QuickSortGroup, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_QUICK_SORT)).c_str());
+     SendDlgItemMessage(hDlg, IDC_MergeSortGroup, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_MERGE_SORT)).c_str());
+     SendDlgItemMessage(hDlg, IDC_BubbleSortGroup, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_BUBBLE_SORT)).c_str());
+
+     SendDlgItemMessage(hDlg, IDC_QickSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_NOT_RUN)).c_str());
+     SendDlgItemMessage(hDlg, IDC_MergeSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_NOT_RUN)).c_str());
+     SendDlgItemMessage(hDlg, IDC_BubbleSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_NOT_RUN)).c_str());
 
      {std::lock_guard<std::recursive_mutex> lock(g_mutex);
      for (auto& iTest : g_tests)
      {
+          switch (iTest.GetSortType())
+          {
+          case CSortTest::ESORT_TYPE::QUICK_SORT:
+          {
+               SendDlgItemMessage(hDlg, IDC_QickSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertSortStateToString(iTest.GetState())).c_str());
+               SendDlgItemMessage(hDlg, IDC_SortedQuickSortArrayEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertVectorToString(iTest.GetSortedArray()).c_str()));
+               SendDlgItemMessage(hDlg, IDC_QuickSortNumberOfSortsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(iTest.GetNumberOfSorts()).c_str()));
+
+               auto nTotalMicroseconds = std::chrono::duration_cast<std::chrono::microseconds>(iTest.GetDuration());
+               SendDlgItemMessage(hDlg, IDC_QuickSortDurationEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(nTotalMicroseconds.count()).c_str()));
+               SendDlgItemMessage(hDlg, IDC_QuickSortUnitsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_MICROSECONDS)).c_str());
+               break;
+          }
+          case CSortTest::ESORT_TYPE::MERGE_SORT:
+          {
+               SendDlgItemMessage(hDlg, IDC_MergeSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertSortStateToString(iTest.GetState())).c_str());
+               SendDlgItemMessage(hDlg, IDC_SortedMergeSortArrayEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertVectorToString(iTest.GetSortedArray()).c_str()));
+               SendDlgItemMessage(hDlg, IDC_MergeSortNumberOfSortsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(iTest.GetNumberOfSorts()).c_str()));
+
+               auto nTotalMicroseconds = std::chrono::duration_cast<std::chrono::microseconds>(iTest.GetDuration());
+               SendDlgItemMessage(hDlg, IDC_MergeSortDurationEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(nTotalMicroseconds.count()).c_str()));
+               SendDlgItemMessage(hDlg, IDC_MergeSortUnitsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_MICROSECONDS)).c_str());
+               break;
+          }
+          case CSortTest::ESORT_TYPE::BUBBLE_SORT:
+          {
+               SendDlgItemMessage(hDlg, IDC_BubbleSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertSortStateToString(iTest.GetState())).c_str());
+               SendDlgItemMessage(hDlg, IDC_SortedBubbleSortArrayEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertVectorToString(iTest.GetSortedArray()).c_str()));
+               SendDlgItemMessage(hDlg, IDC_BubbleSortNumberOfSortsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(iTest.GetNumberOfSorts()).c_str()));
+
+               auto nTotalMicroseconds = std::chrono::duration_cast<std::chrono::microseconds>(iTest.GetDuration());
+               SendDlgItemMessage(hDlg, IDC_BubbleSortDurationEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(nTotalMicroseconds.count()).c_str()));
+               SendDlgItemMessage(hDlg, IDC_BubbleSortUnitsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_MICROSECONDS)).c_str());
+               break;
+          }
+          default:
+               break;
+          }
+
      }
      } // {std::lock_guard<std::recursive_mutex> lock(g_mutex);
 }
@@ -605,6 +660,8 @@ void ThreadFunc(const HWND hDlg, CSortTest* iTest)
           }
 
           iTest->SetSortedArray(vArray);
+          iTest->SetNumberOfSorts(nNumberOfSorts);
+          iTest->SetDuration(duration);
 
           CHECK_SUCCEEDED_LOG_THROW((CSorting<int, std::size_t>::VerifySort(tempArray, tempArraySize, bSortCorrect)));
 
