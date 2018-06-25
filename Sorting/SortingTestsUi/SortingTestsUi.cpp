@@ -274,7 +274,7 @@ void onMainRunSortTestsButton(const HWND hDlg)
           }
           else
           {
-               CHECK_THROW_LOG_THROW(EINVAL);
+               CHECK_SUCCEEDED_LOG_THROW(EINVAL);
           }
      }
      catch (long& check_catch_lresult)
