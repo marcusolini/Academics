@@ -380,6 +380,10 @@ long ParseInput(IN const std::wstring& sToParse, OUT std::vector<int>& vArray)
      {
           nStatus = EINVAL;
      }
+     catch (std::out_of_range)
+     {
+          nStatus = EINVAL;
+     }
      catch (long& check_catch_lresult)
      {
           nStatus = check_catch_lresult;
@@ -403,17 +407,13 @@ INT_PTR CALLBACK ProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPAR
 
      case WM_COMMAND:
      {
-          switch (LOWORD(wParam))
-          {
-          case ID_ProgressStopButton:
-               onProgressClose(hDlg, wParam);
-               return TRUE;
-               break;
-          }
+          //switch (LOWORD(wParam))
+         // {
+         // }
           break;
      }
 
-     case WM_CLOSE:
+     case WM_ALL_THREADS_COMPLETE:
           EndDialog(hDlg, wParam);
           return TRUE;
           break;
@@ -463,7 +463,7 @@ void onProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPARAM
 
      if (true == bAllThreadsComplete)
      {
-          SendMessage(hDlg, WM_CLOSE, (WPARAM)0, (LPARAM)0);
+          SendMessage(hDlg, WM_ALL_THREADS_COMPLETE, (WPARAM)0, (LPARAM)0);
      }
 }
 
@@ -494,13 +494,15 @@ INT_PTR CALLBACK SortResultsDialogProc(const HWND hDlg, const UINT uMsg, const W
 
      case WM_COMMAND:
      {
+          switch (LOWORD(wParam))
+          {
+          case IDCLOSE:
+               onSortResultsClose(hDlg, wParam);
+               return TRUE;
+               break;
+          } // switch
           break;
      }
-
-     case WM_CLOSE:
-          EndDialog(hDlg, wParam);
-          return TRUE;
-          break;
 
      } // switch
 
@@ -579,11 +581,12 @@ void onSortResultsInit(const HWND hDlg)
      } // {std::lock_guard<std::recursive_mutex> lock(g_mutex);
 }
 
+
 void onSortResultsClose(const HWND hDlg, const WPARAM wParam)
 {
      int msgBoxID = IDNO;
 
-     msgBoxID = MessageBox(hDlg, (LoadStringFromResourceId(IDS_STOP_QUESTION)).c_str(), (LoadStringFromResourceId(IDS_PROGRESS_STOP)).c_str(), (MB_ICONQUESTION | MB_YESNO));
+     msgBoxID = MessageBox(hDlg, (LoadStringFromResourceId(IDS_CLOSE_TEST)).c_str(), (LoadStringFromResourceId(IDS_CLOSE)).c_str(), (MB_ICONQUESTION | MB_YESNO));
 
      if (IDYES == msgBoxID)
      {
@@ -613,11 +616,15 @@ void ThreadFunc(const HWND hDlg, CSortTest* iTest)
 
      try
      {
+          std::this_thread::yield();
+
           iTest->SetState(CSortTest::ESTATE_TYPE::STARTED);
 
           ss << std::this_thread::get_id();
           id = std::stoull(ss.str());
           iTest->SetThreadId(id);
+
+          std::this_thread::sleep_for(std::chrono::milliseconds{ 750 });  // For Progress Bar Show
 
           // Synchronize thread runnings
           {std::lock_guard<std::recursive_mutex> lock(g_mutex);} 

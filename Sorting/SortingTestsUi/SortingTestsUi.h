@@ -22,6 +22,8 @@
 // DECLARATIONS
 
 #define WM_USER_THREAD_COMPLETE (WM_USER + 100)
+#define WM_ALL_THREADS_COMPLETE (WM_USER + 101)
+
 
 class CSortTest;
 
