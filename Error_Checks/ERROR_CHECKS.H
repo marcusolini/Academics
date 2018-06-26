@@ -25,6 +25,19 @@
 #endif // _WIN32
 
 
+#ifndef IN
+     #define IN
+#endif
+
+#ifndef OUT
+     #define OUT
+#endif
+
+#ifndef OPTIONAL
+     #define OPTIONAL
+#endif
+
+
 #define CHECK_LOG_ERROR        1
 #define CHECK_NOLOG_ERROR      2
 #define CHECK_THROW_ERROR      3

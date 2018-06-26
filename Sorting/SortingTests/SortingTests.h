@@ -7,7 +7,8 @@
 #define SORTING_TESTS_H
 
 #include "../../Error_Checks/ERROR_CHECKS.H"
-#include "../SortingTemplateLib/SortingLib.h"
+
+#include "../SortingShared/SortingLib.h"
 
 
 // DECLARATIONS

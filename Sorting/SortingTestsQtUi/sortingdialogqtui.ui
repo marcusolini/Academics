@@ -46,10 +46,10 @@
        <bool>false</bool>
       </property>
       <property name="text">
-       <string>Bubble Sort</string>
+       <string>Quick Sort</string>
       </property>
       <property name="checkable">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -59,10 +59,10 @@
        <bool>false</bool>
       </property>
       <property name="text">
-       <string>Bubble Sort</string>
+       <string>Merge Sort</string>
       </property>
       <property name="checkable">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
      </widget>
     </item>

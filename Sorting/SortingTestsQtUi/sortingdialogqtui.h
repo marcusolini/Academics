@@ -21,7 +21,10 @@ public:
     ~sortingdialog();
 
 public slots:
+    void handleSortArrayLineditTextChanged(const QString& text);
     void handleQuickSortCheckbox(int state);
+    void handleMergeSortCheckbox(int state);
+    void handleBubbleSortCheckbox(int state);
     void handleRunSortTestsPushbutton();
     void handleCloseSortTestsPushbutton();
 

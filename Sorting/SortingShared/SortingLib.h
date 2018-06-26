@@ -14,15 +14,7 @@
 	#include <windows.h>
 	//#include <minwindef.h>
 #else
-    #ifndef IN
-        #define IN
-    #endif
-    #ifndef OUT
-        #define OUT
-    #endif
-    #ifndef OPTIONAL
-        #define OPTIONAL
-    #endif
+
 #endif // _WIN32
 
 #include <string>

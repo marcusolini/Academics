@@ -3,10 +3,12 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 
-#include "SortingTestsUi.h"
 #include "../../Error_Checks/ERROR_CHECKS.H"
 
-#include "../SortingTemplateLib/SortingLib.h"
+#include "../SortingShared/SortingLib.h"
+#include "../SortingShared/SortTest.h"
+
+#include "SortingTestsUi.h"
 
 #pragma comment(linker, \
   "\"/manifestdependency:type='Win32' "\
@@ -48,6 +50,32 @@ std::wstring LoadStringFromResourceId(const UINT id)
      }
 }
 
+static std::wstring ConvertSortTypeToString(IN const CSortTest::ESORT_TYPE eSortType)
+{
+     switch (eSortType)
+     {
+     case CSortTest::ESORT_TYPE::UNDEFINED: return LoadStringFromResourceId(IDS_UNDEFINED); break;
+     case CSortTest::ESORT_TYPE::QUICK_SORT: return LoadStringFromResourceId(IDS_QUICK_SORT); break;
+     case CSortTest::ESORT_TYPE::MERGE_SORT: return LoadStringFromResourceId(IDS_MERGE_SORT); break;
+     case CSortTest::ESORT_TYPE::BUBBLE_SORT: return LoadStringFromResourceId(IDS_BUBBLE_SORT); break;
+     default: return LoadStringFromResourceId(IDS_UNDEFINED); break;
+     }
+}
+
+static std::wstring ConvertSortStateToString(IN const CSortTest::ESTATE_TYPE eSortState)
+{
+     switch (eSortState)
+     {
+     case CSortTest::ESTATE_TYPE::UNDEFINED: return LoadStringFromResourceId(IDS_UNDEFINED); break;
+     case CSortTest::ESTATE_TYPE::STARTED: return LoadStringFromResourceId(IDS_SORT_STARTED); break;
+     case CSortTest::ESTATE_TYPE::RUNNING: return LoadStringFromResourceId(IDS_SORT_RUNNING); break;
+     case CSortTest::ESTATE_TYPE::PAUSED: return LoadStringFromResourceId(IDS_SORT_PAUSED); break;
+     case CSortTest::ESTATE_TYPE::INTERRUPTED: return LoadStringFromResourceId(IDS_SORT_NOT_RUN); break;
+     case CSortTest::ESTATE_TYPE::SUCCESS: return LoadStringFromResourceId(IDS_SORT_SUCCESS); break;
+     case CSortTest::ESTATE_TYPE::FAILED: return LoadStringFromResourceId(IDS_SORT_FAILED); break;
+     default: return LoadStringFromResourceId(IDS_UNDEFINED); break;
+     }
+}
 
 
 // MAIN DIALOG
@@ -328,61 +356,10 @@ long GetInput(IN const HWND hDlg, OUT std::vector<int>& vArray, IN OPTIONAL bool
                sToParse = szTemp;
           }
 
-          CHECK_SUCCEEDED_LOG_THROW(ParseInput(sToParse, vArray));
+          CHECK_SUCCEEDED_LOG_THROW( CSortTest::ValidateAndConvertFromStringToVector(sToParse, vArray) );
 
           CHECK_NOT_ZERO_LOG_THROW(vArray.empty());
 
-     }
-     catch (long& check_catch_lresult)
-     {
-          nStatus = check_catch_lresult;
-     }
-
-     return nStatus;
-}
-
-long ParseInput(IN const std::wstring& sToParse, OUT std::vector<int>& vArray)
-{
-     long nStatus = 0;
-
-     std::wstring sParsed;
-     std::wstring sSpace = L" ";
-
-     try
-     {
-          for (auto iParse : sToParse)
-          {
-               std::wstring c = { iParse };
-
-               if (sSpace.compare(c))
-               {
-                    int intTest = std::stoi(c); // should throw if not an integer.
-                    sParsed += iParse;
-               }
-               else
-               {
-                    if (sParsed.size())
-                    {
-                         vArray.push_back(std::stoi(sParsed));
-                         sParsed.erase();
-                    }
-               }
-          }
-
-          // Store the last parsed element.
-          if (sParsed.size())
-          {
-               vArray.push_back(std::stoi(sParsed)); // should throw if not an integer.
-               sParsed.erase();
-          }
-     }
-     catch (std::invalid_argument)
-     {
-          nStatus = EINVAL;
-     }
-     catch (std::out_of_range)
-     {
-          nStatus = EINVAL;
      }
      catch (long& check_catch_lresult)
      {
@@ -542,7 +519,7 @@ void onSortResultsInit(const HWND hDlg)
           {
           case CSortTest::ESORT_TYPE::QUICK_SORT:
           {
-               SendDlgItemMessage(hDlg, IDC_QickSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertSortStateToString(iTest.GetState())).c_str());
+               SendDlgItemMessage(hDlg, IDC_QickSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(ConvertSortStateToString(iTest.GetState())).c_str());
                SendDlgItemMessage(hDlg, IDC_SortedQuickSortArrayEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertVectorToString(iTest.GetSortedArray()).c_str()));
                SendDlgItemMessage(hDlg, IDC_QuickSortNumberOfSortsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(iTest.GetNumberOfSorts()).c_str()));
 
@@ -553,7 +530,7 @@ void onSortResultsInit(const HWND hDlg)
           }
           case CSortTest::ESORT_TYPE::MERGE_SORT:
           {
-               SendDlgItemMessage(hDlg, IDC_MergeSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertSortStateToString(iTest.GetState())).c_str());
+               SendDlgItemMessage(hDlg, IDC_MergeSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(ConvertSortStateToString(iTest.GetState())).c_str());
                SendDlgItemMessage(hDlg, IDC_SortedMergeSortArrayEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertVectorToString(iTest.GetSortedArray()).c_str()));
                SendDlgItemMessage(hDlg, IDC_MergeSortNumberOfSortsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(iTest.GetNumberOfSorts()).c_str()));
 
@@ -564,7 +541,7 @@ void onSortResultsInit(const HWND hDlg)
           }
           case CSortTest::ESORT_TYPE::BUBBLE_SORT:
           {
-               SendDlgItemMessage(hDlg, IDC_BubbleSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertSortStateToString(iTest.GetState())).c_str());
+               SendDlgItemMessage(hDlg, IDC_BubbleSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(ConvertSortStateToString(iTest.GetState())).c_str());
                SendDlgItemMessage(hDlg, IDC_SortedBubbleSortArrayEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(CSortTest::ConvertVectorToString(iTest.GetSortedArray()).c_str()));
                SendDlgItemMessage(hDlg, IDC_BubbleSortNumberOfSortsEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(std::to_wstring(iTest.GetNumberOfSorts()).c_str()));
 
