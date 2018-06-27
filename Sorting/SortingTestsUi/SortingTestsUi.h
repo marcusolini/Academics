@@ -25,7 +25,12 @@
 #define WM_USER_THREAD_COMPLETE (WM_USER + 100)
 #define WM_ALL_THREADS_COMPLETE (WM_USER + 101)
 
-void ThreadFunc(const HWND hDlg, CSortTest * iTest);
+#ifndef QT_GUI_LIB
+void ThreadFunc(const HWND hDlg, CSortTest* iTest);
+#else
+// TODO
+void ThreadFunc(sortingdialog* pSortingdialog, CSortTest* iTest);
+#endif // QT_GUI_LIB
 
 // MAIN DIALOG
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow);
@@ -36,7 +41,6 @@ void onMainCancel(const HWND hDlg);
 void onMainClose(const HWND hDlg);
 void onMainChange(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 long GetInput(IN const HWND hDlg, OUT std::vector<int>& vArray, IN OPTIONAL bool* pbDataPresent = nullptr);
-long ParseInput(IN const std::wstring& sToParse, OUT std::vector<int>& vArray);
 
 // PROGRESS DIALOG
 INT_PTR CALLBACK ProgressDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);

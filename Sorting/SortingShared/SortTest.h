@@ -20,10 +20,24 @@
 #include <mutex>
 
 #include "../../Error_Checks/ERROR_CHECKS.H"
+#include "../SortingShared/SortingLib.h"
 
 // DECLARATIONS
 
 class CSortTest;
+
+#ifndef QT_GUI_LIB
+     void ThreadFunc(const HWND hDlg, CSortTest* iTest);
+     #ifdef _WIN32
+          #define WM_USER_THREAD_COMPLETE (WM_USER + 100)
+          #define WM_ALL_THREADS_COMPLETE (WM_USER + 101)
+     #endif // _WIN32
+#else
+     #include "../sortingdialogqtui.h"
+     void ThreadFunc(sortingdialog* pSortingdialog, CSortTest* iTest);
+
+
+#endif // QT_GUI_LIB
 
 
 // DEFINITIONS
@@ -70,6 +84,8 @@ public:
      void SetThreadId(IN uint64_t id) { m_threadId = id; }
      uint64_t GetThreadId() { return m_threadId; }
 
+     static std::recursive_mutex g_mutex;
+     static std::vector<CSortTest> g_sortTests;
 
      static std::wstring ConvertVectorToString(IN const std::vector<int>& vArray)
      {
@@ -151,5 +167,118 @@ private:
      long m_nError = 0;
      uint64_t m_threadId = 0;
 };
+
+
+// DEFINITIONS
+
+// GLOBALS
+
+/*static*/ std::recursive_mutex CSortTest::g_mutex;
+/*static*/ std::vector<CSortTest> CSortTest::g_sortTests;
+
+// THREAD FUNCTION
+
+#ifndef QT_GUI_LIB
+    void ThreadFunc(const HWND hDlg, CSortTest* iTest)
+#else
+    void ThreadFunc(sortingdialog* pSortingdialog, CSortTest* iTest)
+#endif // QT_GUI_LIB
+{
+     int nStatus = 0;
+
+     std::wstringstream ss;
+     uint64_t id = 0;
+
+     std::vector<int> vArray;
+     int* tempArray = nullptr;
+     int* iTempArray = nullptr;
+     std::size_t tempArraySize = 0;
+
+     std::size_t nNumberOfSorts = 0;
+     std::chrono::duration<double> duration;
+     bool bSortCorrect = false;
+
+     try
+     {
+          std::this_thread::yield();
+
+          iTest->SetState(CSortTest::ESTATE_TYPE::STARTED);
+
+          ss << std::this_thread::get_id();
+          id = std::stoull(ss.str());
+          iTest->SetThreadId(id);
+
+          std::this_thread::sleep_for(std::chrono::milliseconds{ 750 });  // For Progress Bar Show
+
+                                                                          // Synchronize thread runnings
+          {std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex); }
+
+          iTest->SetState(CSortTest::ESTATE_TYPE::RUNNING);
+
+          // Convet vector to array.
+          vArray = iTest->GetArray();
+          tempArraySize = vArray.size();
+
+          tempArray = new int[tempArraySize];
+          iTempArray = tempArray;
+
+          for (auto& iArray : vArray)
+          {
+               *iTempArray = iArray;
+               iTempArray += 1;
+          }
+
+          switch (iTest->GetSortType())
+          {
+          case CSortTest::ESORT_TYPE::QUICK_SORT:
+               CHECK_SUCCEEDED_LOG_THROW((CSorting<int, std::size_t>::Sort(ESortingTypes::QuickSort, tempArray, tempArraySize, &nNumberOfSorts, &duration)));
+               break;
+          case CSortTest::ESORT_TYPE::MERGE_SORT:
+               CHECK_SUCCEEDED_LOG_THROW((CSorting<int, std::size_t>::Sort(ESortingTypes::MergeSort, tempArray, tempArraySize, &nNumberOfSorts, &duration)));
+               break;
+          case CSortTest::ESORT_TYPE::BUBBLE_SORT:
+               CHECK_SUCCEEDED_LOG_THROW((CSorting<int, std::size_t>::Sort(ESortingTypes::BubbleSort, tempArray, tempArraySize, &nNumberOfSorts, &duration)));
+               break;
+          default:
+               break;
+          }
+
+          vArray.clear();
+
+          for (std::size_t nIndex = 0; nIndex < tempArraySize; nIndex++)
+          {
+               vArray.push_back(tempArray[nIndex]);
+          }
+
+          iTest->SetSortedArray(vArray);
+          iTest->SetNumberOfSorts(nNumberOfSorts);
+          iTest->SetDuration(duration);
+
+          CHECK_SUCCEEDED_LOG_THROW((CSorting<int, std::size_t>::VerifySort(tempArray, tempArraySize, bSortCorrect)));
+
+          CHECK_BOOL_TRUE_LOG_THROW(bSortCorrect);
+
+          iTest->SetState(CSortTest::ESTATE_TYPE::SUCCESS);
+     }
+     catch (long& check_catch_lresult)
+     {
+          nStatus = check_catch_lresult;
+          iTest->SetError(nStatus);
+          iTest->SetState(CSortTest::ESTATE_TYPE::FAILED);
+     }
+
+     {std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);
+     iTest->SetIsComplete();
+     } //std::lock_guard<std::recursive_mutex> lock(g_mutex);
+
+#ifndef QT_GUI_LIB
+     SendMessage(hDlg, WM_USER_THREAD_COMPLETE, (WPARAM)iTest->GetThreadId(), (LPARAM)iTest->GetState());
+#else
+       // TODO
+#endif // QT_GUI_LIB
+
+
+
+}
 
 #endif // SORT_TEST_H

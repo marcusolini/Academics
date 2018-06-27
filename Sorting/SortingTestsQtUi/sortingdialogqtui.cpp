@@ -9,6 +9,8 @@
 #include <QIntValidator>
 #include <QMessageBox>
 
+#include <thread>
+
 #include "../../Error_Checks/ERROR_CHECKS.H"
 #include "../SortingShared/SortTest.h"
 
@@ -174,4 +176,11 @@ void sortingdialog::handleRunSortTestsPushbutton()
     msgBox.setInformativeText(tr("NOT IMPLEMENTED"));
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.exec();
+
+    for (auto& iTest : CSortTest::g_sortTests)
+    {
+        std::thread progressThread = std::thread(ThreadFunc, this, &iTest);
+        progressThread.detach();
+    }
+
 }

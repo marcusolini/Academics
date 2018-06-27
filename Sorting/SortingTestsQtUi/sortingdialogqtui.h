@@ -18,7 +18,8 @@ class sortingdialog : public QDialog
 
 public:
     explicit sortingdialog(QWidget *parent = 0);
-    ~sortingdialog();
+    ~sortingdialog();    
+
 
 public slots:
     void handleSortArrayLineditTextChanged(const QString& text);
@@ -30,6 +31,9 @@ public slots:
 
 private:
     Ui::sortingdialog *ui;
+
+
+
 };
 
 #endif // SORTINGDIALOG_H

@@ -17,13 +17,14 @@
           #define SUCCEEDED(hr) (((HRESULT)(hr)) >= 0)
      #endif
 #else
-     #define GetLastError() (ENOMSG)
+     #define GetLastError() (EINVAL)
      #define HRESULT_FROM_WIN32(x) (x)
      #ifndef SUCCEEDED
           #define SUCCEEDED(x) ((0 == x))
      #endif
 #endif // _WIN32
 
+#include <cerrno>
 
 #ifndef IN
      #define IN
@@ -75,7 +76,7 @@
      bool bool_error_check_result = (error_check_call);  \
      if ( true != bool_error_check_result ) \
      { \
-        long lresult_error_check_result = HRESULT_FROM_WIN32(ENOMSG); \
+        long lresult_error_check_result = HRESULT_FROM_WIN32(EINVAL); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
           std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
         if ( CHECK_THROW_ERROR == error_check_throw ) \

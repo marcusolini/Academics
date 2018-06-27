@@ -94,12 +94,12 @@ STATUS CSorting<T, U>::Sort(IN const ESortingTypes eSortType, IN OUT T* array, I
           {
                T* pMergedArray = new T[arraySize];
 
-               for (auto nIndex = 0; nIndex < arraySize; nIndex++)  // initialize merged array with original array
+               for (U nIndex = 0; nIndex < arraySize; nIndex++)  // initialize merged array with original array
                     pMergedArray[nIndex] = array[nIndex];
 
                CHECK_SUCCEEDED_LOG_THROW( CSorting::MergeSort(array, arraySize, pMergedArray, nNumberOfSorts) );
 
-               for (auto nIndex = 0; nIndex < arraySize; nIndex++) // copy merged array into original array
+               for (U nIndex = 0; nIndex < arraySize; nIndex++) // copy merged array into original array
                     array[nIndex] = pMergedArray[nIndex];
 
                if (pMergedArray) delete[] pMergedArray;
@@ -132,19 +132,19 @@ STATUS CSorting<T, U>::Sort(IN const ESortingTypes eSortType, IN OUT T* array, I
 template<class T, class U>
 STATUS CSorting<T, U>::QuickSort(IN OUT T* array, IN const U arraySize, OUT std::size_t& numberOfSorts)
 {
-	T* left = array;
-	T* right = array + (arraySize - 1);
-	U pivot = *(array + (CSorting::RandomArrayReference(arraySize) - 1));
+    T* left = array;
+    T* right = array + (arraySize - 1);
+    U pivot = *(array + (CSorting::RandomArrayReference(arraySize) - 1));
 
-	STATUS nStatus = 0;
+    STATUS nStatus = 0;
 
      try
      {
 	     while (left < right)
 	     {
-		     if (*left < pivot)
+                     if ((U)(*left) < pivot)
 			     left++;
-		     else if (*right > pivot)
+                     else if ((U)(*right) > pivot)
 			     right--;
 		     else if (*left == *right) // Handles duplicates
 			     left++;
@@ -234,7 +234,7 @@ STATUS CSorting<T,U>::MergeSort(IN OUT T* array, IN const U arraySize, IN OUT T*
                     mergedArray[mIndex] = rArray[rIndex];
 
                // Copy sorted and merged array back into original array
-               for (int nIndex = 0; nIndex < arraySize; nIndex++)
+               for (U nIndex = 0; nIndex < arraySize; nIndex++)
                     array[nIndex] = mergedArray[nIndex];
           }
      }
@@ -270,7 +270,7 @@ STATUS CSorting<T,U>::BubbleSort(IN OUT T* array, IN const U arraySize, OUT std:
 
      try
      {
-          for (auto nIndex = 0; nIndex < arraySize - 1; nIndex++)
+          for (U nIndex = 0; nIndex < arraySize - 1; nIndex++)
           {
                if (array[nIndex] > array[nIndex + 1])
                {

@@ -32,3 +32,10 @@ HEADERS += \
 
 FORMS += \
     sortingdialogqtui.ui
+
+
+win32:CONFIG(release, debug|release){
+QMAKE_POST_LINK = $$(QTDIR)/bin/windeployqt $$PWD/build-SortingTestsQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Release/release/SortingTestsQtUi.exe
+}else:win32:CONFIG(debug, debug|release){
+QMAKE_POST_LINK = $$(QTDIR)/bin/windeployqt $$PWD/build-SortingTestsQtUi-Desktop_Qt_5_11_0_MinGW_32bit-Debug/debug/SortingTestsQtUi.exe
+}
