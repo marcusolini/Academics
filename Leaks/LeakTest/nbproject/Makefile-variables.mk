@@ -22,6 +22,22 @@ CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/leaktest
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
 CND_PACKAGE_NAME_Release=leaktest.tar
 CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/leaktest.tar
+# Debug-Win32 configuration
+CND_PLATFORM_Debug-Win32=GNU-Linux
+CND_ARTIFACT_DIR_Debug-Win32=dist/Debug-Win32/GNU-Linux
+CND_ARTIFACT_NAME_Debug-Win32=leaktest
+CND_ARTIFACT_PATH_Debug-Win32=dist/Debug-Win32/GNU-Linux/leaktest
+CND_PACKAGE_DIR_Debug-Win32=dist/Debug-Win32/GNU-Linux/package
+CND_PACKAGE_NAME_Debug-Win32=leaktest.tar
+CND_PACKAGE_PATH_Debug-Win32=dist/Debug-Win32/GNU-Linux/package/leaktest.tar
+# Release-Win32 configuration
+CND_PLATFORM_Release-Win32=GNU-Linux
+CND_ARTIFACT_DIR_Release-Win32=dist/Release-Win32/GNU-Linux
+CND_ARTIFACT_NAME_Release-Win32=leaktest
+CND_ARTIFACT_PATH_Release-Win32=dist/Release-Win32/GNU-Linux/leaktest
+CND_PACKAGE_DIR_Release-Win32=dist/Release-Win32/GNU-Linux/package
+CND_PACKAGE_NAME_Release-Win32=leaktest.tar
+CND_PACKAGE_PATH_Release-Win32=dist/Release-Win32/GNU-Linux/package/leaktest.tar
 #
 # include compiler specific variables
 #

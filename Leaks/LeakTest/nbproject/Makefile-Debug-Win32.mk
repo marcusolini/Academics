@@ -35,15 +35,15 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/LeakLib.o
+	${OBJECTDIR}/LeakTest.o
 
 
 # C Compiler Flags
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-Wall -W -Wextra -fexceptions -std=gnu++11
-CXXFLAGS=-Wall -W -Wextra -fexceptions -std=gnu++11
+CCFLAGS=
+CXXFLAGS=
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -52,20 +52,22 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=../LeakLib/dist/Debug/GNU-Linux/libLeakLib.so
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT}: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest: ../LeakLib/dist/Debug/GNU-Linux/libLeakLib.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -mwindows -shared -fPIC
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/LeakLib.o: LeakLib.cpp
+${OBJECTDIR}/LeakTest.o: LeakTest.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -s -DLEAKLIB_EXPORTS -DUNICODE -DWIN32 -D_UNICODE -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakTest.o LeakTest.cpp
 
 # Subprojects
 .build-subprojects:
@@ -73,6 +75,8 @@ ${OBJECTDIR}/LeakLib.o: LeakLib.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.so
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest
 
 # Subprojects
 .clean-subprojects:
