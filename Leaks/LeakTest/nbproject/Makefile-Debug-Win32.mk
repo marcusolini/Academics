@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=MinGW-Windows
-CND_DLIB_EXT=dll
+CND_PLATFORM=GNU-Linux
+CND_DLIB_EXT=so
 CND_CONF=Debug-Win32
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -56,11 +56,11 @@ LDLIBSOPTIONS=../LeakLib/dist/Debug-Win32/MinGW-Windows/libLeakLib.dll
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest.exe: ../LeakLib/dist/Debug-Win32/MinGW-Windows/libLeakLib.dll
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest: ../LeakLib/dist/Debug-Win32/MinGW-Windows/libLeakLib.dll
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest.exe: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest ${OBJECTFILES} ${LDLIBSOPTIONS}
 
@@ -76,7 +76,7 @@ ${OBJECTDIR}/LeakTest.o: LeakTest.cpp
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
 	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.dll
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest.exe
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/leaktest
 
 # Subprojects
 .clean-subprojects:

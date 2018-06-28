@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=MinGW-Windows
-CND_DLIB_EXT=dll
+CND_PLATFORM=GNU-Linux
+CND_DLIB_EXT=so
 CND_CONF=Debug-Win32
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -60,12 +60,12 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -mwindows -shared
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -mwindows -shared -fPIC
 
 ${OBJECTDIR}/LeakLib.o: LeakLib.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -s -DLEAKLIB_EXPORTS -DUNICODE -DWIN32 -D_UNICODE -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
+	$(COMPILE.cc) -g -s -DLEAKLIB_EXPORTS -DUNICODE -DWIN32 -D_UNICODE -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
 
 # Subprojects
 .build-subprojects:

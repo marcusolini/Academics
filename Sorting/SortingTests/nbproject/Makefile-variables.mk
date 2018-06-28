@@ -23,21 +23,21 @@ CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
 CND_PACKAGE_NAME_Release=sortingtests.tar
 CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/sortingtests.tar
 # Debug-Win32 configuration
-CND_PLATFORM_Debug-Win32=MinGW-Windows
-CND_ARTIFACT_DIR_Debug-Win32=dist/Debug-Win32/MinGW-Windows
+CND_PLATFORM_Debug-Win32=GNU-Linux
+CND_ARTIFACT_DIR_Debug-Win32=dist/Debug-Win32/GNU-Linux
 CND_ARTIFACT_NAME_Debug-Win32=sortingtests
-CND_ARTIFACT_PATH_Debug-Win32=dist/Debug-Win32/MinGW-Windows/sortingtests
-CND_PACKAGE_DIR_Debug-Win32=dist/Debug-Win32/MinGW-Windows/package
+CND_ARTIFACT_PATH_Debug-Win32=dist/Debug-Win32/GNU-Linux/sortingtests
+CND_PACKAGE_DIR_Debug-Win32=dist/Debug-Win32/GNU-Linux/package
 CND_PACKAGE_NAME_Debug-Win32=sortingtests.tar
-CND_PACKAGE_PATH_Debug-Win32=dist/Debug-Win32/MinGW-Windows/package/sortingtests.tar
+CND_PACKAGE_PATH_Debug-Win32=dist/Debug-Win32/GNU-Linux/package/sortingtests.tar
 # Release-Win32 configuration
-CND_PLATFORM_Release-Win32=MinGW-Windows
-CND_ARTIFACT_DIR_Release-Win32=dist/Release-Win32/MinGW-Windows
+CND_PLATFORM_Release-Win32=GNU-Linux
+CND_ARTIFACT_DIR_Release-Win32=dist/Release-Win32/GNU-Linux
 CND_ARTIFACT_NAME_Release-Win32=sortingtests
-CND_ARTIFACT_PATH_Release-Win32=dist/Release-Win32/MinGW-Windows/sortingtests
-CND_PACKAGE_DIR_Release-Win32=dist/Release-Win32/MinGW-Windows/package
+CND_ARTIFACT_PATH_Release-Win32=dist/Release-Win32/GNU-Linux/sortingtests
+CND_PACKAGE_DIR_Release-Win32=dist/Release-Win32/GNU-Linux/package
 CND_PACKAGE_NAME_Release-Win32=sortingtests.tar
-CND_PACKAGE_PATH_Release-Win32=dist/Release-Win32/MinGW-Windows/package/sortingtests.tar
+CND_PACKAGE_PATH_Release-Win32=dist/Release-Win32/GNU-Linux/package/sortingtests.tar
 #
 # include compiler specific variables
 #
