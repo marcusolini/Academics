@@ -8,6 +8,10 @@
 
 #include <QDialog>
 
+#include <vector>
+
+#include "../SortingShared/SortTest.h"
+
 namespace Ui {
 class sortingdialog;
 }
@@ -20,6 +24,7 @@ public:
     explicit sortingdialog(QWidget *parent = 0);
     ~sortingdialog();    
 
+    std::vector<CSortTest> sortTests;
 
 public slots:
     void handleSortArrayLineditTextChanged(const QString& text);

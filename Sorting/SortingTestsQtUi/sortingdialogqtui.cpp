@@ -5,6 +5,7 @@
 
 #include "sortingdialogqtui.h"
 #include "ui_sortingdialogqtui.h"
+#include "progressdialog.h"
 
 #include <QIntValidator>
 #include <QMessageBox>
@@ -49,6 +50,8 @@ sortingdialog::~sortingdialog()
 
 void sortingdialog::handleSortArrayLineditTextChanged(const QString& text)
 {
+    //long nStatus = 0;
+
     std::vector<int> vArray;
 
     try
@@ -57,6 +60,8 @@ void sortingdialog::handleSortArrayLineditTextChanged(const QString& text)
     }
     catch (long& check_catch_lresult)
     {
+        //nStatus = check_catch_lresult;
+
         QMessageBox msgBox;
         msgBox.setText(tr("Invalid Input"));
         msgBox.setInformativeText(tr("Please enter integer data only and clear any non-integer data."));
@@ -89,6 +94,8 @@ void sortingdialog::handleSortArrayLineditTextChanged(const QString& text)
             ui->RunSortTestsPushbutton->setEnabled(true);
         }
     }
+
+    //return nStatus;
 }
 
 
@@ -117,6 +124,7 @@ void sortingdialog::handleQuickSortCheckbox(int state)
         ui->RunSortTestsPushbutton->setEnabled(true);
         break;
     case Qt::Unchecked:
+    default:
         if ( (false == ui->QuickSortCheckbox->isChecked()) &&
              (false == ui->MergeSortCheckbox->isChecked()) &&
              (false == ui->BubbleSortCheckbox->isChecked())
@@ -171,16 +179,55 @@ void sortingdialog::handleBubbleSortCheckbox(int state)
 
 void sortingdialog::handleRunSortTestsPushbutton()
 {
-    QMessageBox msgBox;
-    msgBox.setText(tr("NOT IMPLEMENTED"));
-    msgBox.setInformativeText(tr("NOT IMPLEMENTED"));
-    msgBox.setIcon(QMessageBox::Warning);
-    msgBox.exec();
+    //long nStatus = 0;
+    std::vector<int> vArray;
 
-    for (auto& iTest : CSortTest::g_sortTests)
+    try
     {
-        std::thread progressThread = std::thread(ThreadFunc, this, &iTest);
-        progressThread.detach();
+        QString sText = ui->SortArrayLinedit->text();
+        CHECK_SUCCEEDED_LOG_THROW( (CSortTest::ValidateAndConvertFromStringToVector(sText.toStdWString(), vArray)) );
+
+        if ( true == ui->QuickSortCheckbox->isChecked())
+        {
+            CSortTest sortTest( CSortTest::ESORT_TYPE::QUICK_SORT, vArray);
+            sortTests.push_back(sortTest);
+        }
+
+        if ( true == ui->MergeSortCheckbox->isChecked())
+        {
+            CSortTest sortTest( CSortTest::ESORT_TYPE::MERGE_SORT, vArray);
+            sortTests.push_back(sortTest);
+        }
+
+        if ( true == ui->BubbleSortCheckbox->isChecked())
+        {
+            CSortTest sortTest( CSortTest::ESORT_TYPE::BUBBLE_SORT, vArray);
+            sortTests.push_back(sortTest);
+        }
+
+        if ( sortTests.size() )
+        {
+            ProgressDialog w(this, sortTests);
+            w.show();
+            w.exec();
+        }
+        else
+        {
+            CHECK_SUCCEEDED_LOG_THROW(EINVAL);
+        }
+    }
+    catch (long& check_catch_lresult)
+    {
+        //nStatus = check_catch_lresult;
+
+        QMessageBox msgBox;
+        msgBox.setText(tr("Invalid Input"));
+        msgBox.setInformativeText(tr("Please enter integer data only and clear any non-integer data."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
     }
 
+    sortTests.clear();
+
+    //return nStatus;
 }
