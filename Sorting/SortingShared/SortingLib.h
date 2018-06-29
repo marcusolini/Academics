@@ -40,7 +40,7 @@ public:
      //enum class ESortType { QuickSort, MergeSort, BubbleSort };
      
      static STATUS Sort(IN const ESortingTypes eSortType, IN OUT T* array, IN const U arraySize, OUT OPTIONAL std::size_t* pnNumberOfSorts = nullptr, OUT OPTIONAL std::chrono::duration<double>* pDuration = nullptr);
-	static STATUS VerifySort(IN const T* array, IN const U arraySize, OUT bool& bSorted);
+     static STATUS VerifySort(IN const T* array, IN const U arraySize, OUT bool& bSorted);
 
 private:
      static STATUS QuickSort(IN OUT T* array, IN const U arraySize, OUT std::size_t& numberOfSorts);
@@ -53,13 +53,13 @@ private:
 };
 
 
-ESortingTypes operator++(ESortingTypes& eSortingType, int)
+inline ESortingTypes operator++(ESortingTypes& eSortingType, int)
 {
      eSortingType = ESortingTypes(int(eSortingType) + 1);
      return eSortingType;
 }
 
-std::wostream& operator << (std::wostream& str, ESortingTypes eSortingType)
+inline std::wostream& operator << (std::wostream& str, ESortingTypes eSortingType)
 {
      switch (eSortingType)
      {

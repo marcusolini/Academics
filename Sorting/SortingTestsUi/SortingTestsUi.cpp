@@ -5,8 +5,8 @@
 
 #include "../../Error_Checks/ERROR_CHECKS.H"
 
-#include "../SortingShared/SortingLib.h"
 #include "../SortingShared/SortTest.h"
+#include "../SortingShared/SortThreadFunction.h"
 
 #include "SortingTestsUi.h"
 
@@ -19,6 +19,12 @@
   "language='*'\"")
 
 #pragma comment(lib, "ComCtl32.lib")
+
+
+// GLOBALS
+
+static std::vector<CSortTest> g_sortTests;
+static std::recursive_mutex g_sortTestsMutex;
 
 
 // DEFINITIONS
@@ -273,21 +279,21 @@ void onMainRunSortTestsButton(const HWND hDlg)
                if (BST_CHECKED == checked)
                {
                     CSortTest sortTest(CSortTest::ESORT_TYPE::QUICK_SORT, vArray);
-                    CSortTest::g_sortTests.push_back(sortTest);
+                    g_sortTests.push_back(sortTest);
                }
 
                checked = SendDlgItemMessage(hDlg, LOWORD(IDC_MergeSortCheckbox), BM_GETCHECK, (WPARAM)0, (LPARAM)0);
                if (BST_CHECKED == checked)
                {
                     CSortTest sortTest(CSortTest::ESORT_TYPE::MERGE_SORT, vArray);
-                    CSortTest::g_sortTests.push_back(sortTest);
+                    g_sortTests.push_back(sortTest);
                }
 
                checked = SendDlgItemMessage(hDlg, LOWORD(IDC_BubbleSortCheckbox), BM_GETCHECK, (WPARAM)0, (LPARAM)0);
                if (BST_CHECKED == checked)
                {
                     CSortTest sortTest(CSortTest::ESORT_TYPE::BUBBLE_SORT, vArray);
-                    CSortTest::g_sortTests.push_back(sortTest);
+                    g_sortTests.push_back(sortTest);
                }
 
                pProgressDialog = DialogBox(nullptr, MAKEINTRESOURCE(IDD_ProgressDialog), hDlg, ProgressDialogProc);
@@ -305,7 +311,7 @@ void onMainRunSortTestsButton(const HWND hDlg)
           MessageBox(hDlg, (LoadStringFromResourceId(IDS_INVALID_DATA_ENTERED)).c_str(), (LoadStringFromResourceId(IDS_INVALID_DATA)).c_str(), (MB_ICONERROR | MB_OK));
      }
 
-     CSortTest::g_sortTests.clear();
+     g_sortTests.clear();
 }
 
 void onMainCancel(const HWND hDlg)
@@ -389,12 +395,6 @@ INT_PTR CALLBACK ProgressDialogProc(const HWND hDlg, const UINT uMsg, const WPAR
           return TRUE;
           break;
 
-     case WM_USER_THREAD_COMPLETE:
-     {
-          onProgressThreadComplete(hDlg, wParam, lParam);
-          return TRUE;
-          break;
-     }
      } // switch
 
      return FALSE;
@@ -406,37 +406,31 @@ void onProgressInit(const HWND hDlg)
      SendDlgItemMessage(hDlg, IDC_ProgressBar, PBM_SETMARQUEE, (WPARAM)1, (LPARAM)0);
      SendDlgItemMessage(hDlg, ID_ProgressStopButton, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_PROGRESS_STOP)).c_str());
 
-     {std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);
-     for (auto& iTest : CSortTest::g_sortTests)
-     {
-          std::thread thread = std::thread(ThreadFunc, hDlg, &iTest);
-          thread.detach(); // Thread will be communicated to with atomic flags. Thread will communicate with SendMessage. Will not be joined.
-     }
-     } // {std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);
+     std::thread watchDogThread = std::thread(SortTestsWatchDogThread, hDlg, &g_sortTests);
+     watchDogThread.detach();
 }
 
-void onProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPARAM lParam)
+void SortTestsWatchDogThread(const HWND hDlg, std::vector<CSortTest>* pSortTests)
 {
      long nStatus = 0;
-     bool bAllThreadsComplete = true;
 
-     // Determine if all threads are complete
-     {std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);
-     for (auto& iTest : CSortTest::g_sortTests)
-     {
-          if (false == iTest.IsComplete())
-          {
-               bAllThreadsComplete = false;
-               break;
-          }
-     }
-     } //std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);
+     std::vector<std::thread> sortTestThreads;
 
-     if (true == bAllThreadsComplete)
+     {std::lock_guard<std::recursive_mutex> lock(g_sortTestsMutex);
+     for (auto& iTest : g_sortTests)
      {
-          SendMessage(hDlg, WM_ALL_THREADS_COMPLETE, (WPARAM)0, (LPARAM)0);
+          sortTestThreads.push_back( std::thread(SortThreadFunction, &iTest) );
      }
+     } //std::lock_guard<std::recursive_mutex> lock(g_sortTestsMutex);
+
+     for (auto& iTestThread : sortTestThreads)
+     {
+          iTestThread.join();
+     }
+
+     SendMessage(hDlg, WM_ALL_THREADS_COMPLETE, (WPARAM)0, (LPARAM)0);
 }
+
 
 void onProgressClose(const HWND hDlg, const WPARAM wParam)
 {
@@ -506,8 +500,8 @@ void onSortResultsInit(const HWND hDlg)
      SendDlgItemMessage(hDlg, IDC_MergeSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_NOT_RUN)).c_str());
      SendDlgItemMessage(hDlg, IDC_BubbleSortStatusEditbox, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_SORT_NOT_RUN)).c_str());
 
-     {std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);
-     for (auto& iTest : CSortTest::g_sortTests)
+     {std::lock_guard<std::recursive_mutex> lock(g_sortTestsMutex);
+     for (auto& iTest : g_sortTests)
      {
           switch (iTest.GetSortType())
           {
@@ -549,7 +543,7 @@ void onSortResultsInit(const HWND hDlg)
           }
 
      }
-     } // {std::lock_guard<std::recursive_mutex> lock(CSortTest::g_mutex);
+     } // {std::lock_guard<std::recursive_mutex> lock(g_sortTestsMutex);
 }
 
 

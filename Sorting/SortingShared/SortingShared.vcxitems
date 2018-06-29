@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)SortTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SortThreadFunction.h" />
   </ItemGroup>
 </Project>

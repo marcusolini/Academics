@@ -22,15 +22,7 @@
 
 // DECLARATIONS
 
-#define WM_USER_THREAD_COMPLETE (WM_USER + 100)
-#define WM_ALL_THREADS_COMPLETE (WM_USER + 101)
-
-#ifndef QT_GUI_LIB
-void ThreadFunc(const HWND hDlg, CSortTest* iTest);
-#else
-// TODO
-void ThreadFunc(sortingdialog* pSortingdialog, CSortTest* iTest);
-#endif // QT_GUI_LIB
+#define WM_ALL_THREADS_COMPLETE (WM_USER + 100)
 
 // MAIN DIALOG
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow);
@@ -45,8 +37,9 @@ long GetInput(IN const HWND hDlg, OUT std::vector<int>& vArray, IN OPTIONAL bool
 // PROGRESS DIALOG
 INT_PTR CALLBACK ProgressDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void onProgressInit(const HWND hDlg);
-void onProgressThreadComplete(const HWND hDlg, const WPARAM wParam, const LPARAM lParam);
 void onProgressClose(const HWND hDlg, const WPARAM wParam);
+
+void SortTestsWatchDogThread(const HWND hDlg, std::vector<CSortTest>* pSortTests);
 
 // RESULTS DIALOG
 INT_PTR CALLBACK SortResultsDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
