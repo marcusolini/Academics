@@ -10,6 +10,8 @@
 
 #include <QIntValidator>
 #include <QMessageBox>
+#include <QFileDialog>
+#include <QStringList>
 
 #include <thread>
 
@@ -33,6 +35,7 @@ sortingdialog::sortingdialog(QWidget *parent) :
     ui->CloseSortTestsPushbutton->setEnabled(true);
 
     connect(ui->SortArrayLinedit, SIGNAL (textChanged(const QString&)), this, SLOT(handleSortArrayLineditTextChanged(const QString&)));
+    connect(ui->OpenFilePushButton, SIGNAL (released()), this, SLOT(handleOpenFilePushbutton()));
 
     connect(ui->QuickSortCheckbox, SIGNAL (stateChanged(int)), this, SLOT(handleQuickSortCheckbox(int)));
     connect(ui->MergeSortCheckbox, SIGNAL (stateChanged(int)), this, SLOT(handleMergeSortCheckbox(int)));
@@ -97,6 +100,20 @@ void sortingdialog::handleSortArrayLineditTextChanged(const QString& text)
     }
 
     //return nStatus;
+}
+
+
+void sortingdialog::handleOpenFilePushbutton()
+{
+    QFileDialog dialog(this);
+    QStringList fileNames;
+
+    dialog.setFileMode(QFileDialog::AnyFile);
+
+    dialog.exec();
+    fileNames = dialog.selectedFiles();
+
+
 }
 
 

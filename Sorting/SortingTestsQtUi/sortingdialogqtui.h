@@ -27,6 +27,7 @@ public:
     std::vector<CSortTest> sortTests;
 
 public slots:
+    void handleOpenFilePushbutton();
     void handleSortArrayLineditTextChanged(const QString& text);
     void handleQuickSortCheckbox(int state);
     void handleMergeSortCheckbox(int state);
