@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QStringList>
+#include <QFile>
 
 #include <thread>
 
@@ -105,14 +106,28 @@ void sortingdialog::handleSortArrayLineditTextChanged(const QString& text)
 
 void sortingdialog::handleOpenFilePushbutton()
 {
-    QFileDialog dialog(this);
+    QString fileNameFilter;
     QStringList fileNames;
 
-    dialog.setFileMode(QFileDialog::AnyFile);
+    fileNameFilter = tr("Text files (*.txt)");
 
-    dialog.exec();
-    fileNames = dialog.selectedFiles();
+    QFileDialog OpenFileDialog(this);
+    OpenFileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+    OpenFileDialog.setNameFilter(fileNameFilter);
 
+    OpenFileDialog.exec();
+
+    // TODO: Add Error Handling
+
+    fileNames = OpenFileDialog.selectedFiles();
+
+    QFile fFile(fileNames[0]);
+
+    fFile.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QByteArray line = fFile.readLine();
+
+    ui->SortArrayLinedit->setText(line.data());
 
 }
 

@@ -227,6 +227,8 @@ void onMainOpenFile(const HWND hDlg)
 
      inputStream.open(szFileName, std::ifstream::in);
 
+     // TODO Add Error handling
+
      // TODO check szFileName
 
      CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(inputStream.is_open());
