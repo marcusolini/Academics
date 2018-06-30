@@ -35,6 +35,7 @@
 #define IDS_SORT_PAUSED                 129
 #define IDS_SORT_INTERRUPTED            130
 #define IDS_MILLISECONDS                132
+#define IDC_OpenFileButton              1001
 #define IDC_SortArrayEdit               1002
 #define IDC_QuickSortCheckbox           1003
 #define IDC_MergeSortCheckbox           1004
@@ -43,7 +44,6 @@
 #define IDC_SortAlgorithmsGroup         1008
 #define ID_RunSortTestsButton           1009
 #define IDC_ProgressBar                 1010
-#define ID_ProgressStopButton           1011
 #define IDC_NumberOfSortsStatic         1013
 #define IDC_NumberOfSortsStatic2        1015
 #define IDC_NumberOfSortsStatic3        1017
@@ -70,7 +70,6 @@
 #define IDC_QuickSortUnitsEditbox       1038
 #define IDC_QuickSortGroup              1039
 #define IDC_MergeSortGroup              1040
-#define IDC_BubbleSortGroup2            1041
 #define IDC_BubbleSortGroup             1041
 
 // Next default values for new objects
@@ -79,7 +78,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        121
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1037
+#define _APS_NEXT_CONTROL_VALUE         1038
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

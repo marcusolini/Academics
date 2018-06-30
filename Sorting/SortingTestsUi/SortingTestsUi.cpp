@@ -21,11 +21,15 @@
 #pragma comment(lib, "ComCtl32.lib")
 
 
+#include <fstream>
+
 // GLOBALS
 
 static std::vector<CSortTest> g_sortTests;
 static std::recursive_mutex g_sortTestsMutex;
 
+
+static std::wstring g_sFilename;
 
 // DEFINITIONS
 
@@ -145,6 +149,12 @@ INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
                     return TRUE;
                     break;
                } // switch
+               break;
+          case IDC_OpenFileButton:
+               onMainOpenFile(hDlg);
+               return TRUE;
+               break;
+
           } // switch
 
           break;
@@ -191,6 +201,52 @@ void onMainInitDialog(const HWND hDlg)
 
      hTemp = GetDlgItem(hDlg, ID_RunSortTestsButton);
      Edit_Enable(hTemp, FALSE);
+}
+
+void onMainOpenFile(const HWND hDlg)
+{
+     long nStatus = 0;
+
+     try
+     {
+     std::wifstream inputStream;
+
+     OPENFILENAME ofn = { 0 };
+     wchar_t szFileName[MAX_PATH] = { 0 };
+
+     HWND hLoadXmlButton{};
+
+     ofn.lStructSize = sizeof(OPENFILENAME);
+     ofn.Flags = OFN_ALLOWMULTISELECT | OFN_EXPLORER;
+     ofn.lpstrFilter = TEXT("Text Files (*.txt)\0*.txt\0");
+     ofn.lpstrFile = szFileName;
+     ofn.nMaxFile = MAX_PATH;
+     ofn.hwndOwner = hDlg;
+
+     CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(GetOpenFileName(&ofn));
+
+     inputStream.open(szFileName, std::ifstream::in);
+
+     // TODO check szFileName
+
+     CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(inputStream.is_open());
+
+     // TODO read stream
+
+     wchar_t szFileData[MAX_PATH] = { 0 };
+     inputStream.getline(szFileData, MAX_PATH);
+
+     
+
+     SendDlgItemMessage(hDlg, IDC_SortArrayEdit, WM_SETTEXT, (WPARAM)0, (LPARAM)szFileData);
+
+     inputStream.close();
+
+     }
+     catch (long& check_catch_lresult)
+     {
+          nStatus = check_catch_lresult;
+     }
 }
 
 void onMainChange(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -404,7 +460,7 @@ void onProgressInit(const HWND hDlg)
 {
      SendMessage(hDlg, WM_SETTEXT, TRUE, (LPARAM)(LoadStringFromResourceId(IDS_PROGRESS_DIALOG)).c_str());
      SendDlgItemMessage(hDlg, IDC_ProgressBar, PBM_SETMARQUEE, (WPARAM)1, (LPARAM)0);
-     SendDlgItemMessage(hDlg, ID_ProgressStopButton, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_PROGRESS_STOP)).c_str());
+     //SendDlgItemMessage(hDlg, ID_ProgressStopButton, WM_SETTEXT, (WPARAM)0, (LPARAM)(LoadStringFromResourceId(IDS_PROGRESS_STOP)).c_str());
 
      std::thread watchDogThread = std::thread(SortTestsWatchDogThread, hDlg, &g_sortTests);
      watchDogThread.detach();
