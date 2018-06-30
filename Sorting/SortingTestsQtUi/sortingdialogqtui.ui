@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>766</width>
-    <height>130</height>
+    <width>1116</width>
+    <height>302</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>10</y>
-     <width>741</width>
-     <height>111</height>
+     <width>1071</width>
+     <height>251</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -31,7 +31,11 @@
      </widget>
     </item>
     <item row="1" column="0" colspan="5">
-     <widget class="QLineEdit" name="SortArrayLinedit"/>
+     <widget class="QLineEdit" name="SortArrayLinedit">
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_2">

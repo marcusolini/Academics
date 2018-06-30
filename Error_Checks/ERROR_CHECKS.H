@@ -18,7 +18,7 @@
      #endif
 #else
      #define GetLastError() (EINVAL)
-     #define HRESULT_FROM_WIN32(x) x
+     #define HRESULT_FROM_WIN32(x) (x)
      #ifndef SUCCEEDED
           #define SUCCEEDED(x) ((0 == x))
      #endif
