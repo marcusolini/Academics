@@ -22,14 +22,14 @@
 
 
 #include <fstream>
+#include <streambuf>
+
 
 // GLOBALS
 
 static std::vector<CSortTest> g_sortTests;
 static std::recursive_mutex g_sortTestsMutex;
 
-
-static std::wstring g_sFilename;
 
 // DEFINITIONS
 
@@ -203,52 +203,56 @@ void onMainInitDialog(const HWND hDlg)
      Edit_Enable(hTemp, FALSE);
 }
 
-void onMainOpenFile(const HWND hDlg)
+long onMainOpenFile(const HWND hDlg)
 {
      long nStatus = 0;
 
-     try
-     {
-     std::wifstream inputStream;
-
      OPENFILENAME ofn = { 0 };
-     wchar_t szFileName[MAX_PATH] = { 0 };
+     wchar_t szFileData[MAX_PATH] = { 0 };
+
+     bool bInputStreamIsOpen = false;
+     std::wifstream inputStream;
+     std::wstring streamData;
 
      HWND hLoadXmlButton{};
 
-     ofn.lStructSize = sizeof(OPENFILENAME);
-     ofn.Flags = OFN_ALLOWMULTISELECT | OFN_EXPLORER;
-     ofn.lpstrFilter = TEXT("Text Files (*.txt)\0*.txt\0");
-     ofn.lpstrFile = szFileName;
-     ofn.nMaxFile = MAX_PATH;
-     ofn.hwndOwner = hDlg;
+     try
+     {
+          ofn.lStructSize = sizeof(OPENFILENAME);
+          ofn.Flags = OFN_ALLOWMULTISELECT | OFN_EXPLORER;
+          ofn.lpstrFilter = TEXT("Text Files (*.txt)\0*.txt\0");
+          ofn.lpstrFile = szFileData;
+          ofn.nMaxFile = MAX_PATH;
+          ofn.hwndOwner = hDlg;
 
-     CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(GetOpenFileName(&ofn));
+          CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(GetOpenFileName(&ofn));
 
-     inputStream.open(szFileName, std::ifstream::in);
+          inputStream.open(szFileData, std::ifstream::in);
+          CHECK_BOOL_TRUE_LOG_THROW(inputStream.is_open());
+          bInputStreamIsOpen = true;
 
-     // TODO Add Error handling
+          CHECK_BOOL_TRUE_LOG_THROW((false == inputStream.fail()));
 
-     // TODO check szFileName
+          CHECK_NOT_ZERO_LOG_THROW(szFileData[0]);
 
-     CHECK_BOOL_TRUE_LAST_ERROR_LOG_THROW(inputStream.is_open());
+          std::getline(inputStream, streamData);
 
-     // TODO read stream
+          CHECK_BOOL_TRUE_LOG_THROW((false == inputStream.fail()));
 
-     wchar_t szFileData[MAX_PATH] = { 0 };
-     inputStream.getline(szFileData, MAX_PATH);
-
-     
-
-     SendDlgItemMessage(hDlg, IDC_SortArrayEdit, WM_SETTEXT, (WPARAM)0, (LPARAM)szFileData);
-
-     inputStream.close();
-
+          SendDlgItemMessage(hDlg, IDC_SortArrayEdit, WM_SETTEXT, (WPARAM)0, (LPARAM)streamData.c_str());
      }
      catch (long& check_catch_lresult)
      {
           nStatus = check_catch_lresult;
+          MessageBox(hDlg, (LoadStringFromResourceId(IDS_INVALID_DATA_ENTERED)).c_str(), (LoadStringFromResourceId(IDS_INVALID_DATA)).c_str(), (MB_ICONERROR | MB_OK));
      }
+
+     if (true == bInputStreamIsOpen)
+     {
+          inputStream.close();
+     }
+    
+     return nStatus;
 }
 
 void onMainChange(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -416,8 +420,7 @@ long GetInput(IN const HWND hDlg, OUT std::vector<int>& vArray, IN OPTIONAL bool
 
           CHECK_SUCCEEDED_LOG_THROW( CSortTest::ValidateAndConvertFromStringToVector(sToParse, vArray) );
 
-          CHECK_NOT_ZERO_LOG_THROW(vArray.empty());
-
+          CHECK_BOOL_FALSE_LOG_THROW(vArray.empty());
      }
      catch (long& check_catch_lresult)
      {

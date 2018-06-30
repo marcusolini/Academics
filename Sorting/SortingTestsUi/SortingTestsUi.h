@@ -32,7 +32,7 @@ void onMainRunSortTestsButton(const HWND hDlg);
 void onMainCancel(const HWND hDlg);
 void onMainClose(const HWND hDlg);
 void onMainChange(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
-void onMainOpenFile(const HWND hDlg);
+long onMainOpenFile(const HWND hDlg);
 long GetInput(IN const HWND hDlg, OUT std::vector<int>& vArray, IN OPTIONAL bool* pbDataPresent = nullptr);
 
 // PROGRESS DIALOG
