@@ -6,6 +6,7 @@
 #include "sortingdialogqtui.h"
 #include "ui_sortingdialogqtui.h"
 #include "progressdialog.h"
+#include "sortresultsdialog.h"
 
 #include <QIntValidator>
 #include <QMessageBox>
@@ -185,7 +186,8 @@ void sortingdialog::handleRunSortTestsPushbutton()
     try
     {
         QString sText = ui->SortArrayLinedit->text();
-        CHECK_SUCCEEDED_LOG_THROW( (CSortTest::ValidateAndConvertFromStringToVector(sText.toStdWString(), vArray)) );
+
+        CHECK_SUCCEEDED_LOG_THROW( CSortTest::ValidateAndConvertFromStringToVector(sText.toStdWString(), vArray) );
 
         if ( true == ui->QuickSortCheckbox->isChecked())
         {
@@ -207,9 +209,14 @@ void sortingdialog::handleRunSortTestsPushbutton()
 
         if ( sortTests.size() )
         {
-            ProgressDialog w(this, sortTests);
-            w.show();
-            w.exec();
+            ProgressDialog wProgressDialog(this, sortTests);
+            wProgressDialog.show();
+            wProgressDialog.exec();
+
+            SortResultsDialog wSortResultsDialog(this, sortTests);
+            wSortResultsDialog.show();
+            wSortResultsDialog.exec();
+
         }
         else
         {

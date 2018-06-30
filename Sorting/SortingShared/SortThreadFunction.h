@@ -25,7 +25,7 @@
 
 // SORT THREAD FUNCTION
 
-void SortThreadFunction(CSortTest* iTest)
+static void SortThreadFunction(CSortTest* iTest)
 {
      int nStatus = 0;
 
@@ -106,6 +106,8 @@ void SortThreadFunction(CSortTest* iTest)
           iTest->SetError(nStatus);
           iTest->SetState(CSortTest::ESTATE_TYPE::FAILED);
      }
+
+     iTest->SetIsComplete();
 }
 
 #endif // SORT_THREAD_FUNCTION_H

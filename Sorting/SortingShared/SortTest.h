@@ -40,7 +40,7 @@ public:
 
      enum class ESTATE_TYPE
      {
-          UNDEFINED = 0, STARTED, RUNNING, PAUSED, INTERRUPTED, SUCCESS, FAILED
+          UNDEFINED = 0, NOT_RUN, STARTED, RUNNING, PAUSED, INTERRUPTED, SUCCESS, FAILED
      };
 
      CSortTest(const ESORT_TYPE eSortType, const std::vector<int> vArray) : m_eSortType(eSortType), m_vArray(vArray) {}
@@ -135,6 +135,35 @@ public:
           }
 
           return nStatus;
+     }
+
+
+     static std::wstring ConvertSortTypeToString(IN const CSortTest::ESORT_TYPE eSortType)
+     {
+          switch (eSortType)
+          {
+          case CSortTest::ESORT_TYPE::UNDEFINED: return L"Undefined"; break;
+          case CSortTest::ESORT_TYPE::QUICK_SORT: return L"Quick Sort"; break;
+          case CSortTest::ESORT_TYPE::MERGE_SORT: return L"Merge Sort"; break;
+          case CSortTest::ESORT_TYPE::BUBBLE_SORT: return L"Bubble Sort"; break;
+          default: return L"Undefined"; break;
+          }
+     }
+
+     static std::wstring ConvertSortStateToString(IN const CSortTest::ESTATE_TYPE eSortState)
+     {
+          switch (eSortState)
+          {
+          case CSortTest::ESTATE_TYPE::UNDEFINED: return L"Undefined"; break;
+          case CSortTest::ESTATE_TYPE::NOT_RUN: return L"Not Run"; break;
+          case CSortTest::ESTATE_TYPE::STARTED: return L"Started"; break;
+          case CSortTest::ESTATE_TYPE::RUNNING: return L"Running"; break;
+          case CSortTest::ESTATE_TYPE::PAUSED: return L"Paused"; break;
+          case CSortTest::ESTATE_TYPE::INTERRUPTED: return L"Interrupted"; break;
+          case CSortTest::ESTATE_TYPE::SUCCESS: return L"Success"; break;
+          case CSortTest::ESTATE_TYPE::FAILED: return L"Failed"; break;
+          default: return L"Undefined"; break;
+          }
      }
 
 

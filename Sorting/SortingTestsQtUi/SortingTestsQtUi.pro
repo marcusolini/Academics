@@ -26,15 +26,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     sortingdialogqtui.cpp \
-    progressdialog.cpp
+    progressdialog.cpp \
+    sortresultsdialog.cpp
 
 HEADERS += \
     sortingdialogqtui.h \
-    progressdialog.h
+    progressdialog.h \
+    sortresultsdialog.h
 
 FORMS += \
     sortingdialogqtui.ui \
-    progressdialog.ui
+    progressdialog.ui \
+    sortresultsdialog.ui
 
 
 win32:CONFIG(release, debug|release){

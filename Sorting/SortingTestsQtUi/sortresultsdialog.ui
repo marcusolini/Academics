@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SortResultsDialog</class>
+ <widget class="QDialog" name="SortResultsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>920</width>
+    <height>487</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Sort Results</string>
+  </property>
+  <widget class="QGroupBox" name="QuckSortGroup">
+   <property name="geometry">
+    <rect>
+     <x>21</x>
+     <y>10</y>
+     <width>891</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Quick Sort</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="QuickSortStatusLabel">
+      <property name="text">
+       <string>Status:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="QuickSortStatusLineEdit">
+      <property name="text">
+       <string>Not Run</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QLineEdit" name="QuickSortUnitsLineEdit">
+      <property name="text">
+       <string>microseconds</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="5">
+     <widget class="QLineEdit" name="QuickSortSortDurationLineEdit">
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QLabel" name="QuickSortSortDurationLabel">
+      <property name="text">
+       <string>Sort Duration:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="QuickSortNumberOfSortsLabel">
+      <property name="text">
+       <string>Number of Sorts:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QLineEdit" name="QuickSortNumberOfSortsLineEdit">
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="7">
+     <widget class="QLineEdit" name="QuickSortSortArrayLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+   <zorder>QuickSortSortDurationLabel</zorder>
+   <zorder>QuickSortSortDurationLineEdit</zorder>
+   <zorder>QuickSortNumberOfSortsLineEdit</zorder>
+   <zorder>QuickSortUnitsLineEdit</zorder>
+   <zorder>QuickSortNumberOfSortsLabel</zorder>
+   <zorder>QuickSortStatusLabel</zorder>
+   <zorder>QuickSortStatusLineEdit</zorder>
+   <zorder>QuickSortSortArrayLineEdit</zorder>
+  </widget>
+  <widget class="QGroupBox" name="MergeSortGroup">
+   <property name="geometry">
+    <rect>
+     <x>21</x>
+     <y>160</y>
+     <width>891</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Merge Sort</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="MergeSortStatusLabel">
+      <property name="text">
+       <string>Status:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="MergeSortStatusLineEdit">
+      <property name="text">
+       <string>Not Run</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="MergeSortNumberOfSortsLabel">
+      <property name="text">
+       <string>Number of Sorts:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QLineEdit" name="MergeSortNumberOfSortsLineEdit">
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QLabel" name="MergeSortSortDurationLabel">
+      <property name="text">
+       <string>Sort Duration:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="5">
+     <widget class="QLineEdit" name="MergeSortSortDurationLineEdit">
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QLineEdit" name="MergeSortUnitsLineEdit">
+      <property name="text">
+       <string>microseconds</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="7">
+     <widget class="QLineEdit" name="MergeSortSortArrayLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="BubbleSortGroup">
+   <property name="geometry">
+    <rect>
+     <x>21</x>
+     <y>310</y>
+     <width>891</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Bubble Sort</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QLabel" name="BubbleSortStatusLabel">
+      <property name="text">
+       <string>Status:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="BubbleSortStatusLineEdit">
+      <property name="text">
+       <string>Not Run</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="BubbleSortNumberOfSortsLabel">
+      <property name="text">
+       <string>Number of Sorts:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QLineEdit" name="BubbleSortNumberOfSortsLineEdit">
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QLabel" name="BubbleSortSortDurationLabel">
+      <property name="text">
+       <string>Sort Duration:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="5">
+     <widget class="QLineEdit" name="BubbleSortSortDurationLineEdit">
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QLineEdit" name="BubbleSortUnitsLineEdit">
+      <property name="text">
+       <string>microseconds</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="7">
+     <widget class="QLineEdit" name="BubbleSortSortArrayLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="ClosePushButton">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>460</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>QuickSortStatusLineEdit</tabstop>
+  <tabstop>QuickSortNumberOfSortsLineEdit</tabstop>
+  <tabstop>QuickSortSortDurationLineEdit</tabstop>
+  <tabstop>QuickSortUnitsLineEdit</tabstop>
+  <tabstop>QuickSortSortArrayLineEdit</tabstop>
+  <tabstop>MergeSortStatusLineEdit</tabstop>
+  <tabstop>MergeSortNumberOfSortsLineEdit</tabstop>
+  <tabstop>MergeSortSortDurationLineEdit</tabstop>
+  <tabstop>MergeSortUnitsLineEdit</tabstop>
+  <tabstop>MergeSortSortArrayLineEdit</tabstop>
+  <tabstop>BubbleSortStatusLineEdit</tabstop>
+  <tabstop>BubbleSortNumberOfSortsLineEdit</tabstop>
+  <tabstop>BubbleSortSortDurationLineEdit</tabstop>
+  <tabstop>BubbleSortUnitsLineEdit</tabstop>
+  <tabstop>BubbleSortSortArrayLineEdit</tabstop>
+  <tabstop>ClosePushButton</tabstop>
+  <tabstop>MergeSortNumberOfSortsLineEdit_2</tabstop>
+  <tabstop>MergeSortSortDurationLineEdit_2</tabstop>
+  <tabstop>MergeSortStatusLineEdit_2</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

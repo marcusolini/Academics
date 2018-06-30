@@ -18,7 +18,7 @@
      #endif
 #else
      #define GetLastError() (EINVAL)
-     #define HRESULT_FROM_WIN32(x) (x)
+     #define HRESULT_FROM_WIN32(x) x
      #ifndef SUCCEEDED
           #define SUCCEEDED(x) ((0 == x))
      #endif
@@ -56,7 +56,8 @@
 #define CHECK_SUCCEEDED_NOLOG_NOTHROW( error_check_call )  CHECK_SUCCEEDED_HANDLER( error_check_call, CHECK_NOLOG_ERROR, CHECK_NOTHROW_ERROR )
 #define CHECK_SUCCEEDED_HANDLER( error_check_call, error_check_log, error_check_throw ) \
 { \
-     long lresult_error_check_result = HRESULT_FROM_WIN32(error_check_call);  \
+     long lresult_error_check_result = (error_check_call); \
+     lresult_error_check_result = HRESULT_FROM_WIN32(lresult_error_check_result); \
      if ( !SUCCEEDED(lresult_error_check_result) ) \
      { \
         if ( CHECK_LOG_ERROR == error_check_log ) \
