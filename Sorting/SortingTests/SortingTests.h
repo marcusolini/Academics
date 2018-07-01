@@ -40,7 +40,7 @@ template<class T, class U> long RunTests(ArraysStruct<T, U> arrays[], std::size_
      std::size_t nNumberOfSorts = 0;
      std::chrono::duration<double> duration;
 
-     for (auto arraysIndex = 0; arraysIndex < arraysSize; arraysIndex++)
+     for (std::size_t arraysIndex = 0; arraysIndex < arraysSize; arraysIndex++)
      {
           for (ESortingTypes eSortType = ESortingTypes::QuickSort; eSortType <= ESortingTypes::BubbleSort; eSortType++)
           {
@@ -51,7 +51,7 @@ template<class T, class U> long RunTests(ArraysStruct<T, U> arrays[], std::size_
                     //std::shared_ptr<T[]> tempArray(new T[arrays[arraysIndex].size]);
                     T* tempArray = new T[arrays[arraysIndex].size];
 
-                    for (auto nIndex = 0; nIndex < arrays[arraysIndex].size; nIndex++)
+                    for (std::size_t nIndex = 0; nIndex < arrays[arraysIndex].size; nIndex++)
                          tempArray[nIndex] = arrays[arraysIndex].array[nIndex];
 
                     std::wcout << L"SORTING TYPE: " << eSortType;
