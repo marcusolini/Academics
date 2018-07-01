@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+     <xsd:element name="Participants">
+          <xsd:complexType>
+               <xsd:sequence>
+                    <xsd:element ref="Participant" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+          </xsd:complexType>
+     </xsd:element>
+          <xsd:element name="Participant">
+          <xsd:complexType>
+               <xsd:sequence>
+                    <xsd:element name="Participant-First" type="xsd:string"/>
+                    <xsd:element name="Participant-Last"/>
+                    <xsd:element name="Email"/>
+                    <xsd:element name="Gender"/>
+                    <xsd:element name="Category"/>
+                    <xsd:element name="Shirt-Size"/>
+                    <xsd:element name="Registration-Date" type="xsd:date"/>
+                    <xsd:element name="Registration-Time" type="xsd:time"/>
+                    <xsd:element name="Paid"/>
+                    <xsd:element name="Paid-By"/>
+                    <xsd:element name="Promotion_Code"/>
+                    <xsd:element name="Status"/>
+                    <xsd:element name="Bib"/>
+                    <xsd:element name="Athlete-Type"/>
+                    <xsd:element name="Predicted-5k-Finishing-Time"/>
+                    <xsd:element name="Employment-Status"/>
+               </xsd:sequence>
+          </xsd:complexType>
+     </xsd:element>
+ </xsd:schema>
+
+

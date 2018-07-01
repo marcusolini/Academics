@@ -7,12 +7,12 @@
 
 #include "ProdConQueue.h"
 
-#include "Log.h"
+//#include "Log.h"
 
 template <class DATA> class CConsumer
 {
 public:
-     CConsumer(CProdConQueue<DATA>& queue, size_t quantity, const DWORD removeDelay = 0);
+     CConsumer(CProdConQueue<DATA>& queue, size_t quantity, const uint64_t removeDelay = 0);
      virtual ~CConsumer();
 
      void operator()();
@@ -26,31 +26,31 @@ public:
 private:
      CProdConQueue<DATA>& m_queue;
      size_t m_quantity = 0;
-     DWORD m_removeDelay = 0;  // milliseconds
+     uint64_t m_removeDelay = 0;  // milliseconds
 };
 
 
 template <class DATA>
-CConsumer<DATA>::CConsumer(CProdConQueue<DATA>& queue, const size_t quantity, const DWORD removeDelay)
+CConsumer<DATA>::CConsumer(CProdConQueue<DATA>& queue, const size_t quantity, const uint64_t removeDelay)
      : m_queue(queue), m_quantity(quantity), m_removeDelay(removeDelay)
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 }
 
 template <class DATA>
 CConsumer<DATA>::~CConsumer()
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 }
 
 template <class DATA>
 DATA CConsumer<DATA>::Remove()
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 
      if (m_removeDelay)
      {
-          Sleep(m_removeDelay);
+          std::this_thread::sleep_for(std::chrono::milliseconds{ m_removeDelay });
      }
 
      return m_queue.Remove();
@@ -59,7 +59,7 @@ DATA CConsumer<DATA>::Remove()
 template <class DATA>
 size_t CConsumer<DATA>::Quantity()
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 
      return m_quantity;
 }
@@ -67,22 +67,22 @@ size_t CConsumer<DATA>::Quantity()
 template <class DATA>
 void CConsumer<DATA>::operator()()
 {
-     LOG_START_TRACE();
+     //LOG_START_TRACE();
 
      try
      {
 
      //for (auto& count : m_quantity)
-     for (int count = 0; count < m_quantity; count++)
+     for (std::size_t count = 0; count < m_quantity; count++)
      {
           POD_CON_DATA data = Remove();
-          LOG("Removed Data: ", data);
+          //LOG("Removed Data: ", data);
      }
 
      }
-     catch (std::exception& e)
+     catch (...)
      {
-          LOG_ERROR("exception: ", e.what());
+          //LOG_ERROR("exception: ", e.what());
           throw;
      }
 }

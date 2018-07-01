@@ -1,0 +1,30 @@
+## REST Client Extension
+## Github RESTful API Examples
+## Create and use a personal access token: https://github.com/settings/tokens
+
+@username = Enter-name-of-authenticated-user
+@token = Enter-authenticated-user-token-or-password
+@userrepo = Enter-repository-user-name
+@reponame = Enter-existing-repository-name
+@createRepo = Enter-repository-name-to-be-created
+
+
+GET https://api.github.com
+Authorization: Basic {{username}} {{token}}
+
+GET https://api.github.com/user/repos
+Authorization: Basic {{username}} {{token}}
+
+GET https://api.github.com/repos/{{userrepo}}/{{reponame}}/subscription
+Authorization: Basic {{username}} {{token}}
+
+GET https://api.github.com/repos/{{userrepo}}/{{reponame}}/subscribers
+Authorization: Basic {{username}} {{token}}
+
+POST https://api.github.com/user/repos
+Authorization: Basic {{username}} {{token}}
+Content-Type: application/json
+
+{
+    "name" : "{{createRepo}}"
+}

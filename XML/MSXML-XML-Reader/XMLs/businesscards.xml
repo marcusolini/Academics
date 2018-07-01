@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<BusinessCards>
+     <BusinessCard>
+          <Name>Joe Shmo</Name>
+          <phone type="mobile">(415) 555-4567</phone>
+          <phone type="work">(800) 555-9876</phone>
+          <phone type="fax">(510) 555-1234</phone>
+          <email>joe.shmo@joeshmo.com</email>
+     </BusinessCard>
+     <BusinessCard>
+          <Name>Me Mo</Name>
+          <phone type="mobile">(415) 555-1111</phone>
+          <phone type="work">(800) 555-2222</phone>
+          <phone type="fax">(510) 555-3333</phone>
+          <email>me.mo@memo.com</email>
+     </BusinessCard>
+</BusinessCards>

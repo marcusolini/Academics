@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>LeakLib.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>LeakLib.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>/home/marcusolini/projects/academics/Leaks/LeakLib</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
+      </compileType>
+      <item path="LeakLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LeakLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="LeakLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LeakLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Debug-Win32" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <stripSymbols>true</stripSymbols>
+          <standard>10</standard>
+        </cTool>
+        <ccTool>
+          <stripSymbols>true</stripSymbols>
+          <standard>8</standard>
+          <commandlineTool>g++</commandlineTool>
+          <commandLine>-Wall -W -Wextra -fexceptions -std=gnu++11</commandLine>
+          <preprocessorList>
+            <Elem>LEAKLIB_EXPORTS</Elem>
+            <Elem>UNICODE</Elem>
+            <Elem>WIN32</Elem>
+            <Elem>_UNICODE</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <commandLine>-mwindows</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="LeakLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="LeakLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release-Win32" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <standard>10</standard>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <commandLine>-mthreads</commandLine>
+          <preprocessorList>
+            <Elem>LEAKLIB_EXPORTS</Elem>
+            <Elem>UNICODE</Elem>
+            <Elem>_GLIBCXX_USE_NANOSLEEP</Elem>
+            <Elem>_UNICODE</Elem>
+          </preprocessorList>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="LeakLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="LeakLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
