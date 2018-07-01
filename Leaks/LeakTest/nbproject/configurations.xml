@@ -88,7 +88,7 @@
         </ccTool>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../LeakLib/dist/Debug/GNU-Linux/libLeakLib.so</linkerLibFileItem>
+            <linkerLibFileItem>../LeakLib/dist/Debug-Win32/MinGW-Windows/libLeakLib.dll</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -117,7 +117,7 @@
         </asmTool>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../LeakLib/dist/Release/GNU-Linux/libLeakLib.so</linkerLibFileItem>
+            <linkerLibFileItem>../LeakLib/dist/Release-Win32/MinGW-Windows/libLeakLib.dll</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

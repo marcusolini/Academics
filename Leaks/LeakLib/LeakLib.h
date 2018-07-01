@@ -30,10 +30,10 @@ extern "C"
 class CLeakLib
 {
 public:
-     CLASS_DECLSPEC static int CALL LeakNewMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
-     CLASS_DECLSPEC static int CALL LeakMallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
-     CLASS_DECLSPEC static int CALL LeakCallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
-     CLASS_DECLSPEC static int CALL LeakHandle(const std::size_t numberOfCalls);
+     CLASS_DECLSPEC static long CALL LeakNewMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
+     CLASS_DECLSPEC static long CALL LeakMallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
+     CLASS_DECLSPEC static long CALL LeakCallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall);
+     CLASS_DECLSPEC static long CALL LeakHandle(const std::size_t numberOfCalls);
 };
 }
 

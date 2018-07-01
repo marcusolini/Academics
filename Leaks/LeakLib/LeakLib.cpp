@@ -25,9 +25,9 @@
 #include <cstdlib>
 
 
-/*static*/ int CALL CLeakLib::LeakNewMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
+/*static*/ long CALL CLeakLib::LeakNewMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
 {    
-     int nStatus = 0;
+     long nStatus = 0;
 
      char* pChars = nullptr;
 
@@ -57,9 +57,9 @@
      return nStatus;
 }
 
-/*static*/ int CALL CLeakLib::LeakMallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
+/*static*/ long CALL CLeakLib::LeakMallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
 {
-     int nStatus = 0;
+     long nStatus = 0;
 
      void* pVoid = nullptr;
 
@@ -87,9 +87,9 @@
      return nStatus;
 }
 
-/*static*/ int CALL CLeakLib::LeakCallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
+/*static*/ long CALL CLeakLib::LeakCallocMemory(const std::size_t numberOfCalls, const std::size_t bytesEachCall)
 {
-     int nStatus = 0;
+     long nStatus = 0;
 
      void* pVoid = nullptr;
 
@@ -118,12 +118,12 @@
      return nStatus;
 }
 
-/*static*/ int CALL CLeakLib::LeakHandle(const std::size_t numberOfCalls)
+/*static*/ long CALL CLeakLib::LeakHandle(const std::size_t numberOfCalls)
 {
 #ifndef _WIN32
-     int nStatus = ENOMEM;
+     long nStatus = ENOMEM;
 #else
-     int nStatus = 0;
+     long nStatus = 0;
 
      HANDLE hMutex = INVALID_HANDLE_VALUE;
 

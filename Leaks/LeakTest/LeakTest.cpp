@@ -1,4 +1,4 @@
-// Copyright 2018 marcusolini@outlook.com
+﻿// Copyright 2018 marcusolini@outlook.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -9,6 +9,7 @@
 // https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/finding-a-user-mode-memory-leak
 
 #ifdef _WIN32
+     #include <windows.h>
      #include "targetver.h"
 #endif // _WIN32
 
@@ -27,8 +28,8 @@
  */
 int main(int argc, char** argv) {
     
-     int nExitStatus = 0;
-     int nStatus = 0;
+     long nExitStatus = 0;
+     long nStatus = 0;
      
      std::size_t leakNewCalls = 1;
      std::size_t leakNewBytes = 10000;
