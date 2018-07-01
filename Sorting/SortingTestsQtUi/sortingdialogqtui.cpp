@@ -106,29 +106,60 @@ void sortingdialog::handleSortArrayLineditTextChanged(const QString& text)
 
 void sortingdialog::handleOpenFilePushbutton()
 {
+    //long nStatus = 0;
+
+    QFileDialog OpenFileDialog(this);
     QString fileNameFilter;
     QStringList fileNames;
 
-    fileNameFilter = tr("Text files (*.txt)");
+    QByteArray fileReadLine;
 
-    QFileDialog OpenFileDialog(this);
-    OpenFileDialog.setAcceptMode(QFileDialog::AcceptOpen);
-    OpenFileDialog.setNameFilter(fileNameFilter);
+    try
+    {
+        fileNameFilter = tr("Text files (*.txt)");
+        OpenFileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+        OpenFileDialog.setNameFilter(fileNameFilter);
+        OpenFileDialog.exec();
 
-    OpenFileDialog.exec();
+        fileNames = OpenFileDialog.selectedFiles();
 
-    // TODO: Add Error Handling
+        CHECK_BOOL_TRUE_LOG_THROW((false == fileNames.empty()));
 
-    fileNames = OpenFileDialog.selectedFiles();
+        QFile fFile(fileNames[0]);
+        bool bInputFileIsOpen = false;
 
-    QFile fFile(fileNames[0]);
+        try
+        {
+            CHECK_BOOL_TRUE_LOG_THROW(fFile.open(QIODevice::ReadOnly | QIODevice::Text));
 
-    fFile.open(QIODevice::ReadOnly | QIODevice::Text);
+            fileReadLine = fFile.readLine();
 
-    QByteArray line = fFile.readLine();
+            CHECK_NOT_ZERO_LOG_THROW(fileReadLine.size());
 
-    ui->SortArrayLinedit->setText(line.data());
+            ui->SortArrayLinedit->setText(fileReadLine.data());
+        }
+        catch (long& check_catch_lresult)
+        {
+            //nStatus = check_catch_lresult;
+            throw fFile.error();
+        }
 
+        if (true == bInputFileIsOpen)
+        {
+            fFile.close();
+        }
+    }
+    catch (long& check_catch_lresult)
+    {
+        //nStatus = check_catch_lresult;
+        QMessageBox msgBox;
+        msgBox.setText(tr("Invalid Input"));
+        msgBox.setInformativeText(tr("Please enter integer data only and clear any non-integer data."));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
+
+    //return nStatus;
 }
 
 
