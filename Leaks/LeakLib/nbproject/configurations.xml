@@ -87,12 +87,13 @@
         </cTool>
         <ccTool>
           <stripSymbols>true</stripSymbols>
-          <commandLine>-Wall -W -Wextra -fexceptions -mthreads -std=gnu++11</commandLine>
+          <standard>8</standard>
+          <commandlineTool>g++</commandlineTool>
+          <commandLine>-Wall -W -Wextra -fexceptions -std=gnu++11</commandLine>
           <preprocessorList>
             <Elem>LEAKLIB_EXPORTS</Elem>
             <Elem>UNICODE</Elem>
             <Elem>WIN32</Elem>
-            <Elem>_GLIBCXX_USE_NANOSLEEP</Elem>
             <Elem>_UNICODE</Elem>
           </preprocessorList>
         </ccTool>

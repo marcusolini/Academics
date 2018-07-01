@@ -42,8 +42,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-Wall -W -Wextra -fexceptions -mthreads -std=gnu++11
-CXXFLAGS=-Wall -W -Wextra -fexceptions -mthreads -std=gnu++11
+CCFLAGS=-Wall -W -Wextra -fexceptions -std=gnu++11
+CXXFLAGS=-Wall -W -Wextra -fexceptions -std=gnu++11
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -65,7 +65,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libLeakLib.${CND_DLIB_EXT}: ${OBJECTF
 ${OBJECTDIR}/LeakLib.o: LeakLib.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -s -DLEAKLIB_EXPORTS -DUNICODE -DWIN32 -D_GLIBCXX_USE_NANOSLEEP -D_UNICODE -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
+	$(COMPILE.cc) -g -s -DLEAKLIB_EXPORTS -DUNICODE -DWIN32 -D_UNICODE -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LeakLib.o LeakLib.cpp
 
 # Subprojects
 .build-subprojects:
