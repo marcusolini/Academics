@@ -74,10 +74,7 @@ private:
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-
-          outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(outputStream.str());
-          outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult)
      }
 
      return hrResult;
@@ -103,10 +100,7 @@ private:
      catch (HRESULT& check_catch_hresult)
      {
      hrResult = check_catch_hresult;
-
-     outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-     LOG_MESSAGE(outputStream.str());
-     outputStream.str(TEXT(""));
+     LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult)
      }
 
      return hrResult;
@@ -127,10 +121,7 @@ CMsXmlLib::CMsXmlLib()
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-
-          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult)
           throw check_catch_hresult;  // throw
      }
 }
@@ -170,10 +161,7 @@ HRESULT CMsXmlLib::InitializeCom()
           catch (HRESULT& check_catch_hresult)
           {
           hrResult = check_catch_hresult;
-
-          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult)
           }
      }
 
@@ -216,18 +204,10 @@ HRESULT CMsXmlLib::LoadXML(IN const std::wstring& xmlFilePathname)
                     CHECK_SUCCEEDED_LOG_THROW(m_pDoc->get_parseError(&pXMLErr));
 
                     CHECK_SUCCEEDED_LOG_THROW(pXMLErr->get_errorCode(&errorCode));
-                    m_outputStream << TEXT("ErrorCode: '") << std::hex << std::showbase << errorCode;
 
                     CHECK_SUCCEEDED_LOG_THROW(pXMLErr->get_reason(&bstrTemp));
-                    m_outputStream << TEXT("  Reason: '") << bstrTemp.m_str;
-                    bstrTemp.Empty();
 
-                    //CHECK_SUCCEEDED_LOG_THROW(pXMLErr->get_srcText(&bstrTemp));
-                    //outputStream << TEXT("SrcText: '") << bstrTemp.m_str << std::endl;
-                    //bstrTemp.Empty();
-
-                    LOG_MESSAGE(m_outputStream.str());
-                    m_outputStream.str(TEXT(""));
+                    LOG_MESSAGE(L"ErrorCode:0x%08X - Reason:'%s'", errorCode, bstrTemp ? bstrTemp.m_str : L"");
 
                     hrResult = (errorCode ? errorCode : check_catch_hresult);
                     throw hrResult;
@@ -235,11 +215,7 @@ HRESULT CMsXmlLib::LoadXML(IN const std::wstring& xmlFilePathname)
                catch (HRESULT& check_catch_hresult)
                {
                     hrResult = check_catch_hresult;
-
-                    m_outputStream << TEXT("XML load parse failure: ") << std::hex << std::showbase << check_catch_hresult;
-                    LOG_MESSAGE(m_outputStream.str());
-                    m_outputStream.str(TEXT(""));
-
+                    LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult);
                     throw hrResult;
                }
           }
@@ -247,9 +223,7 @@ HRESULT CMsXmlLib::LoadXML(IN const std::wstring& xmlFilePathname)
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult)
      }
 
      return hrResult;
@@ -275,9 +249,7 @@ HRESULT CMsXmlLib::GetTextXML(OUT std::wstring& xmlData)
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult);
      }
 
      return hrResult;
@@ -304,18 +276,10 @@ HRESULT CMsXmlLib::ValidateXML()
           catch (HRESULT& check_catch_hresult)
           {
                CHECK_SUCCEEDED_LOG_THROW(pXMLErr->get_errorCode(&errorCode));
-               m_outputStream << TEXT("ErrorCode: '") << std::hex << std::showbase << errorCode;
 
                CHECK_SUCCEEDED_LOG_THROW(pXMLErr->get_reason(&bstrTemp));
-               m_outputStream << TEXT("  Reason: '") << bstrTemp.m_str;
-               bstrTemp.Empty();
 
-               //CHECK_SUCCEEDED_LOG_THROW(pXMLErr->get_srcText(&bstrTemp));
-               //outputStream << TEXT("SrcText: '") << bstrTemp.m_str << std::endl;
-               //bstrTemp.Empty();
-
-               LOG_MESSAGE(m_outputStream.str());
-               m_outputStream.str(TEXT(""));
+               LOG_MESSAGE(L"ErrorCode:0x%08X - Reason:'%s'", errorCode, bstrTemp ? bstrTemp.m_str : L"");
 
                hrResult = (errorCode ? errorCode : check_catch_hresult);
                throw hrResult;
@@ -324,9 +288,7 @@ HRESULT CMsXmlLib::ValidateXML()
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult);
      }
 
      return hrResult;
@@ -367,9 +329,7 @@ HRESULT CMsXmlLib::GetParsedXML(IN const std::wstring& parseNode, OUT XML_NODE_M
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult);
      }
 
      return hrResult;
@@ -407,9 +367,7 @@ HRESULT CMsXmlLib::WalkNodeList(IN CComPtr<IXMLDOMNodeList> pNodes, OUT XML_NODE
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult);
      }
 
      return hrResult;
@@ -545,9 +503,7 @@ HRESULT CMsXmlLib::WalkNode(IN IXMLDOMNode* pNode, OUT XML_NODE_MAP& xmlNodeMap)
      catch (HRESULT& check_catch_hresult)
      {
           hrResult = check_catch_hresult;
-          m_outputStream << TEXT("Fatal error: ") << std::hex << std::showbase << check_catch_hresult;
-          LOG_MESSAGE(m_outputStream.str());
-          m_outputStream.str(TEXT(""));
+          LOG_MESSAGE(L"Fatal Error:0x%08X", check_catch_hresult);
      }
 
      return hrResult;

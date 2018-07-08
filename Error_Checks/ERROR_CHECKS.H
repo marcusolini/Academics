@@ -10,6 +10,8 @@
 #include <iostream>
 #include <cstddef>
 
+#include <stdarg.h>
+
 #ifdef _WIN32
      #include <winerror.h>
      #include <errno.h>
@@ -38,15 +40,100 @@
      #define OPTIONAL
 #endif
 
+// Logger function pointer
+typedef void (*FPCHECK_LOGGER_FUNCTION)(const wchar_t* pszMsgFormat, ...);
 
+// Default Logger
+static void CHECK_LOGGER(const wchar_t* pszMsgFormat, ...);
+static FPCHECK_LOGGER_FUNCTION FPCHECK_LOGGER = CHECK_LOGGER;
+
+// Override Default Logger
+static void CHECK_SET_LOGGER_FUCTION(FPCHECK_LOGGER_FUNCTION fpLogger);
+
+static void CHECK_PRODESS_MESSAGE_ARGS(OUT std::wstring& sMessage, IN const wchar_t* pszMsgFormat, IN ...);
+
+// Default Logger
+void CHECK_LOGGER(const wchar_t* pszMsgFormat, ...)
+{
+     if (nullptr != pszMsgFormat)
+     {
+          const int nCheckMessageBuffer = 8192;
+          wchar_t   szCheckMessageBuffer[nCheckMessageBuffer] = { 0 };
+
+          va_list marker;
+          va_start(marker, pszMsgFormat);
+          _vsnwprintf_s(szCheckMessageBuffer, nCheckMessageBuffer, nCheckMessageBuffer, pszMsgFormat, marker);
+
+          wprintf(szCheckMessageBuffer);
+
+          va_end(marker);
+     }
+}
+
+void CHECK_PROCESS_MESSAGE_ARGS(OUT std::wstring& sMessage, IN const wchar_t* pszMsgFormat, IN ...)
+{
+     const int nCheckBuffer = 8192;
+     wchar_t   szCheckBuffer[nCheckBuffer] = { 0 };
+
+     if (nullptr != pszMsgFormat)
+     {
+          sMessage.erase();
+
+          va_list marker;
+          va_start(marker, pszMsgFormat);
+          _vsnwprintf_s(szCheckBuffer, nCheckBuffer, nCheckBuffer, pszMsgFormat, marker);
+
+          if (nullptr != szCheckBuffer)
+          {
+               sMessage = szCheckBuffer;
+
+               std::wstring::size_type pos = std::wstring::npos;
+               std::wstring newLine = L"\n";
+               std::wstring carrageReturn = L"\r";
+
+               pos = sMessage.find(newLine);
+               if (std::wstring::npos != pos) sMessage.replace(pos, newLine.length(), L"");
+
+               pos = sMessage.find(carrageReturn);
+               if (std::wstring::npos != pos) sMessage.replace(pos, carrageReturn.length(), L"");
+          }
+
+          va_end(marker);
+     }
+}
+
+// Override the default logger function
+void CHECK_SET_LOGGER_FUCTION(FPCHECK_LOGGER_FUNCTION fpLogger)
+{ 
+     if ( nullptr != fpLogger) 
+     { 
+          FPCHECK_LOGGER = fpLogger;
+     } 
+}
+
+
+// Logging Level
+#define CHECK_LOG_LEVEL_TRACE      0
+#define CHECK_LOG_LEVEL_INFO       1
+#define CHECK_LOG_LEVEL_WARNING    2
+#define CHECK_LOG_LEVEL_ERROR      3
+
+// Logging
 #define CHECK_LOG_ERROR        1
 #define CHECK_NOLOG_ERROR      2
+
+// Logging Propogation
 #define CHECK_THROW_ERROR      3
 #define CHECK_NOTHROW_ERROR    4
 
-#define LOG_MESSAGE( pwszMessage ) \
+
+// LOGGING ROUTINES
+
+#define LOG_MESSAGE(pwszMsgFormat, ...) \
 { \
-    std::wcout << pwszMessage << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+     std::wstring sCheckMessageBuffer; \
+     CHECK_PROCESS_MESSAGE_ARGS(sCheckMessageBuffer, pwszMsgFormat, ## __VA_ARGS__); \
+     FPCHECK_LOGGER( L"%s - LOCATION:%S:%d \n", sCheckMessageBuffer.c_str(), __FUNCTION__, __LINE__); \
 } \
 
 
@@ -61,7 +148,7 @@
      if ( !SUCCEEDED(lresult_error_check_result) ) \
      { \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          LOG_MESSAGE(L"OPERATION:%S - STATUS:0x%08X", #error_check_call,  lresult_error_check_result); \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -79,7 +166,7 @@
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(EINVAL); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          LOG_MESSAGE(L"OPERATION:%S - STATUS:0x%08X", #error_check_call,  lresult_error_check_result); \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -96,7 +183,7 @@
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(EINVAL); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          LOG_MESSAGE(L"OPERATION:%S - STATUS:0x%08X", #error_check_call,  lresult_error_check_result); \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -115,7 +202,7 @@
         long lresult_error_check_result = GetLastError(); \
         lresult_error_check_result = HRESULT_FROM_WIN32(lresult_error_check_result); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          LOG_MESSAGE(L"OPERATION:%S - STATUS:0x%08X", #error_check_call,  lresult_error_check_result); \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -131,7 +218,7 @@
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(ENOMEM); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          LOG_MESSAGE(L"OPERATION:%S - STATUS:0x%08X", #error_check_call,  lresult_error_check_result); \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -148,7 +235,7 @@
         long lresult_error_check_result = HRESULT_FROM_WIN32(EINVAL); \
         lresult_error_check_result = HRESULT_FROM_WIN32(lresult_error_check_result); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          LOG_MESSAGE(L"OPERATION:%S - STATUS:0x%08X", #error_check_call,  lresult_error_check_result); \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -165,7 +252,7 @@
         long lresult_error_check_result = GetLastError(); \
         lresult_error_check_result = HRESULT_FROM_WIN32(lresult_error_check_result); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          LOG_MESSAGE(L"OPERATION:%S - STATUS:0x%08X", #error_check_call,  lresult_error_check_result); \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
@@ -181,7 +268,7 @@
      { \
         long lresult_error_check_result = HRESULT_FROM_WIN32(EINVAL); \
         if ( CHECK_LOG_ERROR == error_check_log ) \
-          std::wcerr << L"OPERATION:" << #error_check_call << L" STATUS:" << std::hex << std::showbase << lresult_error_check_result << std::dec << L" LOCATION:" << __FUNCTION__ << L":" << __LINE__ << std::endl; \
+          LOG_MESSAGE(L"OPERATION:%S - STATUS:0x%08X", #error_check_call,  lresult_error_check_result); \
         if ( CHECK_THROW_ERROR == error_check_throw ) \
           throw lresult_error_check_result; \
      } \
