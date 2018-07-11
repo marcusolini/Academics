@@ -7,12 +7,20 @@
 #ifndef ERROR_CHECKS_H
 #define ERROR_CHECKS_H
 
+#if __cplusplus >= 201103L
+     #include <mutex>
+#else
+     #include <pthread.h>
+#endif
+
 #include <iostream>
 #include <cstddef>
-
+#include <cstdio>
+#include <cwctype>
 #include <stdarg.h>
 
 #ifdef _WIN32
+     //#pragma warning(disable : 4996) // for _vsnwprintf
      #include <winerror.h>
      #include <errno.h>
      #ifndef SUCCEEDED
@@ -40,8 +48,19 @@
      #define OPTIONAL
 #endif
 
+#ifndef nullptr
+     #define nullptr (0)
+#endif
+
+
 // Logger function pointer
 typedef void (*FPCHECK_LOGGER_FUNCTION)(const wchar_t* pszMsgFormat, ...);
+
+#if __cplusplus >= 201103L
+     static std::recursive_mutex g_check_logger_mutex;
+#else
+     static pthread_mutex_t g_check_logger_mutex = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP;
+#endif
 
 // Default Logger
 static void CHECK_LOGGER(const wchar_t* pszMsgFormat, ...);
@@ -53,24 +72,53 @@ static void CHECK_SET_LOGGER_FUCTION(FPCHECK_LOGGER_FUNCTION fpLogger);
 static void CHECK_PRODESS_MESSAGE_ARGS(OUT std::wstring& sMessage, IN const wchar_t* pszMsgFormat, IN ...);
 
 // Default Logger
-void CHECK_LOGGER(const wchar_t* pszMsgFormat, ...)
+static void CHECK_LOGGER(const wchar_t* pszMsgFormat, ...)
 {
-     if (nullptr != pszMsgFormat)
+     long lStatus = 0;
+
+     try
      {
-          const int nCheckMessageBuffer = 8192;
-          wchar_t   szCheckMessageBuffer[nCheckMessageBuffer] = { 0 };
+#if __cplusplus >= 201103L         
+          std::lock_guard<std::recursive_mutex> lock(g_check_logger_mutex);
+#else
+          pthread_mutex_lock(&g_check_logger_mutex);
+#endif
 
-          va_list marker;
-          va_start(marker, pszMsgFormat);
-          _vsnwprintf_s(szCheckMessageBuffer, nCheckMessageBuffer, nCheckMessageBuffer, pszMsgFormat, marker);
+          if (nullptr != pszMsgFormat)
+          {
+               const int nCheckMessageBuffer = 8192;
+               wchar_t   szCheckMessageBuffer[nCheckMessageBuffer] = { 0 };
 
-          wprintf(szCheckMessageBuffer);
+               va_list marker;
+               va_start(marker, pszMsgFormat);
+               //_vsnwprintf_s(szCheckMessageBuffer, nCheckMessageBuffer, nCheckMessageBuffer, pszMsgFormat, marker);
+               vswprintf(szCheckMessageBuffer, nCheckMessageBuffer, pszMsgFormat, marker);
+               wprintf(szCheckMessageBuffer);
 
-          va_end(marker);
+               va_end(marker);
+          }
+#if __cplusplus > 201103L               
+#else
+          pthread_mutex_unlock(&g_check_logger_mutex);
+#endif
+     }
+     catch (std::bad_alloc&)
+     {
+          lStatus = ENOMEM;
+     }
+#if __cplusplus >= 201103L     
+     catch (std::system_error& exception)
+     {
+          lStatus = (exception.code()).value();
+     }
+#endif
+     catch (long& lcatch_return)
+     {
+          lStatus = lcatch_return;
      }
 }
 
-void CHECK_PROCESS_MESSAGE_ARGS(OUT std::wstring& sMessage, IN const wchar_t* pszMsgFormat, IN ...)
+static void CHECK_PROCESS_MESSAGE_ARGS(OUT std::wstring& sMessage, IN const wchar_t* pszMsgFormat, IN ...)
 {
      const int nCheckBuffer = 8192;
      wchar_t   szCheckBuffer[nCheckBuffer] = { 0 };
@@ -81,7 +129,8 @@ void CHECK_PROCESS_MESSAGE_ARGS(OUT std::wstring& sMessage, IN const wchar_t* ps
 
           va_list marker;
           va_start(marker, pszMsgFormat);
-          _vsnwprintf_s(szCheckBuffer, nCheckBuffer, nCheckBuffer, pszMsgFormat, marker);
+          //_vsnwprintf_s(szCheckBuffer, nCheckBuffer, nCheckBuffer, pszMsgFormat, marker);
+          vswprintf(szCheckBuffer, nCheckBuffer-1, pszMsgFormat, marker);
 
           if (nullptr != szCheckBuffer)
           {
@@ -103,7 +152,7 @@ void CHECK_PROCESS_MESSAGE_ARGS(OUT std::wstring& sMessage, IN const wchar_t* ps
 }
 
 // Override the default logger function
-void CHECK_SET_LOGGER_FUCTION(FPCHECK_LOGGER_FUNCTION fpLogger)
+static void CHECK_SET_LOGGER_FUCTION(FPCHECK_LOGGER_FUNCTION fpLogger)
 { 
      if ( nullptr != fpLogger) 
      { 
