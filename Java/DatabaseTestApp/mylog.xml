@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-03-01T16:10:57.313015Z</date>
+  <millis>1551456657313</millis>
+  <nanos>15000</nanos>
+  <sequence>0</sequence>
+  <logger>com.example.databasetest</logger>
+  <level>INFO</level>
+  <class>com.example.databasetest.DatabaseTest</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>About to test connection</message>
+</record>
+<record>
+  <date>2019-03-01T16:10:58.249529Z</date>
+  <millis>1551456658249</millis>
+  <nanos>529000</nanos>
+  <sequence>1</sequence>
+  <logger>com.example.databasetest</logger>
+  <level>INFO</level>
+  <class>com.example.databasetest.DatabaseTest</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Finshed test connection</message>
+</record>
+</log>
