@@ -15,7 +15,6 @@ public interface ILogging {
     public void addFileHandler(String sFileName, boolean bAppend) throws LoggingException;
 
     // Logging
-    public void config(String msg);
     public void info(String msg);
     public void warning(String msg);
     public void severe(String msg);
@@ -27,10 +26,11 @@ public interface ILogging {
 
     // Set Logging Levels
     public void setLogLevelAll();
-    public void setLogLevelConfig();
     public void setLogLevelInfo();
     public void setLogLevelWarning();
     public void setLogLevelSevere();
+
+    public void flush();
 
     // Get Raw Logger
     public Logger getLogger() throws LoggingException;

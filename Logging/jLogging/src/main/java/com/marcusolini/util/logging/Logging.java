@@ -3,10 +3,8 @@ package com.marcusolini.util.logging;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.LinkedTransferQueue;
+import java.util.logging.*;
 
 public class Logging implements ILogging, Runnable{
 
@@ -33,12 +31,15 @@ public class Logging implements ILogging, Runnable{
     private Logger logger = null;
     private Level level = null;
     private Thread thread = null;
+    //private LinkedTransferQueue<LogMessage> queue = null;
     private BlockingQueue<LogMessage> queue = null;
     private int queueCapacity = 1000;
     private boolean bQueuePutInterrupted = false;
+
     private Logging() {
         level = Level.ALL;
         queue = new LinkedBlockingDeque<>(queueCapacity);
+        //queue = new LinkedTransferQueue<>();
         thread = new Thread(this);
         thread.start();
     }
@@ -62,9 +63,6 @@ public class Logging implements ILogging, Runnable{
 
     // Logging
 
-    public void config(String msg) {
-        log(Level.CONFIG, msg);
-    }
     public void info(String msg) {
         log(Level.INFO, msg);
     }
@@ -97,8 +95,8 @@ public class Logging implements ILogging, Runnable{
     // TODO: Determine outcome if called more than once.
     public void addConsoleHandler() throws LoggingException {
         if (logger != null) {
-            ConsoleHandler consoleHandler = new ConsoleHandler();
-            logger.addHandler(consoleHandler);
+            ConsoleHandler handler = new ConsoleHandler();
+            logger.addHandler(handler);
         }
     }
 
@@ -106,8 +104,8 @@ public class Logging implements ILogging, Runnable{
     public void addFileHandler(String sFileName, boolean bAppend) throws LoggingException {
         try {
             if (logger != null) {
-                FileHandler fileHandler = new FileHandler(sFileName, bAppend);
-                logger.addHandler(fileHandler);
+                FileHandler handler = new FileHandler(sFileName, bAppend);
+                logger.addHandler(handler);
             }
         } catch (IOException e) {
             throw new LoggingException(LoggingErrorCode.E_LOGGER_FILE_HANDLER_CREATION_FAILURE, e);
@@ -131,9 +129,6 @@ public class Logging implements ILogging, Runnable{
     public void setLogLevelAll() {
         setLogLevel(Level.ALL);
     }
-    public void setLogLevelConfig() {
-        setLogLevel(Level.CONFIG);
-    }
     public void setLogLevelInfo() {
         setLogLevel(Level.INFO);
     }
@@ -147,6 +142,15 @@ public class Logging implements ILogging, Runnable{
         if (logger != null) {
             this.level = level;
             logger.setLevel(this.level);
+        }
+    }
+
+    public void flush() {
+        if (logger != null) {
+            Handler[] handlers = logger.getHandlers();
+            for(Handler handle : handlers) {
+                handle.flush();
+            }
         }
     }
 
