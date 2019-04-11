@@ -3,7 +3,6 @@ package com.marcusolini.util.logging;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.LinkedTransferQueue;
 import java.util.logging.*;
 
 public class Logging implements ILogging, Runnable{
@@ -31,7 +30,6 @@ public class Logging implements ILogging, Runnable{
     private Logger logger = null;
     private Level level = null;
     private Thread thread = null;
-    //private LinkedTransferQueue<LogMessage> queue = null;
     private BlockingQueue<LogMessage> queue = null;
     private int queueCapacity = 1000;
     private boolean bQueuePutInterrupted = false;
@@ -39,7 +37,6 @@ public class Logging implements ILogging, Runnable{
     private Logging() {
         level = Level.ALL;
         queue = new LinkedBlockingDeque<>(queueCapacity);
-        //queue = new LinkedTransferQueue<>();
         thread = new Thread(this);
         thread.start();
     }
