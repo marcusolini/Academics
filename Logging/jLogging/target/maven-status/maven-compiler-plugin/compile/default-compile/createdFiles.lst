@@ -1,0 +1,5 @@
+com\marcusolini\util\logging\LoggingException.class
+com\marcusolini\util\logging\ILogging.class
+com\marcusolini\util\logging\LogMessage.class
+com\marcusolini\util\logging\LoggingErrorCode.class
+com\marcusolini\util\logging\Logging.class
