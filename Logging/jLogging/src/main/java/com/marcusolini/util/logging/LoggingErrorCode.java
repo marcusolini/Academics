@@ -9,6 +9,7 @@ public enum LoggingErrorCode {
     E_LOGGER_QUEUE_TAKE_INTERRUPTED(1004, "Logger queue take has been interrupted."),
     E_LOGGER_CONSOLE_HANDLER_CREATION_FAILURE(1005, "Logger file handler creation failure."),
     E_LOGGER_FILE_HANDLER_CREATION_FAILURE(1006, "Logger file handler creation failure."),
+    E_LOGGER_MANAGER_CONFIG_FILE_FAILURE(1007, "Logger Manager configureation file failure."),
     ;
 
     private final int id;

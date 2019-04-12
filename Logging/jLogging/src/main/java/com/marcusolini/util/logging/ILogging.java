@@ -32,6 +32,9 @@ public interface ILogging {
 
     public void flush();
 
+    // Configuration File (optional)
+    public void setConfiguration(String fileName) throws LoggingException;
+
     // Get Raw Logger
     public Logger getLogger() throws LoggingException;
 }

@@ -1,12 +1,14 @@
 package com.marcusolini.util.logging;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.*;
 
-public class Logging implements ILogging, Runnable{
+public class Logging implements ILogging, Runnable {
 
     private static Logging ourInstance = new Logging();
 
@@ -34,6 +36,8 @@ public class Logging implements ILogging, Runnable{
     private BlockingQueue<LogMessage> queue = null;
     private int queueCapacity = 1000;
     private boolean bQueuePutInterrupted = false;
+
+    private LoggingManager loggingManager = null;
 
     private Logging() {
         level = Level.ALL;
@@ -139,6 +143,17 @@ public class Logging implements ILogging, Runnable{
             for(Handler handle : handlers) {
                 handle.flush();
             }
+        }
+    }
+
+    // Configuration File (optional)
+    public void setConfiguration(String fileName) throws LoggingException {
+        try {
+            if (null != fileName) {
+                loggingManager = new LoggingManager(fileName);
+            }
+        } catch (LoggingException e) {
+            throw e;
         }
     }
 

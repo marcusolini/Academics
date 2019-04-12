@@ -14,23 +14,34 @@ public class LoggingTest
     {
         ILogging logging = null;
         final String LOGGERNAME = "com.marcusolini.util.logging";
-        final String LOGFILE = "loggingtest.log";
+        final String LOGFILE = "loggingtest1.log";
         boolean bAppend = false;
+        boolean bUsingConfigFile = true;
 
         try {
             logging = Logging.getInstance();
             logging.createLogger(LOGGERNAME);
 
-            try { logging.addConsoleHandler(); }
-            catch (LoggingException e) { logging.severe("Exception" + e.getMessage()); }
+            try {
+                logging.setConfiguration("loggingtest.properties");
+                bUsingConfigFile = true;
+            } catch (LoggingException e) {
+                bUsingConfigFile = false;
+                logging.severe("Exception" + e.getMessage());
+            }
 
-            try { logging.addFileHandler(LOGFILE, bAppend); }
-            catch (LoggingException e) { logging.severe("Exception" + e.getMessage()); }
-            try { logging.addFileHandler(LOGFILE, bAppend); }
-            catch (LoggingException e) { logging.severe("Exception" + e.getMessage()); }
+            if (false == bUsingConfigFile) {
+                try { logging.addConsoleHandler(); }
+                catch (LoggingException e) { logging.severe("Exception" + e.getMessage()); }
 
-            logging.setLogLevelAll();
-        } catch (LoggingException e) { logging.severe("Exception" + e.getMessage() ); }
+                try { logging.addFileHandler(LOGFILE, bAppend); }
+                catch (LoggingException e) { logging.severe("Exception" + e.getMessage()); }
+
+                logging.setLogLevelAll();
+            }
+        } catch (LoggingException e) {
+            logging.severe("Exception" + e.getMessage() );
+        }
 
         logging.setLogLevelAll();
         logging.info( "Starting Tests...");
