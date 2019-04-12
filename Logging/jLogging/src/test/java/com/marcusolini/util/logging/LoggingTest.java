@@ -14,18 +14,23 @@ public class LoggingTest
     {
         ILogging logging = null;
         final String LOGGERNAME = "com.marcusolini.util.logging";
-        final String LOGFILE = "loggingtest2.log";
+        final String LOGFILE = "loggingtest.log";
         boolean bAppend = false;
 
         try {
             logging = Logging.getInstance();
             logging.createLogger(LOGGERNAME);
-            logging.addConsoleHandler();
-            logging.addFileHandler(LOGFILE, bAppend);
+
+            try { logging.addConsoleHandler(); }
+            catch (LoggingException e) { logging.severe("Exception" + e.getMessage()); }
+
+            try { logging.addFileHandler(LOGFILE, bAppend); }
+            catch (LoggingException e) { logging.severe("Exception" + e.getMessage()); }
+            try { logging.addFileHandler(LOGFILE, bAppend); }
+            catch (LoggingException e) { logging.severe("Exception" + e.getMessage()); }
+
             logging.setLogLevelAll();
-        } catch (LoggingException e) {
-            logging.severe("Exception" + e.getMessage());
-        }
+        } catch (LoggingException e) { logging.severe("Exception" + e.getMessage() ); }
 
         logging.setLogLevelAll();
         logging.info( "Starting Tests...");

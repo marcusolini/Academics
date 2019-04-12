@@ -1,6 +1,7 @@
 package com.marcusolini.util.logging;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.*;
@@ -89,7 +90,7 @@ public class Logging implements ILogging, Runnable{
 
     // Add Logging Handler
 
-    // TODO: Determine outcome if called more than once.
+    // Multiple calls will not be filtered
     public void addConsoleHandler() throws LoggingException {
         if (logger != null) {
             ConsoleHandler handler = new ConsoleHandler();
@@ -97,7 +98,7 @@ public class Logging implements ILogging, Runnable{
         }
     }
 
-    // TODO: Determine outcome if called more than once.
+    // Multiple calls will not be filtered
     public void addFileHandler(String sFileName, boolean bAppend) throws LoggingException {
         try {
             if (logger != null) {
@@ -111,30 +112,20 @@ public class Logging implements ILogging, Runnable{
 
     // Enable/Disable Logging
 
+    public void setLogOn() { setLogLevel(this.level);  }
     public void setLogOff() {
         if (logger != null) {
             this.level = logger.getLevel();
             logger.setLevel(Level.OFF);
         }
     }
-    public void setLogOn() {
-        setLogLevel(this.level);
-    }
 
     // Set Logging Levels
 
-    public void setLogLevelAll() {
-        setLogLevel(Level.ALL);
-    }
-    public void setLogLevelInfo() {
-        setLogLevel(Level.INFO);
-    }
-    public void setLogLevelWarning() {
-        setLogLevel(Level.WARNING);
-    }
-    public void setLogLevelSevere() {
-        setLogLevel(Level.SEVERE);
-    }
+    public void setLogLevelAll() { setLogLevel(Level.ALL); }
+    public void setLogLevelInfo() { setLogLevel(Level.INFO); }
+    public void setLogLevelWarning() { setLogLevel(Level.WARNING); }
+    public void setLogLevelSevere() { setLogLevel(Level.SEVERE); }
     private void setLogLevel(Level level) {
         if (logger != null) {
             this.level = level;
