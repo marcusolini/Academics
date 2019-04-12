@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 
 public interface ILogging {
 
-    // TODO: Add able to re-configure independently during runtime.
-
     // Create Logger - Called only once by main executable
     public void createLogger(String sLogger) throws LoggingException;
 

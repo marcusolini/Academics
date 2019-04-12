@@ -8,6 +8,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.*;
 
+
+// TODO: Finish ability to re-configure independently during runtime.
+
 public class Logging implements ILogging, Runnable {
 
     private static Logging ourInstance = new Logging();
