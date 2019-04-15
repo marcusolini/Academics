@@ -56,7 +56,9 @@ public class Logging implements ILogging, Runnable {
             while(true) {
                 LogMessage logMessage = queue.take();
                 if ((null != logger) && (null != logMessage)) {
-                    logger.log(logMessage.getLevel(), logMessage.getMessage());
+                    LogRecord logRecord = new LogRecord(logMessage.getLevel(), logMessage.getMessage());
+                    logRecord.setThreadID(logMessage.getThreadId());
+                    logger.log(logRecord);
                 }
             }
         } catch (InterruptedException e) {
@@ -80,7 +82,7 @@ public class Logging implements ILogging, Runnable {
     public void log(Level level, String msg) {
         try {
             if ((null != logger) && (null != msg)) {
-                LogMessage logMessage = new LogMessage(level, msg);
+                LogMessage logMessage = new LogMessage(level, (int)Thread.currentThread().getId(), msg);
                 queue.put(logMessage);
                 bQueuePutInterrupted = false;
             }
@@ -101,6 +103,8 @@ public class Logging implements ILogging, Runnable {
     public void addConsoleHandler() throws LoggingException {
         if (logger != null) {
             ConsoleHandler handler = new ConsoleHandler();
+            LoggingFormatter loggingFormatter = new LoggingFormatter();
+            handler.setFormatter(loggingFormatter);
             logger.addHandler(handler);
         }
     }
@@ -110,6 +114,8 @@ public class Logging implements ILogging, Runnable {
         try {
             if (logger != null) {
                 FileHandler handler = new FileHandler(sFileName, bAppend);
+                LoggingFormatter loggingFormatter = new LoggingFormatter();
+                handler.setFormatter(loggingFormatter);
                 logger.addHandler(handler);
             }
         } catch (IOException e) {
