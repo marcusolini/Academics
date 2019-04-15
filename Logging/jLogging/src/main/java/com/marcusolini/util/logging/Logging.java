@@ -58,6 +58,7 @@ public class Logging implements ILogging, Runnable {
                 if ((null != logger) && (null != logMessage)) {
                     LogRecord logRecord = new LogRecord(logMessage.getLevel(), logMessage.getMessage());
                     logRecord.setThreadID(logMessage.getThreadId());
+                    logRecord.setSourceMethodName(logMessage.method());
                     logger.log(logRecord);
                 }
             }
@@ -79,10 +80,19 @@ public class Logging implements ILogging, Runnable {
     public void severe(String msg) {
         log(Level.SEVERE, msg);
     }
-    public void log(Level level, String msg) {
+    private void log(Level level, String msg) {
         try {
             if ((null != logger) && (null != msg)) {
-                LogMessage logMessage = new LogMessage(level, (int)Thread.currentThread().getId(), msg);
+                String methodName = "Unknown";
+                int lineNumber = 0;
+                int threadId = (int)Thread.currentThread().getId();
+                StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+                if (4 <= stackTraceElements.length) {
+                    methodName = stackTraceElements[3].getMethodName();
+                    lineNumber = stackTraceElements[3].getLineNumber();
+                }
+                LogMessage logMessage = new LogMessage(level, threadId, methodName, lineNumber, msg);
+
                 queue.put(logMessage);
                 bQueuePutInterrupted = false;
             }

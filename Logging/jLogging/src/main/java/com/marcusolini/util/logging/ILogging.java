@@ -16,7 +16,6 @@ public interface ILogging {
     public void info(String msg);
     public void warning(String msg);
     public void severe(String msg);
-    public void log(Level level, String msg);
 
     // Enable/Disable Logging
     public void setLogOn();
