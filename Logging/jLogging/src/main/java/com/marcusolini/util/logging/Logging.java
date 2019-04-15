@@ -81,7 +81,7 @@ public class Logging implements ILogging, Runnable {
         log(Level.SEVERE, msg);
     }
     private void log(Level level, String msg) {
-        try {
+        //try {
             if ((null != logger) && (null != msg)) {
                 String methodName = "Unknown";
                 int lineNumber = 0;
@@ -93,18 +93,28 @@ public class Logging implements ILogging, Runnable {
                 }
                 LogMessage logMessage = new LogMessage(level, threadId, methodName, lineNumber, msg);
 
-                queue.put(logMessage);
-                bQueuePutInterrupted = false;
-            }
-        } catch (InterruptedException e) {
-            // Directly log once when queue put is interrupted.
-            if (false == bQueuePutInterrupted) {
-                bQueuePutInterrupted = true;
-                if (null != logger) {
-                    logger.severe(LoggingErrorCode.E_LOGGER_QUEUE_PUT_INTERRUPTED.toString());
+                //queue.put(logMessage);
+                if (true == queue.offer(logMessage)) {
+                    bQueuePutInterrupted = false;
+                } else {
+                    // Directly log once when queue put is interrupted.
+                    if (false == bQueuePutInterrupted) {
+                        bQueuePutInterrupted = true;
+                        if (null != logger) {
+                            logger.severe(LoggingErrorCode.E_LOGGER_QUEUE_PUT_INTERRUPTED.toString());
+                        }
+                    }
                 }
             }
-        }
+        //} catch (InterruptedException e) {
+        //    // Directly log once when queue put is interrupted.
+        //    if (false == bQueuePutInterrupted) {
+        //        bQueuePutInterrupted = true;
+        //        if (null != logger) {
+        //            logger.severe(LoggingErrorCode.E_LOGGER_QUEUE_PUT_INTERRUPTED.toString());
+        //        }
+        //    }
+        //}
     }
 
     // Add Logging Handler
