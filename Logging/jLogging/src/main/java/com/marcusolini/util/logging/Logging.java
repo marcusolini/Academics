@@ -88,7 +88,7 @@ public class Logging implements ILogging, Runnable {
                 int threadId = (int)Thread.currentThread().getId();
                 StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
                 if (4 <= stackTraceElements.length) {
-                    methodName = stackTraceElements[3].getMethodName();
+                    methodName = (stackTraceElements[3].getMethodName()) != null ? stackTraceElements[3].getMethodName() : "Unknown";
                     lineNumber = stackTraceElements[3].getLineNumber();
                 }
                 LogMessage logMessage = new LogMessage(level, threadId, methodName, lineNumber, msg);
