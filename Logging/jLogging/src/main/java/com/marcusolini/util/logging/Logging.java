@@ -58,7 +58,7 @@ public class Logging implements ILogging, Runnable {
                 if ((null != logger) && (null != logMessage)) {
                     LogRecord logRecord = new LogRecord(logMessage.getLevel(), logMessage.getMessage());
                     logRecord.setThreadID(logMessage.getThreadId());
-                    logRecord.setSourceMethodName(logMessage.method());
+                    logRecord.setSourceMethodName(logMessage.method() + ":" + logMessage.line());
                     logger.log(logRecord);
                 }
             }
