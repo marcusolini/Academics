@@ -1,6 +1,8 @@
-﻿/**
-* © Copyright 2018, Cole Engineering Services, Inc.   All Rights Reserved.
-*/
+﻿// Copyright 2018 marcusolini@outlook.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+//
 
 // Thread Guard for Windows and Linux:
 //   std::thread (C++14) - Windows Visual Studio and Netbeans

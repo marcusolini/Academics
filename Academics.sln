@@ -111,8 +111,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SortingTestsUi", "Sorting\S
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SortingShared", "Sorting\SortingShared\SortingShared.vcxitems", "{61444CD0-ADAD-4D76-A129-678B4D0F1E17}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Commons", "Commons\Commons.vcxitems", "{C2ED2CC5-77FE-4ED2-B0B6-D437A3B93727}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gaming", "Gaming", "{6D82C2D4-56D6-4DFB-BCA7-374CE68D69A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gamepad", "Gamepad", "{66BABADC-1DF1-4D0A-A941-BD45CB3476F0}"
@@ -122,6 +120,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RawInput2", "Gaming\Gamepad\RawInput2\RawInput2.vcxproj", "{9F7DC086-DD1F-4733-AB7F-A00CE51B44CD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "loggerlib", "Logging\loggerlib\visualstudio\loggerlib.vcxproj", "{39442464-9FCD-46A0-9ABA-00D5B5CACDEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commons", "Commons", "{D488AF6B-B45D-4294-B3C3-1448D4E41B3D}"
+	ProjectSection(SolutionItems) = preProject
+		Commons\LockGuard.h = Commons\LockGuard.h
+		Commons\Signaler.h = Commons\Signaler.h
+		Commons\ThreadGuard.h = Commons\ThreadGuard.h
+		Commons\TSTRING.h = Commons\TSTRING.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
