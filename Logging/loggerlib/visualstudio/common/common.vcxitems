@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <ItemsProjectGuid>{c2ed2cc5-77fe-4ed2-b0b6-d437a3b93727}</ItemsProjectGuid>
+    <ItemsProjectGuid>{e960277e-9b89-470f-a5f2-b4ed8d4a59aa}</ItemsProjectGuid>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -14,9 +14,8 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)LockGuard.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Signaler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ThreadGuard.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)TSTRING.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\LockGuard.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\ThreadGuard.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\TSTRING.h" />
   </ItemGroup>
 </Project>
