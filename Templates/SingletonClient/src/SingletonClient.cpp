@@ -52,6 +52,7 @@ int main()
     ISingleton* pAquiredInstance = NULL;
 
     // STRUCTURED EXCEPTION HANDLING  -  Compiler Option: Yes with SEH Exceptions (/EHa)
+	// IDE EXECUTION - Disable Exception Settings - Win32 Exceptions - Access Violation
     #ifdef _WIN32
         _set_se_translator(my_trans_func);  
         set_terminate(my_terminate_handler);
