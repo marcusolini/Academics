@@ -23,7 +23,7 @@
     <ProjectGuid>{0CF577C1-E1AF-4288-8472-AD7A95C83CC8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SingletonClient</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

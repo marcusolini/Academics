@@ -14,7 +14,7 @@
 #include <iostream>
 #include <unordered_map>
 
-#include "Common/LockGuard.h"     // contains conditional <mutex>, <pthread.h> and <windows.h>
+#include "LockGuard.h"     // contains conditional <mutex>, <pthread.h> and <windows.h>
 
 // FORWARD DECLARATIONS
 

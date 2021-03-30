@@ -36,9 +36,9 @@
 #include <time.h>
 #include <cstdio>
 
-#include "Common/LockGuard.h" // contains conditional <mutex>, <pthread.h> and <windows.h>
-#include "Common/ThreadGuard.h"
-#include "Common/TSTRING.h"
+#include "LockGuard.h" // contains conditional <mutex>, <pthread.h> and <windows.h>
+#include "ThreadGuard.h"
+#include "TSTRING.h"
 
 // FORWARD DECLARATIONS
 

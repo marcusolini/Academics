@@ -14,7 +14,7 @@
 
 #include "loggerlib.h"
 
-#include "Common/TSTRING.h"
+#include "TSTRING.h"
 
 // HELPER FUNCTIONS AND MACROS
 static void LOG_MESSAGE_ARGS(TSTRING& sMessage, const TCHAR* pszMsgFormat, ...);

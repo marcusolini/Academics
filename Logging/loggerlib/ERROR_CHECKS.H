@@ -13,7 +13,7 @@
 #include <cwctype>
 #include <stdarg.h>
 
-#include "Common/TSTRING.h"
+#include "TSTRING.h"
 
 #include "LOGGER_MACROS.H"
 
